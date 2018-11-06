@@ -26,9 +26,9 @@ GitBook支持输出多种文档格式，如：
   [https://toolchain.gitbook.com/](https://toolchain.gitbook.com/)
 * ## 项目地址 {#本项目地址}
 * 仓库：  
-  [https://github.com/einverne/gitbook-tutorial](https://github.com/a763246630/mybook.git)
+  https://github.com/a763246630/mybook.git
 
-* 在线阅读：
+* 在线阅读：  
   [https://einverne.github.io/gitbook-tutorial](https://einverne.github.io/gitbook-tutorial)
 
 
