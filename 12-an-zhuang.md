@@ -4,6 +4,7 @@
 
 * 首先安装nodejs
 
-* 
+* nodejs地址
+
 
 
