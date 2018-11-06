@@ -9,7 +9,7 @@
 
 * maven
 
-* git 
+* git
 
 
 
