@@ -4,7 +4,9 @@
 
 * 首先安装nodejs
 
-* nodejs地址[https://nodejs.org/dist/v10.13.0/node-v10.13.0-x64.msi](https://nodejs.org/dist/v10.13.0/node-v10.13.0-x64.msi)
+* nodejs地址
+
+* [https://nodejs.org/dist/v10.13.0/node-v10.13.0-x64.msi](https://nodejs.org/dist/v10.13.0/node-v10.13.0-x64.msi)
 
 
 
