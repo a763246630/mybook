@@ -25,9 +25,11 @@ gitbook serve --lrport 32928 --port 4000
 ```
 
 - 解析和打印关于book0的调试信息	级别调试，信息，警告，错误，禁用，  默认为信息
+
 ```
 gitbook parse
 ```
+
 - 显示GitBook 帮助信息
 
 ```
