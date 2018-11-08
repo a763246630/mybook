@@ -4,7 +4,7 @@
 
 * nodejs下载地址
 
-  [https://nodejs.org/dist/v10.13.0/node-v10.13.0-x64.msi](https://nodejs.org/dist/v10.13.0/node-v10.13.0-x64.msi)
+* [https://nodejs.org/dist/v10.13.0/node-v10.13.0-x64.msi](https://nodejs.org/dist/v10.13.0/node-v10.13.0-x64.msi)
 
 ```
 node -v //查看node版本号,node是否安装成功.
