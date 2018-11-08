@@ -7,13 +7,17 @@ gitbook init
 ```
 
 - 安装配置插件
+
 ```
 gitbook install
 ```
+
 -  构建book
+
 ```
 gitbook build
 ```
+
 - 构建并启动项目默认端口4000 lrport 指定监控端口 port 启动端口
 
 ```
