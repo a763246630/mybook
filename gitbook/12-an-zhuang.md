@@ -22,3 +22,17 @@ npm install -g gitbook-cli
 gitbook -v
 ```
 
+本地reloadlive热加载插件如果出现bug，删除node_modules\gitbook-plugin-livereload文件后重新执行
+
+```
+gitbook install
+```
+
+```
+gitbook build
+```
+
+```
+gitbook serve
+```
+
