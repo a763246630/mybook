@@ -10,5 +10,9 @@
 node -v //查看node版本号,node是否安装成功.
 ```
 
-gitbook 安装
+* gitbook 安装
+
+`npm install -g gitbook-cli`
+
+
 
