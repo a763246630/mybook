@@ -10,6 +10,7 @@
   * [1.1 安装和配置](maven/11-an-zhuang-he-pei-zhi.md)
 * [linux](linux.md)
   * [文件管理](linux/linuxwen-jian-xiang-guan-ming-ling.md)
+  * [用户管理](linux/yong-hu-guan-li.md)
 * git
   * [1.1 安装和配置](git/11-an-zhuang-he-pei-zhi.md)
 * dos
