@@ -12,9 +12,7 @@
   * [用户管理](linux/yong-hu-guan-li.md)
 * [git](git.md)
   * [1.1 安装和配置](git/11-an-zhuang-he-pei-zhi.md)
-  * 1.2 常用命令
+  * [1.2 常用命令](git/12-chang-yong-ming-ling.md)
 * dos
   * [常用的dos命令](dos/chang-yong-de-dos-ming-ling.md)
-
-
 
