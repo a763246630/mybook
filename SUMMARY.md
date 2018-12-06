@@ -24,5 +24,5 @@
   * [NIO](io/nio.md)
   * BIO
   * AIO
-* [Zookeeper](zookeeper.md)
+* [zookeeper](zookeeper.md)
 
