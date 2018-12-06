@@ -22,4 +22,7 @@
   * [持久化方式](redis/chi-jiu-hua-fang-shi.md)
 * [IO](io.md)
   * [NIO](io/nio.md)
+  * BIO
+  * AIO
+* [Zookeeper](zookeeper.md)
 
