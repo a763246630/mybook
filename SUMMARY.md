@@ -25,5 +25,5 @@
   * BIO
   * AIO
 * [zookeeper](zookeeper.md)
-  * zookeeper简介
+  * [zookeeper简介](zookeeper/zookeeperjian-jie.md)
 
