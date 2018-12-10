@@ -27,4 +27,5 @@
 * [zookeeper](zookeeper.md)
   * [zookeeper简介](zookeeper/zookeeperjian-jie.md)
 * [spring](spring.md)
+  * [spring bean生命周期](spring/spring-beansheng-ming-zhou-qi.md)
 
