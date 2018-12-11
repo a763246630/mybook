@@ -4,6 +4,8 @@
 ZooKeeper是一个分布式的，开放源码的分布式应用程序协调服务，是Google的Chubby一个开源的实现，它是集群的管理者，监视着集群中各个节点的状态根据节点提交的反馈进行下一步合理操作。最终，将简单易用的接口和性能高效、功能稳定的系统提供给用户。
 ```
 
+
+
 ### ZooKeeper提供功能
 
 ###### 文件系统 
@@ -18,18 +20,32 @@ ZooKeeper是一个分布式的，开放源码的分布式应用程序协调服�
 客户端注册监听的节点，当节点发生变化（数据改变、被删除、子目录节点增加删除）时，zookeeper会通知客户端。
 ```
 
+
+
 ### ZooKeeper节点类型
 
-###### PERSISTENT-持久化节点 
+###### PERSISTENT 持久化节点 
 
 ```
 客户端与zookeeper断开连接后，该节点依旧存在.
 ```
 
-######  PERSISTENT-SEQUENTIAL-持久化顺序节点
+######  PERSISTENT-SEQUENTIAL 持久化顺序节点
 
 ```
 客户端与zookeeper断开连接后，节点依然存在,zookeeper给该类型节点进行顺序编号.
+```
+
+###### EPHEMERAL 临时节点
+
+```
+客户端与zookeeper断开连接后，节点将被删除.
+```
+
+###### EPHEMERAL-SEQUENTIAL 临时顺序节点
+
+```
+创建节点时Zookeeper给该节点名称进行顺序编号,客户端与zookeeper断开连接后，节点将被删除.
 ```
 
 
