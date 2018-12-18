@@ -10,7 +10,6 @@
 * [linux](linux.md)
   * [文件管理](linux/linuxwen-jian-xiang-guan-ming-ling.md)
   * [用户管理](linux/yong-hu-guan-li.md)
-  * [内存管理](linux/nei-cun-guan-li.md)
   * [服务管理](linux/fu-wu-guan-li.md)
 * [git](git.md)
   * [1.1 安装和配置](git/11-an-zhuang-he-pei-zhi.md)
