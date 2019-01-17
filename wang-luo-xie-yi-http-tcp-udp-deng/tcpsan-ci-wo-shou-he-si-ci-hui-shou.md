@@ -56,3 +56,11 @@ Client收到确认后，检查ack是否为J+1，ACK是否为1，如果正确则�
 
 ![](/assets/tcp4.png)
 
+
+
+
+
+
+
+
+
