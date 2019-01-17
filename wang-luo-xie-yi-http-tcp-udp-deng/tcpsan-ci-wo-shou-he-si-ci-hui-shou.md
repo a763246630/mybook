@@ -76,5 +76,5 @@ Client收到FIN后，Client进入TIME\_WAIT状态，接着发送一个ACK给Serv
 
 上面是一方主动关闭，另一方被动关闭的情况，实际中还会出现同时发起主动关闭的情况，具体流程如下图：
 
- 
+![](/assets/tcp5.png)
 
