@@ -78,3 +78,5 @@ Client收到FIN后，Client进入TIME\_WAIT状态，接着发送一个ACK给Serv
 
 ![](/assets/tcp5.png)
 
+
+
