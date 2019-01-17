@@ -28,7 +28,7 @@
 
 所谓三次握手（Three-Way Handshake）即建立TCP连接，就是指建立一个TCP连接时，需要客户端和服务端总共发送3个包以确认连接的建立。在socket编程中，这一过程由客户端执行connect来触发，整个流程如下图所示：
 
-![](/assets/tcp3.png)
+![](/assets/tcp2.png)
 
 第一次握手
 
