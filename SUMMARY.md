@@ -2,7 +2,7 @@
 
 * [mynotes](README.md)
 * [数据结构](shu-ju-jie-gou.md)
-  * B树
+  * [B树](shu-ju-jie-gou/bshu.md)
 * [gitbook](gitbook.md)
   * [1.1 介绍](/gitbook/11-jie-shao.md)
   * [1.2 安装](/gitbook/12-an-zhuang.md)
