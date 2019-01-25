@@ -13,6 +13,7 @@
   * [文件管理](linux/linuxwen-jian-xiang-guan-ming-ling.md)
   * [用户管理](linux/yong-hu-guan-li.md)
   * [服务管理](linux/fu-wu-guan-li.md)
+  * [yum源修改](linux/yumyuan-xiu-gai.md)
 * [git](git.md)
   * [1.1 安装和配置](git/11-an-zhuang-he-pei-zhi.md)
   * [1.2 常用命令](git/12-chang-yong-ming-ling.md)
