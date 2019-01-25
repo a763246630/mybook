@@ -24,3 +24,5 @@ baseurl=http://mirrors.163.com/centos/$releasever/os/$basearch/
 gpgkey=http://mirrors.163.com/centos/RPM-GPG-KEY-CentOS-7
 ```
 
+
+
