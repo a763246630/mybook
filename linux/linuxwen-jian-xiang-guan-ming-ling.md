@@ -120,7 +120,8 @@ cp /a /b/
 wget url
 ```
 
-安装 rz sz上传下载文件命令
+- 安装 rz sz上传下载文件命令
+
 
 ```
 yum -y install lrzsz
