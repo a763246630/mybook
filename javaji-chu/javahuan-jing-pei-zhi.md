@@ -46,6 +46,8 @@ export  PATH=$PATH:$JAVA_HOME
 ·在profile文件末尾加入： 
 export JAVA_HOME=/java/jdk/jdk1.8.0_172
 export PATH=$JAVA_HOME/bin:$PATH 
-export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar 
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 ```
+
+
 
