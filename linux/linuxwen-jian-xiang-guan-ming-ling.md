@@ -127,6 +127,11 @@ wget url
 yum -y install lrzsz
 ```
 
-  
+-   查看文件大小
 
 
+```
+du -sh *
+```
+
+ 
