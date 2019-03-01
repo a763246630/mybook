@@ -29,7 +29,7 @@
   * AIO
 * [zookeeper](zookeeper.md)
   * [zookeeper简介](zookeeper/zookeeperjian-jie.md)
-  * 安装和配置
+  * [安装和配置](zookeeper/an-zhuang-he-pei-zhi.md)
 * [spring](spring.md)
   * [spring bean生命周期](spring/spring-beansheng-ming-zhou-qi.md)
 * [java基础](javaji-chu.md)
