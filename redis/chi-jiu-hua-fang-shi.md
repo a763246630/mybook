@@ -86,7 +86,7 @@ redis-cli -h ip -p port bgrewriteaof
 
 AOF rewrite过程并不阻塞客户端请求。系统会开启一个子进程来完成。
 
-#### 三.总结：
+#### 三、总结
 
 AOF和RDB各有优缺点，这是有它们各自的特点所决定：
 
