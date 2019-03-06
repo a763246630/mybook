@@ -6,7 +6,11 @@
 
 ##### 1.基本特性
 
-初始容量10,
+初始容量10,当添加元素时数组元素数量+1大于（初始容量和数组元素数量+1中的较大的值）时,进入扩容
+
+扩容为数组原来大小的1.5倍，(生成一个新的原数组大小的1.5倍的数组覆盖原数组对象)。
+
+数组越大扩容会越占用资源，所有初始化指定合适的容量,会提高程序性能。
 
 优点:插入快.
 
@@ -27,9 +31,9 @@ private static final Object[] EMPTY_ELEMENTDATA = {};
 private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = {};
 //对象数组：ArrayList的底层数据结构  用transient关键字修饰的变量不被序列化
 public transient Object[] elementData; 
-//长度
+//List元素数量不等于数组长度
 private int size;
-//最大数组容量
+//最大数组容量 Integer.MIN_VALUE，即-2147483648，二进制位如下： 1000 0000 0000 0000 0000 0000 0000 0000 
 private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 ```
 
@@ -72,7 +76,7 @@ private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
 // 添加元素 jdk1.8	
 public boolean add(E e) { 
-        //添加新元素后,数组最小容量等于数组大小加1.
+        //添加新元素后,数组最小容量等于元素数量加1和默认容量的中较大值为最小容量。
         ensureCapacityInternal(size + 1);  // Increments modCount!!
         elementData[size++] = e;
         return true;
@@ -80,7 +84,7 @@ public boolean add(E e) {
  //确保容量是安全的，超过阀值就扩容
  private void ensureCapacityInternal(int minCapacity) {
         if (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) { // 判断元素数组是否为空数组
-            //取数组大小加1和默认容量的中较大值为最小容量
+            //取元素数量加1和默认容量的中较大值为最小容量
             minCapacity = Math.max(DEFAULT_CAPACITY, minCapacity); // 取较大值
           }
           ensureExplicitCapacity(minCapacity);
@@ -93,7 +97,7 @@ public boolean add(E e) {
             grow(minCapacity);
 }
 
-//扩容方法 数组长度+1 小于 最小容量 则 扩容1.5倍
+//扩容方法 数组元素数量+1 小于 最小容量 则 扩容1.5倍
 private void grow(int minCapacity) {
         int oldCapacity = elementData.length; // 旧容量
         int newCapacity = oldCapacity + (oldCapacity >> 1); 
