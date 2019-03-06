@@ -74,6 +74,10 @@ private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
 ###### 2.3 主要方法
 
+add 方法流程
+
+
+
 ```
 
 // 添加元素 jdk1.8	
