@@ -1,6 +1,6 @@
 ## java常见的集合
 
-[TOC]
+\[TOC\]
 
 #### ArrayList
 
@@ -8,15 +8,15 @@
 
 初始容量10,当添加元素时数组元素数量+1大于（初始容量和数组元素数量+1中的较大的值）时,进入扩容
 
-扩容为数组原来大小的1.5倍，(生成一个新的原数组大小的1.5倍的数组覆盖原数组对象)。
+扩容为数组原来大小的1.5倍，\(生成一个新的原数组大小的1.5倍的数组覆盖原数组对象\)。
 
 数组越大扩容会越占用资源，所有初始化指定合适的容量,会提高程序性能。
 
-(正常情况下会扩容1.5倍，特殊情况下（新扩展数组大小已经达到了最大值）则只取最大值。)
+\(正常情况下会扩容1.5倍，特殊情况下（新扩展数组大小已经达到了最大值）则只取最大值。\)
 
 优点:插入快.
 
-缺点:查找慢，删除慢，长度固定，只能存储单一元素。  
+缺点:查找慢，删除慢，长度固定，只能存储单一元素。
 
 ##### 2.源码解析
 
@@ -76,11 +76,10 @@ private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
 add 方法流程
 
-
+![](/assets/集合1.png)
 
 ```
-
-// 添加元素 jdk1.8	
+// 添加元素 jdk1.8    
 public boolean add(E e) { 
         //添加新元素后,数组最小容量等于元素数量加1和默认容量的中较大值为最小容量。
         ensureCapacityInternal(size + 1);  // Increments modCount!!
@@ -124,10 +123,10 @@ private void grow(int minCapacity) {
         //加入新元素e，size加1
         return true;
     }
-    
-    
+
+
     // 确保数组的容量足够存放新加入的元素，若不够，要扩容
-   
+
     public void ensureCapacity(int minCapacity) {
         modCount++;
         int oldCapacity = elementData.length;//获取数组大小（即数组的容量）
@@ -140,7 +139,9 @@ private void grow(int minCapacity) {
             elementData = Arrays.copyOf(elementData, newCapacity);//复制新容量
         }
     }
-        
 ```
 
 #### LinkList
+
+
+
