@@ -1,10 +1,10 @@
 ## java常见的集合
 
-\[TOC\]
+[TOC]
 
-#### ArrayList
+### ArrayList
 
-##### 1.基本特性
+#### 1.基本特性
 
 初始容量10,当添加元素时数组元素数量+1大于（初始容量和数组元素数量+1中的较大的值）时,进入扩容
 
@@ -14,13 +14,15 @@
 
 \(正常情况下会扩容1.5倍，特殊情况下（新扩展数组大小已经达到了最大值）则只取最大值。\)
 
-优点:插入快.
 
-缺点:查找慢，删除慢，长度固定，只能存储单一元素。
 
-##### 2.源码解析
+优点: 当随机访问List时（get和set操作），ArrayList比LinkedList的效率更高，因为LinkedList是线性的数据存储方式，所以需要移动指针从前往后依次查找。
 
-###### 2.1属性
+缺点:添加或删除元素慢，所有元素的下标。指向
+
+#### 2.源码解析
+
+##### 2.1属性
 
 ```
 // 版本号
@@ -39,7 +41,7 @@ private int size;
 private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 ```
 
-###### 2.2构造函数
+##### 2.2构造函数
 
 ```
  public ArrayList() { 
@@ -72,9 +74,9 @@ private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
     }
 ```
 
-###### 2.3 主要方法
+##### 2.3 主要方法
 
-add 方法流程
+###### 2.3.1 add 方法
 
 ![](/assets/集合1.png)
 
@@ -141,9 +143,92 @@ private void grow(int minCapacity) {
     }
 ```
 
+###### 2.3.2 set 方法
 
+```
+//等价于update 只能覆盖存在元素的下标和元素
+public E set(int index, E element) {
+        // 检验索引是否合法
+        rangeCheck(index);
+        // 获取旧值
+        E oldValue = elementData(index);
+        // 赋新值
+        elementData[index] = element;
+        // 返回旧值
+        return oldValue;
+  }
+ private void rangeCheck(int index) {
+ //索引必须小于元素数量
+        if (index >= size)
+            throw new IndexOutOfBoundsException(outOfBoundsMsg(index));
+ }   
+  E elementData(int index) {
+        return (E) elementData[index];
+  }
+ 
+```
+
+###### 2.3.2 indexOf方法
+
+```
+//list是否包含传入元素，包含则返回元素下标，不在则返回-1
+public int indexOf(Object o) {
+    if (o == null) {
+        for (int i = 0; i < size; i++)
+            if (elementData[i]==null)
+                return i;
+    } else {
+        for (int i = 0; i < size; i++)
+            if (o.equals(elementData[i]))
+                return i;
+    }
+    return -1;
+}
+```
+
+###### 2.3.3 get
+
+```
+  //返回传入索引对应的元素
+  public E get(int index) {
+        // 检验索引是否合法
+        rangeCheck(index);
+
+        return elementData(index);
+    }
+```
+
+2.3.4 remove
+
+```
+public E remove(int index) {
+        // 检查索引是否存在
+        rangeCheck(index);
+        
+        modCount++;
+        //获取下标的元素
+        E oldValue = elementData(index);
+        // 需要移动的元素的个数
+        int numMoved = size - index - 1;
+        if (numMoved > 0)
+            System.arraycopy(elementData, index+1, elementData, index,
+                             numMoved);
+        // 赋值为空，有利于进行GC
+        elementData[--size] = null; 
+        // 返回旧值
+        return oldValue;
+    }
+```
 
 #### LinkList
+
+1.基本特性
+
+底层采用双向链表
+
+
+
+
 
 
 
