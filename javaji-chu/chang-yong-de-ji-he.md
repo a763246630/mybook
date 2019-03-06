@@ -1,6 +1,6 @@
 ## java常见的集合
 
-[TOC]
+\[TOC\]
 
 ### ArrayList
 
@@ -13,8 +13,6 @@
 数组越大扩容会越占用资源，所有初始化指定合适的容量,会提高程序性能。
 
 \(正常情况下会扩容1.5倍，特殊情况下（新扩展数组大小已经达到了最大值）则只取最大值。\)
-
-
 
 优点: 当随机访问List时（get和set操作），ArrayList比LinkedList的效率更高，因为LinkedList是线性的数据存储方式，所以需要移动指针从前往后依次查找。
 
@@ -165,7 +163,6 @@ public E set(int index, E element) {
   E elementData(int index) {
         return (E) elementData[index];
   }
- 
 ```
 
 ###### 2.3.2 indexOf方法
@@ -204,7 +201,7 @@ public int indexOf(Object o) {
 public E remove(int index) {
         // 检查索引是否存在
         rangeCheck(index);
-        
+
         modCount++;
         //获取下标的元素
         E oldValue = elementData(index);
@@ -226,9 +223,5 @@ public E remove(int index) {
 
 底层采用双向链表
 
-
-
-
-
-
+![](/assets/集合2.png)
 
