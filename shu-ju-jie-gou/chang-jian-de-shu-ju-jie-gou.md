@@ -1,6 +1,6 @@
 ## 数据结构
 
-[TOC]
+\[TOC\]
 
 ### 1.数组
 
@@ -28,37 +28,21 @@
 
 ##### 结构图
 
-![](/assets/s1.png)
+![](/assets/sjjg2.png)
 
-2.链表(Linked List)
+2.链表\(Linked List\)
 
+3.栈\(Stack\)
 
+4.堆\(heap\)
 
+5.队列\(Queue\)
 
+6.树\(Tree\)
 
-3.栈(Stack)
+7.哈希表\(Hash\)
 
-
-
-4.堆(heap)
-
-
-
-5.队列(Queue)
-
-
-
-6.树(Tree)
-
-
-
-7.哈希表(Hash)
-
-
-
-8.图(Graph)
-
-
+8.图\(Graph\)
 
 ### 优缺点对比
 
@@ -74,3 +58,4 @@
 | 图\(Graph\) | 对现实世界建模 | 有些算法且复杂 |
 
 ![](/assets/sjjg1.png)
+
