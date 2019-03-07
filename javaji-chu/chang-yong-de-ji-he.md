@@ -217,6 +217,16 @@ public E remove(int index) {
     }
 ```
 
+ArrayList和LinkedList的区别（也是顺序表和链表的区别）：
+
+（1）ArrayList是基于动态数组实现的，LinkedList是基于双向链表实现的。
+
+（2）ArrayList支持随机访问（通过下标），LinkedList不支持。
+
+（3）ArrayList的查询和尾部插入元素效率较高，中间插入和删除元素效率较低，因为有大量的数组复制操作。LinkedList的插入和删除效率较高，只需要把节点指针改变一下就行，但是查询效率较低，即使有双向链表的特性可以从两个方向查找，但还是需要使用蛮力法的方式进行遍历，所以效率较低。
+
+（4）ArrayList会造成一定的空间浪费，因为随时需要探测数组容量然后扩容；LinkedList通过节点方式进行存放数据，不存在空间浪费。
+
 #### LinkList
 
 1.基本特性
