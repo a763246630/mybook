@@ -28,7 +28,7 @@
 
 ##### 结构图
 
-![](/assets/s1.png)
+![](/assets/sjjg2.png)
 
 ### 2.链表(Linked List)
 
