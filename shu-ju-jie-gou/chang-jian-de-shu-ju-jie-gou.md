@@ -32,6 +32,8 @@
 
 ### 2.链表\(Linked List\)
 
+单向两边
+
 ##### 双向链表
 
 ![](/assets/sxlb.png)
