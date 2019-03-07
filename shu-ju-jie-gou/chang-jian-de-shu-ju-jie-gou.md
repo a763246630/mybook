@@ -32,7 +32,9 @@
 
 ### 2.链表\(Linked List\)
 
-双向链表![](/assets/sxlb.png)
+##### 双向链表
+
+![](/assets/sxlb.png)
 
 ### 3.栈\(Stack\)
 
