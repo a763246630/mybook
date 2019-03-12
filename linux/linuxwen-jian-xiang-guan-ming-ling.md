@@ -134,4 +134,9 @@ yum -y install lrzsz
 du -sh *
 ```
 
- 
+-  查找文件
+
+```
+find -name xxx
+```
+
