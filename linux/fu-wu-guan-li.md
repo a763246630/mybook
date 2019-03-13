@@ -22,10 +22,11 @@ free -h
 
 
 
-CentOS7中执行
-service iptables start/stop
-会报错Failed to start iptables.service: Unit iptables.service failed to load: No such file or directory.
+**CentOS7中执行**
+**service iptables start/stop**
+**会报错Failed to start iptables.service: Unit iptables.service failed to load: No such file or directory.**
 
+```
 在CentOS 7防火墙由firewalld来管理，
 
 如果要添加范围例外端口 如 1000-2000
@@ -45,7 +46,6 @@ firewall-cmd --reload
 firewall-cmd --zone=public --query-port=80/tcp
 删除
 firewall-cmd --zone=public --remove-port=80/tcp --permanent
-
 
 当然你可以还原传统的管理方式。
 
@@ -74,5 +74,6 @@ OK，再试一下应该就好使了
 
 开放某个端口 在/etc/sysconfig/iptables里添加
 
--A RH-Firewall-1-INPUT -m state --state NEW -m tcp -p tcp --dport 8080 -j ACCEPT 
---------------------- 
+-A RH-Firewall-1-INPUT -m state --state NEW -m tcp -p tcp --dport 8080 -j ACCEPT
+```
+
