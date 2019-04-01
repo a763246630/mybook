@@ -176,19 +176,6 @@ public class CreateSessionASync implements Watcher{
 | byte[] getData(final String path, Watcher watcher, Stat stat) | 参数： 路径、监视器、数据版本等信息用途：获取znode上的数据   |
 | List getChildren(final String path, Watcher watcher)         | 参数： 路径、监视器;该方法有多个重载用途：获取节点下的所有子节点 |
 
-3.zookeeper中的事件和状态
-
-事件和状态构成了zookeeper客户端连接描述的两个维度。注意，网上很多帖子都是在介绍zookeeper客户端连接的事件，但是忽略了zookeeper客户端状态的变化也是要进行监听和通知的。这里我们通过下面的两个表详细介绍 
-
-
-
-| 连接状态                  | 状态含义                                                     |
-| ------------------------- | ------------------------------------------------------------ |
-| KeeperState.Expired       | 客户端和服务器在ticktime的时间周期内，是要发送心跳通知的。这是租约协议的一个实现。客户端发送request，告诉服务器其上一个租约时间，服务器收到这个请求后，告诉客户端其下一个租约时间是哪个时间点。当客户端时间戳达到最后一个租约时间，而没有收到服务器发来的任何新租约时间，即认为自己下线（此后客户端会废弃这次连接，并试图重新建立连接）。这个过期状态就是Expired状态 |
-| KeeperState.Disconnected  | 就像上面那个状态所述，当客户端断开一个连接（可能是租约期满，也可能是客户端主动断开）这是客户端和服务器的连接就是Disconnected状态 |
-| KeeperState.SyncConnected | 一旦客户端和服务器的某一个节点建立连接（注意，虽然集群有多个节点，但是客户端一次连接到一个节点就行了），并完成一次version、zxid的同步，这时的客户端和服务器的连接状态就是SyncConnected |
-| KeeperState.AuthFailed    | zookeeper客户端进行连接认证失败时，发生该状态                |
-
 
 
 ​	
