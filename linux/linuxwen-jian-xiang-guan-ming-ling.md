@@ -120,23 +120,23 @@ cp /a /b/
 wget url
 ```
 
-- 安装 rz sz上传下载文件命令
-
+* 安装 rz sz上传下载文件命令
 
 ```
 yum -y install lrzsz
 ```
 
--   查看文件大小
-
+* 查看文件大小
 
 ```
 du -sh *
 ```
 
--  查找文件
+* 查找文件
 
 ```
 find -name xxx
 ```
+
+
 
