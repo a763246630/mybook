@@ -40,7 +40,10 @@ zk服务命令
 
 设置和显示监视状态，on或者off。 printwatches on
 
-创建节点，其中-s为顺序充点，-e临时节点 create /zookeeper/node1"test_create"
+创建节点，其中-s为顺序充点，-e临时节点 
+create  [-s][-e] /zookeeper/node1"test_create"
+create  /zookeeper  
+
 
 断开客户端与服务端的连接 close
 
