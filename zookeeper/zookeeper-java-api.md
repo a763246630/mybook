@@ -2,7 +2,8 @@
 
 ### 1.同步创建
 
-　　create(java.lang.String path, byte[] data, java.util.List<org.apache.zookeeper.data.ACL> acl, org.apache.zookeeper.CreateMode createMode)
+```
+　create(java.lang.String path, byte[] data, java.util.List<org.apache.zookeeper.data.ACL> acl, org.apache.zookeeper.CreateMode createMode)
 
 path：创建节点路径，需保证父节点已存在
 
@@ -19,6 +20,7 @@ CREATOR_ALL_ACL：创建该znode的连接拥有所有权限
 READ_ACL_UNSAFE：所有的客户端都可读
 
 自定义权限　　
+```
 
 ```
 ACL aclIp = new ACL(ZooDefs.Perms.READ,new Id("ip","127.0.0.1"));
@@ -26,11 +28,9 @@ ACL aclIp = new ACL(ZooDefs.Perms.READ,new Id("ip","127.0.0.1"));
                         new Id("digest", DigestAuthenticationProvider.generateDigest("id:pass")));
 ```
 
+```
 session设置权限　
-
-```
-zk.addAuthInfo("digest", "id:pass".getBytes());　　
-```
+zk.addAuthInfo("digest", "id:pass".getBytes());　
 
 createMode:节点类型
 
@@ -41,8 +41,7 @@ PERSISTENT_SEQUENTIAL：持久化有序节点
 EPHEMERAL：临时节点（连接断开自动删除）
 
 EPHEMERAL_SEQUENTIAL：临时有序节点（连接断开自动删除）
-
-
+```
 
     import org.apache.zookeeper.*;
     import org.apache.zookeeper.data.ACL;
