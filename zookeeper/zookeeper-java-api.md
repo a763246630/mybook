@@ -191,3 +191,5 @@ import java.io.IOException;
 | KeeperState.SyncConnected | 一旦客户端和服务器的某一个节点建立连接（注意，虽然集群有多个节点，但是客户端一次连接到一个节点就行了），并完成一次version、zxid的同步，这时的客户端和服务器的连接状态就是SyncConnected |
 | KeeperState.AuthFailed    | zookeeper客户端进行连接认证失败时，发生该状态                |
 
+Watcher涉及的类
+
