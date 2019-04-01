@@ -2,38 +2,43 @@
 
 　　create(java.lang.String path, byte[] data, java.util.List<org.apache.zookeeper.data.ACL> acl, org.apache.zookeeper.CreateMode createMode)
 
-- - path：创建节点路径，需保证父节点已存在
+path：创建节点路径，需保证父节点已存在
 
-  - data：节点数据
+data：节点数据
 
-  - acl:权限列表
+acl:权限列表
 
-    - 提供默认的权限OPEN_ACL_UNSAFE、CREATOR_ALL_ACL、READ_ACL_UNSAFE
+提供默认的权限OPEN_ACL_UNSAFE、CREATOR_ALL_ACL、READ_ACL_UNSAFE
 
-      - OPEN_ACL_UNSAFE：完全开放
-      - CREATOR_ALL_ACL：创建该znode的连接拥有所有权限
-      - READ_ACL_UNSAFE：所有的客户端都可读
+OPEN_ACL_UNSAFE：完全开放
 
-    - 自定义权限　　
+CREATOR_ALL_ACL：创建该znode的连接拥有所有权限
 
-      ```
-      ACL aclIp = new ACL(ZooDefs.Perms.READ,new Id("ip","127.0.0.1"));
-                      ACL aclDigest = new ACL(ZooDefs.Perms.READ| ZooDefs.Perms.WRITE,
-                              new Id("digest", DigestAuthenticationProvider.generateDigest("id:pass")));
-      ```
+READ_ACL_UNSAFE：所有的客户端都可读
 
-    - session设置权限　
+自定义权限　　
 
-      ```
-      zk.addAuthInfo("digest", "id:pass".getBytes());　　
-      ```
+```
+ACL aclIp = new ACL(ZooDefs.Perms.READ,new Id("ip","127.0.0.1"));
+                ACL aclDigest = new ACL(ZooDefs.Perms.READ| ZooDefs.Perms.WRITE,
+                        new Id("digest", DigestAuthenticationProvider.generateDigest("id:pass")));
+```
 
-  - createMode:节点类型
+session设置权限　
 
-    - PERSISTENT：持久化节点
-    - PERSISTENT_SEQUENTIAL：持久化有序节点
-    - EPHEMERAL：临时节点（连接断开自动删除）
-    - EPHEMERAL_SEQUENTIAL：临时有序节点（连接断开自动删除）
+```
+zk.addAuthInfo("digest", "id:pass".getBytes());　　
+```
+
+createMode:节点类型
+
+PERSISTENT：持久化节点
+
+PERSISTENT_SEQUENTIAL：持久化有序节点
+
+EPHEMERAL：临时节点（连接断开自动删除）
+
+EPHEMERAL_SEQUENTIAL：临时有序节点（连接断开自动删除）
 
 
 
