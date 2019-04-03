@@ -249,9 +249,7 @@ abstract public void process(WatchedEvent event);
 
 内部类
 
-1. KeeperState 
-
-   \`\`\`
+1. KeeperState是一个枚举类，其定义了在事件发生时Zookeeper所处的各种状态，其还定义了一个从整形值返回对应状态的方法fromInt。
 
 ```
            public enum KeeperState { // 事件发生时Zookeeper的状态
@@ -317,12 +315,12 @@ abstract public void process(WatchedEvent event);
                  KeeperState(int intValue) {
                      this.intValue = intValue;
                  }
-
+    
                  // 返回整形值
                  public int getIntValue() {
                      return intValue;
                  }
-
+    
                  // 从整形值构造相应的状态
                  public static KeeperState fromInt(int intValue) {
                      switch(intValue) {
@@ -334,7 +332,7 @@ abstract public void process(WatchedEvent event);
                          case    5: return KeeperState.ConnectedReadOnly;
                          case    6: return KeeperState.SaslAuthenticated;
                          case -112: return KeeperState.Expired;
-
+    
                          default:
                              throw new RuntimeException("Invalid integer value for conversion to KeeperState");
                      }
