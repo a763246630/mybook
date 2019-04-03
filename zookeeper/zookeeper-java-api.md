@@ -398,3 +398,120 @@ public class WatchedEvent {
     private String path;
 }
 ```
+
+3.5 ZKWatchManager
+
+```
+  private static class ZKWatchManager implements ClientWatchManager {
+        // 数据变化的Watchers
+        private final Map<String, Set<Watcher>> dataWatches =
+            new HashMap<String, Set<Watcher>>();
+        // 节点存在与否的Watchers
+        private final Map<String, Set<Watcher>> existWatches =
+            new HashMap<String, Set<Watcher>>();
+        // 子节点变化的Watchers
+        private final Map<String, Set<Watcher>> childWatches =
+            new HashMap<String, Set<Watcher>>();
+    }
+```
+
+3.6 materialize 该方法表示事件发生时，返回需要被通知的Watcher集合，可能为空集合。
+
+```
+public Set<Watcher> materialize(Watcher.Event.KeeperState state,
+                                        Watcher.Event.EventType type,
+                                        String clientPath)
+        {
+            // 新生成结果Watcher集合
+            Set<Watcher> result = new HashSet<Watcher>();
+
+            switch (type) { // 确定事件类型
+            case None: // 无类型
+                // 添加默认Watcher
+                result.add(defaultWatcher);
+                // 是否需要清空(提取对zookeeper.disableAutoWatchReset字段进行配置的值、Zookeeper的状态是否为同步连接)
+                boolean clear = ClientCnxn.getDisableAutoResetWatch() &&
+                        state != Watcher.Event.KeeperState.SyncConnected;
+
+                synchronized(dataWatches) { // 同步块
+                    for(Set<Watcher> ws: dataWatches.values()) {
+                        // 添加至结果集合
+                        result.addAll(ws);
+                    }
+                    if (clear) { // 是否需要清空
+                        dataWatches.clear();
+                    }
+                }
+
+                synchronized(existWatches) { // 同步块 
+                    for(Set<Watcher> ws: existWatches.values()) {
+                        // 添加至结果集合
+                        result.addAll(ws);
+                    }
+                    if (clear) { // 是否需要清空
+                        existWatches.clear();
+                    }
+                }
+
+                synchronized(childWatches) { // 同步块
+                    for(Set<Watcher> ws: childWatches.values()) {
+                        // 添加至结果集合
+                        result.addAll(ws);
+                    }
+                    if (clear) { // 是否需要清空
+                        childWatches.clear();
+                    }
+                }
+                // 返回结果
+                return result;
+            case NodeDataChanged: // 节点数据变化
+            case NodeCreated: // 创建节点
+                synchronized (dataWatches) { // 同步块
+                    // 移除clientPath对应的Watcher后全部添加至结果集合
+                    addTo(dataWatches.remove(clientPath), result);
+                }
+                synchronized (existWatches) { 
+                    // 移除clientPath对应的Watcher后全部添加至结果集合
+                    addTo(existWatches.remove(clientPath), result);
+                }
+                break;
+            case NodeChildrenChanged: // 节点子节点变化
+                synchronized (childWatches) {
+                    // 移除clientPath对应的Watcher后全部添加至结果集合
+                    addTo(childWatches.remove(clientPath), result);
+                }
+                break;
+            case NodeDeleted: // 删除节点
+                synchronized (dataWatches) { 
+                    // 移除clientPath对应的Watcher后全部添加至结果集合
+                    addTo(dataWatches.remove(clientPath), result);
+                }
+                // XXX This shouldn't be needed, but just in case
+                synchronized (existWatches) {
+                    // 移除clientPath对应的Watcher
+                    Set<Watcher> list = existWatches.remove(clientPath);
+                    if (list != null) {
+                        // 移除clientPath对应的Watcher后全部添加至结果集合
+                        addTo(existWatches.remove(clientPath), result);
+                        LOG.warn("We are triggering an exists watch for delete! Shouldn't happen!");
+                    }
+                }
+                synchronized (childWatches) {
+                    // 移除clientPath对应的Watcher后全部添加至结果集合
+                    addTo(childWatches.remove(clientPath), result);
+                }
+                break;
+            default: // 缺省处理
+                String msg = "Unhandled watch event type " + type
+                    + " with state " + state + " on path " + clientPath;
+                LOG.error(msg);
+                throw new RuntimeException(msg);
+            }
+
+            // 返回结果集合
+            return result;
+        }
+    }
+    该方法在事件发生后，返回需要被通知的Watcher集合。在该方法中，首先会根据EventType类型确定相应的事件类型，然后根据事件类型的不同做出相应的操作，如针对None类型，即无任何事件，则首先会从三个键值对中删除clientPath对应的Watcher，然后将剩余的Watcher集合添加至结果集合；针对NodeDataChanged和NodeCreated事件而言，其会从dataWatches和existWatches中删除clientPath对应的Watcher，然后将剩余的Watcher集合添加至结果集合
+```
+
