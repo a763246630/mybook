@@ -340,7 +340,7 @@ abstract public void process(WatchedEvent event);
              }
      ```
 
-　2. EventType
+　3.3. EventType
 
 ```
    public enum EventType { // 事件类型
@@ -384,4 +384,17 @@ abstract public void process(WatchedEvent event);
             }           
         }
     }
+```
+
+3.4 WatchedEvent 类属性
+
+```
+public class WatchedEvent {
+    // Zookeeper的状态
+    final private KeeperState keeperState;
+    // 事件类型
+    final private EventType eventType;
+    // 事件所涉及节点的路径
+    private String path;
+}
 ```
