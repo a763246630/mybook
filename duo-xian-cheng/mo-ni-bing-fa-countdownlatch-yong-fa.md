@@ -29,10 +29,6 @@ public CountDownLatch countDownLatch = new CountDownLatch(2);
 
 public void test() throws InterruptedException {
 
-
-​
-
-
   new Thread(() -
 >
  {
