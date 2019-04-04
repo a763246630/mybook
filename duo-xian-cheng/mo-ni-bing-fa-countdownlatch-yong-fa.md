@@ -132,103 +132,35 @@ public CyclicBarrier(int parties) {
 ```
 
 ```
-第一个版本比较常用，用来挂起当前线程，直至所有线程都到达barrier状态再同时执行后续任务；
+ // 每调用cyclicBarrier.await()一次累加 次数累加2次后并发执行
+    public static CyclicBarrier cyclicBarrier = new CyclicBarrier(2, () -> {
+        System.out.println(123);
+    });
 
+    @Test
+    public void cyclicBarrierTest() {
+        new Thread(() -> {
+            try {
+                //线程阻塞状态 等待 countdown n  =计算器count  次后并发执行
+                cyclicBarrier.await();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            System.out.println("a");
+        }).start();
 
-​
+        new Thread(() -> {
+            try {
+                //线程阻塞状态 countdown n次后并发执行
+                cyclicBarrier.await();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            System.out.println("b");
+        }).start();
+        System.out.println("c");
+    }
 
-
-​
-
-
-// 每调用cyclicBarrier.await()一次累加 次数累加2次后并发执行先执行runnable
-
-
-  public static CyclicBarrier cyclicBarrier=new CyclicBarrier(2,()-
->
-{
-
-
-  System.out.println(123);
-
-
-  }); 
-
-
-​
-
-
-@Test
-
-
-public void cyclicBarrierTest(){
-
-
-  new Thread(() -
->
- {
-
-
-  try {
-
-
-  //线程阻塞状态 等待 countdown n  =计算器count  次后并发执行
-
-
-  cyclicBarrier.await();
-
-
-  } catch (Exception e) {
-
-
-  e.printStackTrace();
-
-
-  }
-
-
-  System.out.println("a");
-
-
-  }).start();
-
-
-​
-
-
-  new Thread(() -
->
- {
-
-
-  try {
-
-
-  //线程阻塞状态 countdown n次后并发执行
-
-
-  cyclicBarrier.await();
-
-
-  } catch (Exception e) {
-
-
-  e.printStackTrace();
-
-
-  }
-
-
-  System.out.println("b");
-
-
-  }).start();
-
-
-  System.out.println("c");
-
-
-}
 ```
 
 第二个版本是让这些线程等待至一定的时间，如果还有线程没有到达barrier状态就直接让到达barrier的线程执行后续任务。
