@@ -234,75 +234,34 @@ public void cyclicBarrierTest(){
 第二个版本是让这些线程等待至一定的时间，如果还有线程没有到达barrier状态就直接让到达barrier的线程执行后续任务。
 
 ```
-@Test
+ @Test
+    public void cyclicBarrierTest1() throws InterruptedException {
+        Thread t = new Thread(() -> {
+            try {
+                //线程阻塞状态 等待 countdown n  =计算器count  次后并发执行
+                cyclicBarrier.await(2, TimeUnit.SECONDS);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            System.out.println("a");
+        });
 
+        new Thread(() -> {
+            try {
+                //线程阻塞状态 countdown n次后并发执行
+                //  cyclicBarrier.await(2, TimeUnit.SECONDS);;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            System.out.println("b");
+        }).start();
 
-public void cyclicBarrierTest1() throws InterruptedException {
+        t.start();
+        t.join();
 
+        System.out.println("c");
+    }
 
-Thread t=new Thread(() -
->
- {
-
-
-  try {
-
-
-  //等待N秒 如果没有barrier状态就直接让到达barrier的线程执行后续任务。
-
-
-  cyclicBarrier.await(2, TimeUnit.SECONDS);
-
-
-  } catch (Exception e) {
-
-
-  e.printStackTrace();
-
-
-  }
-
-
-  System.out.println("a");
-
-
-  });
-
-
-​
-
-
-  new Thread(() -
->
- {
-
-
-  try {
-
-  //线程阻塞状态 countdown n次后并发执行
-
-  //  cyclicBarrier.await(2, TimeUnit.SECONDS);;
-
-
-  } catch (Exception e) {
-
-  e.printStackTrace();
-
-  }
-
-  System.out.println("b");
-
-  }).start();
-
-  t.start();
-
-
-  t.join();
-
-  System.out.println("c");
-
-
-}
 ```
 
 ### Semaphore用法
