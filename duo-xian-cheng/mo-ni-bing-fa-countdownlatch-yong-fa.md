@@ -207,3 +207,13 @@ public boolean tryAcquire(int permits, long timeout, TimeUnit unit) throws Inter
 
 availablePermits\(\)方法得到可用的许可数目。
 
+CountDownLatch和CyclicBarrier区别
+
+CountDownLatch 计数是递减，CyclicBarrier计数是累加
+
+CyclicBarrier可重用，CountDownLatch 不可重用
+
+Semaphore类似锁的实现
+
+
+
