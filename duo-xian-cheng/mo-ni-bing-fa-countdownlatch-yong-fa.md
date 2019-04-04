@@ -22,89 +22,34 @@ public void countDown() { };  //将count值减1
 ```
 
 ```
-public CountDownLatch countDownLatch = new CountDownLatch(2);
+ @Test
+    public void test() throws InterruptedException {
 
-@Test
+        new Thread(() -> {
+            try {
+                //线程阻塞状态 等待 countdown n  =计算器count  次后并发执行
+                countDownLatch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("a");
+        }).start();
 
-
-public void test() throws InterruptedException {
-
-  new Thread(() ->
- {
-
-
-  try {
-
-
-  //线程阻塞状态 等待 countdown n  =计算器count  次后并发执行
-
-
-  countDownLatch.await();
-
-
-  } catch (InterruptedException e) {
-
-
-  e.printStackTrace();
-
-
-  }
+        new Thread(() -> {
+            try {
+                //线程阻塞状态 countdown n次后并发执行
+                countDownLatch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("b");
+        }).start();
+        countDownLatch.countDown();
+        countDownLatch.countDown();
+        System.out.println("c");
 
 
-  System.out.println("a");
-
-
-  }).start();
-
-
-​
-
-
- new Thread(() -
->
- {
-
-
- try {
-
-
- //线程阻塞状态 countdown n次后并发执行
-
-
- countDownLatch.await();
-
-
- } catch (InterruptedException e) {
-
-
- e.printStackTrace();
-
-
- }
-
-
-  System.out.println("b");
-
-
- }).start();
-
-
-  countDownLatch.countDown();
-
-
-  countDownLatch.countDown();
-
-
-  System.out.println("c");
-
-
-​
-
-
-​
-
-
-}
+    }
 ```
 
 ### CyclicBarrier用法
@@ -160,7 +105,6 @@ public CyclicBarrier(int parties) {
         }).start();
         System.out.println("c");
     }
-
 ```
 
 第二个版本是让这些线程等待至一定的时间，如果还有线程没有到达barrier状态就直接让到达barrier的线程执行后续任务。
@@ -193,7 +137,6 @@ public CyclicBarrier(int parties) {
 
         System.out.println("c");
     }
-
 ```
 
 ### Semaphore用法
