@@ -24,13 +24,6 @@ public void countDown() { };  //将count值减1
 ```
 public CountDownLatch countDownLatch = new CountDownLatch(2);
 
-
-​
-
-
-​
-
-
 @Test
 
 
