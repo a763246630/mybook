@@ -279,39 +279,25 @@ Thread t=new Thread(() -
 
   try {
 
-
   //线程阻塞状态 countdown n次后并发执行
-
 
   //  cyclicBarrier.await(2, TimeUnit.SECONDS);;
 
 
   } catch (Exception e) {
 
-
   e.printStackTrace();
-
 
   }
 
-
   System.out.println("b");
 
-
   }).start();
-
-
-​
-
 
   t.start();
 
 
   t.join();
-
-
-​
-
 
   System.out.println("c");
 
