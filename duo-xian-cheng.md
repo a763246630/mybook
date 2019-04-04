@@ -1,16 +1,4 @@
-线程线程是独立调度和分派的基本单位。线程可以为操作系统内核调度的内核线程，如
-
-[Win32](https://baike.baidu.com/item/Win32)
-
-线程；由用户进程自行调度的用户线程，如Linux平台的POSIX Thread；或者由
-
-[内核](https://baike.baidu.com/item/%E5%86%85%E6%A0%B8)
-
-与用户进程，如
-
-[Windows 7](https://baike.baidu.com/item/Windows%207)
-
-的线程，进行混合调度
+ 
 
 多线程：指的是这个程序（一个进程）运行时产生了不止一个线程
 
