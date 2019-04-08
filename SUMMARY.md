@@ -53,4 +53,6 @@
   * [模拟并发 CountDownLatch用法](duo-xian-cheng/mo-ni-bing-fa-countdownlatch-yong-fa.md)
 * [消息队列](xiao-xi-dui-lie.md)
   * [rabbitmq](xiao-xi-dui-lie/rabbitmq.md)
+* [大数据相关](da-shu-ju-xiang-guan.md)
+  * hive
 
