@@ -67,33 +67,84 @@ server.3=192.168.175.133:2888:3888
 最后，请注意每个服务器名称后面的两个端口号：“2888”和“3888”。对等体使用前端口连接到其他对等体。这样的连接是必要的，使得对等体可以进行通信，例如，以商定更新的顺序。更具体地说，一个ZooKeeper服务器使用这个端口来连接追随者到领导者。当新的领导者出现时，追随者使用此端口打开与领导者的TCP连接。因为默认领导选举也使用TCP，所以我们目前需要另外一个端口进行领导选举。这是服务器条目中的第二个端口。
 ```
 
-对于129和130，由于安装目录都是zookeeper-3.4.5所以dataDir和dataLogDir不需要改变，又由于在不同机器上所以clientPort也不需要改变
+对于131和132，由于安装目录都是zookeeper-3.4.5所以dataDir和dataLogDir不需要改变，又由于在不同机器上所以clientPort也不需要改变
 
-所以此时129和130的conf/zoo.cfg的内容与128一样即可。
+所以此时131和132的conf/zoo.cfg的内容与133一样即可。
 
- 
+防火墙开启端口
+
+```
+firewall-cmd --zone=public --add-port=2181/tcp --permanent
+[root@localhost zookeeper-3.4.11]# firewall-cmd --zone=public --add-port=2888/tcp --permanent
+success
+[root@localhost zookeeper-3.4.11]# firewall-cmd --zone=public --add-port=3888/tcp --permanent
+success
+[root@localhost zookeeper-3.4.11]# systemctl restart firewalld
+```
 
 #### 3.2 data/myid文件修改
 
-128 data/myid修改如下：
+131 data/myid修改如下：
 
 ```
-echo '1' > data/myid
+ 执行  echo '1' > data/myid
 ```
 
-129 data/myid修改如下：
+132 data/myid修改如下：
 
 ```
-echo '2' > data/myid
+ 执行  echo '2' > data/myid
 ```
 
-130 data/myid修改如下：
+133 data/myid修改如下：
 
 ```
-echo '3' > data/myid
+  执行  echo '3' > data/myid
 ```
 
 最后使用1.4的命令把三个zookeeper都启动即可，启动顺序随意没要求。
 
-#### 4.集群部署
+#### 4.查看是否成功
 
+131
+
+```
+[root@localhost zookeeper-3.4.11]# zkServer.sh status
+ZooKeeper JMX enabled by default
+Using config: /usr/local/zookeeper-3.4.11/bin/../conf/zoo.cfg
+Mode: follower
+```
+
+ 
+
+132
+
+```
+[root@localhost zookeeper-3.4.11]# zkServer.sh status
+ZooKeeper JMX enabled by default
+Using config: /usr/local/zookeeper-3.4.11/bin/../conf/zoo.cfg
+Mode: leader
+```
+
+
+
+133
+
+```
+[root@localhost zookeeper-3.4.11]# zkServer.sh status
+ZooKeeper JMX enabled by default
+Using config: /usr/local/zookeeper-3.4.11/bin/../conf/zoo.cfg
+Mode: follower
+```
+
+ 
+
+其实也可以查看启动过程
+
+```
+zkServer.sh start-foreground
+```
+
+ 
+
+PS:想要用客户端连接，需要把2181端口打开（防火墙）
