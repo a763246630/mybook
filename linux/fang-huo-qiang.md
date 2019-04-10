@@ -252,3 +252,22 @@ iptables是按照顺序读取规则
 
 ![](/assets/fhq4.png)
 
+（一） 
+（1）firewalld
+
+安装：
+[root@route ~]# yum install firewalld
+[root@route ~]# systemctl start firewalld
+[root@route ~]# systemctl status firewalld
+firewalld.service - firewalld - dynamic firewall daemon
+   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; enabled)
+   Active: active (running) since 日 2017-12-03 21:12:02 EST; 49s ago
+ Main PID: 2362 (firewalld)
+   CGroup: /system.slice/firewalld.service
+           └─2362 /usr/bin/python -Es /usr/sbin/firewalld --nofork --nopid
+
+12月 03 21:12:02 route systemd[1]: Started firewalld - dynamic firewall daemon.
+12月 03 21:12:45 route systemd[1]: Started firewalld - dynamic firewall daemon.
+[root@route ~]# systemctl enable firewalld
+[root@route ~]# firewall-cmd --state 
+
