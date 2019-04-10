@@ -1,6 +1,6 @@
 ### zookeeper安装配置
 
-下载链接：http://archive.apache.org/dist/zookeeper/
+下载链接：[http://archive.apache.org/dist/zookeeper/](http://archive.apache.org/dist/zookeeper/)
 
 ```
 tar -zxf zookeeper-3.4.5.tar.gz
@@ -16,8 +16,6 @@ mkdir data
 mkdir logs
 ```
 
- 
-
 在conf目录下新建zoo.cfg文件，写入以下内容保存：
 
 ```
@@ -26,8 +24,6 @@ dataDir=/zookeeper/zookeeper-3.4.5/data
 dataLogDir=/zookeeper/zookeeper-3.4.5/logs
 clientPort=2181
 ```
-
-
 
 #### 启动和停止
 
@@ -46,7 +42,7 @@ clientPort=2181
 
 将第1.1到1.3步中安装好的zookeeper打包复制到129和130上，并都解压到同样的目录下。
 
-####  
+#### 
 
 #### 3.1 conf/zoo.cfg文件修改
 
@@ -115,8 +111,6 @@ Using config: /usr/local/zookeeper-3.4.11/bin/../conf/zoo.cfg
 Mode: follower
 ```
 
- 
-
 132
 
 ```
@@ -125,8 +119,6 @@ ZooKeeper JMX enabled by default
 Using config: /usr/local/zookeeper-3.4.11/bin/../conf/zoo.cfg
 Mode: leader
 ```
-
-
 
 133
 
@@ -137,14 +129,11 @@ Using config: /usr/local/zookeeper-3.4.11/bin/../conf/zoo.cfg
 Mode: follower
 ```
 
- 
-
 其实也可以查看启动过程
 
 ```
 zkServer.sh start-foreground
 ```
 
- 
 
-PS:想要用客户端连接，需要把2181端口打开（防火墙）
+
