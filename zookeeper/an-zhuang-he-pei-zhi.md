@@ -52,8 +52,6 @@ clientPort=2181
 
 三个zookeeper的conf/zoo.cfg修改如下：
 
-[![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
-
 ```
 tickTime=2000
 dataDir=/usr/myapp/zookeeper-3.4.5/data
@@ -61,12 +59,13 @@ dataLogDir=/usr/myapp/zookeeper-3.4.5/logs
 clientPort=2181
 initLimit=5
 syncLimit=2
-server.1=192.168.220.128:2888:3888
-server.2=192.168.220.129:2888:3888
-server.3=192.168.220.130:2888:3888
-```
+server.1=192.168.175.131:2888:3888
+server.2=192.168.175.132:2888:3888
+server.3=192.168.175.133:2888:3888
+表单server.X的条目列出构成ZooKeeper服务的服务器。当服务器启动时，它通过查找数据目录中的文件myid来知道它是哪个服务器 。该文件包含服务器编号，以ASCII格式显示。
 
-[![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
+最后，请注意每个服务器名称后面的两个端口号：“2888”和“3888”。对等体使用前端口连接到其他对等体。这样的连接是必要的，使得对等体可以进行通信，例如，以商定更新的顺序。更具体地说，一个ZooKeeper服务器使用这个端口来连接追随者到领导者。当新的领导者出现时，追随者使用此端口打开与领导者的TCP连接。因为默认领导选举也使用TCP，所以我们目前需要另外一个端口进行领导选举。这是服务器条目中的第二个端口。
+```
 
 对于129和130，由于安装目录都是zookeeper-3.4.5所以dataDir和dataLogDir不需要改变，又由于在不同机器上所以clientPort也不需要改变
 
