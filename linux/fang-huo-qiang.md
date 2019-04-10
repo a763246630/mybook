@@ -10,7 +10,7 @@
 
 查看时通过 more /etc/sysconfig/iptables 命令查看
 
-
+![](/fhq1/import.png)
 
 如果想开放端口（如：8889）
 
@@ -179,7 +179,7 @@ iptables是按照顺序读取规则
 ③增加，插入，删除和替换规则
 
 ```
- iptables \[-t 表名\] 
+ iptables \[-t 表名\]
 ```
 
 &lt;
