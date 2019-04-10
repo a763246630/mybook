@@ -244,7 +244,7 @@ iptables是按照顺序读取规则
 2）TCP Wrappers：程序管理机制  
 关于数据包过滤机制有两个软件：firewalld与iptables
 
-![](/fhq3/import.png)
+![](/assets/fhq3.png)
 
 2 iptables通过控制端口来控制服务，而firewalld则是通过控制协议来控制端口  
 我们这里先对firewalld做实验。Iptables和firewalld只能开一个。  
