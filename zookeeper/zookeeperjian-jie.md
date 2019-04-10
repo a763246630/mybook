@@ -16,6 +16,27 @@ ZooKeeper是一个分布式的，开放源码的分布式应用程序协调服�
 
 顺序性：包括全局有序和偏序两种：全局有序是指如果在一台服务器上消息a在消息b前发布，则在所有Server上消息a都将在消息b前被发布；偏序是指如果一个消息b在消息a后被同一个发送者发布，a必将排在b前面。
 
+### 工作原理
+
+在zookeeper的集群中，各个节点共有下面3种角色和4种状态：
+
+角色：leader,follower,observer
+状态：leading,following,observing,looking
+
+Zookeeper的核心是原子广播，这个机制保证了各个Server之间的同步。实现这个机制的协议叫做Zab协议（ZooKeeper Atomic Broadcast protocol）。Zab协议有两种模式，它们分别是恢复模式（Recovery选主）和广播模式（Broadcast同步）。当服务启动或者在领导者崩溃后，Zab就进入了恢复模式，当领导者被选举出来，且大多数Server完成了和leader的状态同步以后，恢复模式就结束了。状态同步保证了leader和Server具有相同的系统状态。
+
+为了保证事务的顺序一致性，zookeeper采用了递增的事务id号（zxid）来标识事务。所有的提议（proposal）都在被提出的时候加上了zxid。实现中zxid是一个64位的数字，它高32位是epoch用来标识leader关系是否改变，每次一个leader被选出来，它都会有一个新的epoch，标识当前属于那个leader的统治时期。低32位用于递增计数。
+
+每个Server在工作过程中有4种状态：
+
+LOOKING：当前Server不知道leader是谁，正在搜寻。
+
+LEADING：当前Server即为选举出来的leader。
+
+FOLLOWING：leader已经选举出来，当前Server与之同步。
+
+OBSERVING：observer的行为在大多数情况下与follower完全一致，但是他们不参加选举和投票，而仅仅接受(observing)选举和投票的结果。
+
 ### ZooKeeper提供功能
 
 ###### 文件系统
