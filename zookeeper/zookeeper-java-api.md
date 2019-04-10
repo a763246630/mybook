@@ -21,10 +21,13 @@ CREATOR_ALL_ACL：创建该znode的连接拥有所有权限
 
 READ_ACL_UNSAFE：所有的客户端都可读
 
-自定义权限
+注意事项
+1.创建节点的时候一定要先判断节点是否存在，如果直接使用zkclient创建一个已经存在的节点，则会抛出异常。 
+2. 使用zkclient创建节点的时候，path描述的路径，预新增的最终节点之前的所有父节点都必须要存在，否则会抛出异常。所以根据自己需要做好处理。
 ```
 
 ```
+自定义权限
 ACL aclIp = new ACL(ZooDefs.Perms.READ,new Id("ip","127.0.0.1"));
                 ACL aclDigest = new ACL(ZooDefs.Perms.READ| ZooDefs.Perms.WRITE,
                         new Id("digest", DigestAuthenticationProvider.generateDigest("id:pass")));
