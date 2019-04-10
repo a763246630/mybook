@@ -10,7 +10,7 @@
 
 查看时通过 more /etc/sysconfig/iptables 命令查看
 
-![](/fhq1/import.png)
+![](/assets/fhq1.png)
 
 如果想开放端口（如：8889）
 
@@ -239,13 +239,16 @@ iptables是按照顺序读取规则
 
 禁止192.168.5.23上网
 
-防火墙是整个数据包进入主机前的第一道关卡。防火墙主要通过Netfilter与TCPwrappers两个机制来管理的。   
-1）Netfilter：数据包过滤机制   
-2）TCP Wrappers：程序管理机制   
+防火墙是整个数据包进入主机前的第一道关卡。防火墙主要通过Netfilter与TCPwrappers两个机制来管理的。  
+1）Netfilter：数据包过滤机制  
+2）TCP Wrappers：程序管理机制  
 关于数据包过滤机制有两个软件：firewalld与iptables
 
 ![](/fhq3/import.png)
 
-2 iptables通过控制端口来控制服务，而firewalld则是通过控制协议来控制端口 
-我们这里先对firewalld做实验。Iptables和firewalld只能开一个。 
+2 iptables通过控制端口来控制服务，而firewalld则是通过控制协议来控制端口   
+我们这里先对firewalld做实验。Iptables和firewalld只能开一个。   
 在学习之前先对iptables firewalld 内核之间的关系有一个了解。
+
+![](/assets/fhq4.png)
+
