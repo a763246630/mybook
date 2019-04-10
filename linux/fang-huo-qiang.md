@@ -20,7 +20,7 @@
 
 \#（3）保存 /etc/rc.d/init.d/iptables save
 
-![](https://images2015.cnblogs.com/blog/760116/201707/760116-20170718093507036-1220236244.png)
+![](/fhq2/import.png)
 
 注：如若不想修改iptables表，可以直接输入下面命令：
 
