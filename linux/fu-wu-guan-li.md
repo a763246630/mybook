@@ -4,6 +4,10 @@
 
 ```
 lsof -i:端口号 或 netstat -tunlp|grep 端口号
+安装lsof  
+yum install lsof   
+安装 netstat 
+yum install net-tools
 ```
 
 * 杀进程
