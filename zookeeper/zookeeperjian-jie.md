@@ -112,6 +112,8 @@ OBSERVING：observer的行为在大多数情况下与follower完全一致，但�
 Zookeeper节点部署越多，服务的可靠性越高，建议部署奇数个节点，因为zookeeper集群是以宕机个数过半才会让整个集群宕机的。
 
 需要给每个zookeeper 1G左右的内存，如果可能的话，最好有独立的磁盘，因为独立磁盘可以确保zookeeper是高性能的。如果你的集群负载很重，不要把zookeeper和RegionServer运行在同一台机器上面，就像DataNodes和TaskTrackers一样。
+
+集群配置最少三台其中有一台挂了才能选举，最少两台服务器存活才能正常访问。
 ```
 
 
