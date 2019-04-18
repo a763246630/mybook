@@ -81,3 +81,19 @@ OK，再试一下应该就好使了
 -A RH-Firewall-1-INPUT -m state --state NEW -m tcp -p tcp --dport 8080 -j ACCEPT
 ```
 
+```
+nohup命令及其输出文件  
+
+nohup ./start.sh &    默认输出到nohup.out文件
+
+nohup ./start.sh >output 2>&1 &  指定输出到output文件
+
+nohup /dev/null 2>&1
+ 1. 带&的命令行，即使terminal（终端）关闭，或者电脑死机程序依然运行（前提是你把程序递交到服务器上)； 
+ 2. 2>&1的意思 
+　　这个意思是把标准错误（2）重定向到标准输出中（1），而标准输出又导入文件output里面，所以结果是标准错误和标准输出都导入文件output里面了。 至于为什么需要将标准错误重定向到标准输出的原因，那就归结为标准错误没有缓冲区，而stdout有。这就会导致 >output 2>output 文件output被两次打开，而stdout和stderr将会竞争覆盖，这肯定不是我门想要的. 
+　　这就是为什么有人会写成： nohup ./command.sh >output 2>output出错的原因了  
+最后谈一下/dev/null文件的作用，这是一个无底洞，任何东西都可以定向到这里，但是却无法打开。 所以一般很大的stdou和stderr当你不关心的时候可以利用stdout和stderr定向到这里>./command.sh >/dev/null 2>&1 
+
+```
+
