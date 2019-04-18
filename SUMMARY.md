@@ -28,7 +28,7 @@
   * [配置和部署](redis/pei-zhi-he-bu-shu.md)
 * [IO](io.md)
   * [NIO](io/nio.md)
-  * BIO
+  * [BIO](io/bio.md)
   * AIO
 * [zookeeper](zookeeper.md)
   * [zookeeper简介](zookeeper/zookeeperjian-jie.md)
