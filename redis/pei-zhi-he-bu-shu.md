@@ -469,7 +469,7 @@ CLIEXEC=/redis/redis-5.0.4/src/redis-cli  //redis安装路径src
 修改完成后按 Esc ,再按 :wq + Enter(回车) 保存并退出
 
 PIDFILE=/var/run/redis_${REDISPORT}.pid
-CONF="/redis/redis-5.0.4/redis.conf"
+CONF="/redis/redis-5.0.4/redis.conf"  //修改成redis  redis.conf路径 
 
 
 启动redis
