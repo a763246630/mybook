@@ -434,3 +434,31 @@ activerehashing yes
 
 ![](/assets/redis21.png)
 
+2.复制redis配置文件(启动脚本需要用到配置文件内容,所以要复制)
+
+```
+//在/etc下新建redis文件夹
+[root@localhost /]# mkdir /etc/redis
+//把安装redis目录里面的redis.conf文件复制到/etc/redis/6379.conf里面,6379.conf是取的文件名称,启动脚本里面的变量会读取这个名称,所以要是redis的端口号改了,这里也要修改
+[root@localhost redis]# cp /redis/redis-3.2.4/redis.conf /etc/redis/6379.conf
+```
+
+3.复制redis启动脚本
+
+```
+#1.redis启动脚本一般在redis根目录的utils,如果不知道路径,可以先查看路径
+[root@localhost redis]# find / -name redis_init_script
+/usr/redis/redis-3.2.4/utils/redis_init_script
+#2.复制启动脚本到/etc/init.d/redis文件中
+[root@localhost redis]# cp /usr/redis/redis-3.2.4//utils/redis_init_script /etc/init.d/redis
+```
+
+4.修改启动脚本参数
+
+```
+[root@localhost redis]# vi /etc/init.d/redis
+//在/etc/init.d/redis 文件里的 !/bin/sh的下方添加
+#!/bin/sh
+# chkconfig: 2345 10 90  
+# description: Start and Stop redis 
+```
