@@ -22,19 +22,7 @@ make install  //编译成功后，进入src文件夹，执行make install进行R
 
 ```
 # Redis配置文件样例
-
-# Note on units: when memory size is needed, it is possible to specifiy
-# it in the usual form of 1k 5GB 4M and so forth:
-#
-# 1k => 1000 bytes
-# 1kb => 1024 bytes
-# 1m => 1000000 bytes
-# 1mb => 1024*1024 bytes
-# 1g => 1000000000 bytes
-# 1gb => 1024*1024*1024 bytes
-#
-# units are case insensitive so 1GB 1Gb 1gB are all the same.
-
+ 
 # Redis默认不是以守护进程的方式运行，可以通过该配置项修改，使用yes启用守护进程
 # 启用守护进程后，Redis会把pid写到一个pidfile中，在/var/run/redis.pid
 daemonize no
@@ -424,21 +412,7 @@ set-max-intset-entries 512
 zset-max-ziplist-entries 128
 zset-max-ziplist-value 64
 
-# Active rehashing uses 1 millisecond every 100 milliseconds of CPU time in
-# order to help rehashing the main Redis hash table (the one mapping top-level
-# keys to values). The hash table implementation redis uses (see dict.c)
-# performs a lazy rehashing: the more operation you run into an hash table
-# that is rhashing, the more rehashing "steps" are performed, so if the
-# server is idle the rehashing is never complete and some more memory is used
-# by the hash table.
-# 
-# The default is to use this millisecond 10 times every second in order to
-# active rehashing the main dictionaries, freeing memory when possible.
-#
-# If unsure:
-# use "activerehashing no" if you have hard latency requirements and it is
-# not a good thing in your environment that Redis can reply form time to time
-# to queries with 2 milliseconds delay.
+ 
 # 指定是否激活重置哈希，默认为开启
 activerehashing yes
 
@@ -448,4 +422,8 @@ activerehashing yes
 # include /path/to/local.conf
 # include /path/to/other.conf
 ```
+
+### redis 设置成服务 并且设置开机启动
+
+
 
