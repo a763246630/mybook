@@ -425,5 +425,10 @@ activerehashing yes
 
 ### redis 设置成服务 并且设置开机启动
 
+1.设置redis.conf中daemonize为yes,确保守护进程开启,也就是在后台可以运行.(设置为yes后,启动时好像没有redis的启动界面,不知道为什么)
 
+```
+#vi编辑redis安装目录里面的redis.conf文件
+[root@localhost /]# vi /usr/redis/redis-3.2.4/redis.conf
+```
 
