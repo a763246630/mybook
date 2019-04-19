@@ -434,7 +434,7 @@ activerehashing yes
 
 ![](/assets/redis21.png)
 
-2.复制redis配置文件(启动脚本需要用到配置文件内容,所以要复制)
+2.复制redis配置文件\(启动脚本需要用到配置文件内容,所以要复制\)
 
 ```
 //在/etc下新建redis文件夹
@@ -481,6 +481,7 @@ CONF="/redis/redis-5.0.4/redis.conf"  //修改成redis  redis.conf路径
 设为开机启动:chkconfig redis on
 
 设为开机关闭:chkconfig redis off
-
 ```
+
+
 
