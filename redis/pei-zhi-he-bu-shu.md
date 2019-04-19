@@ -22,7 +22,7 @@ make install  //编译成功后，进入src文件夹，执行make install进行R
 
 ```
 # Redis配置文件样例
- 
+
 # Redis默认不是以守护进程的方式运行，可以通过该配置项修改，使用yes启用守护进程
 # 启用守护进程后，Redis会把pid写到一个pidfile中，在/var/run/redis.pid
 daemonize no
@@ -412,7 +412,7 @@ set-max-intset-entries 512
 zset-max-ziplist-entries 128
 zset-max-ziplist-value 64
 
- 
+
 # 指定是否激活重置哈希，默认为开启
 activerehashing yes
 
@@ -425,10 +425,12 @@ activerehashing yes
 
 ### redis 设置成服务 并且设置开机启动
 
-1.设置redis.conf中daemonize为yes,确保守护进程开启,也就是在后台可以运行.(设置为yes后,启动时好像没有redis的启动界面,不知道为什么)
+1.设置redis.conf中daemonize为yes,确保守护进程开启,也就是在后台可以运行.\(设置为yes后,启动时好像没有redis的启动界面,不知道为什么\)
 
 ```
 #vi编辑redis安装目录里面的redis.conf文件
 [root@localhost /]# vi /usr/redis/redis-3.2.4/redis.conf
 ```
+
+![](/assets/redis21.png)
 
