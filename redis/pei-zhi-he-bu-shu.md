@@ -461,4 +461,26 @@ activerehashing yes
 #!/bin/sh
 # chkconfig: 2345 10 90  
 # description: Start and Stop redis 
+
+//继续修改 vi /etc/init.d/redis  
+REDISPORT=6379
+EXEC=/redis/redis-5.0.4/src/redis-server  //redis安装路径src
+CLIEXEC=/redis/redis-5.0.4/src/redis-cli  //redis安装路径src
+修改完成后按 Esc ,再按 :wq + Enter(回车) 保存并退出
+
+PIDFILE=/var/run/redis_${REDISPORT}.pid
+CONF="/redis/redis-5.0.4/redis.conf"
+
+
+启动redis
+
+打开redis命令:service redis start
+
+关闭redis命令:service redis stop
+
+设为开机启动:chkconfig redis on
+
+设为开机关闭:chkconfig redis off
+
 ```
+
