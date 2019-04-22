@@ -16,6 +16,7 @@
   * [服务管理](linux/fu-wu-guan-li.md)
   * [yum源修改](linux/yumyuan-xiu-gai.md)
   * [防火墙](linux/fang-huo-qiang.md)
+  * [shell脚本](linux/shelljiao-ben.md)
 * [git](git.md)
   * [1.1 安装和配置](git/11-an-zhuang-he-pei-zhi.md)
   * [1.2 常用命令](git/12-chang-yong-ming-ling.md)
