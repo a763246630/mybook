@@ -99,6 +99,8 @@ nohup /dev/null 2>&1
 
 ### 服务开机启动
 
+#### 一.、在/etc/rc.local文件中添加自启动命令
+
 ```
 执行命令： 编辑"/etc/rc.local"，添加你想开机运行的命令
 
@@ -107,5 +109,36 @@ nohup /dev/null 2>&1
 例如，每次开机时要执行一个hello.sh，这个脚本放在/usr下面，那就可以在"/etc/rc.local"中加一行"/usr/./hello.sh"，或者" cd /opt && ./hello.sh "
 
 注意，你的命令应该添加在：exit 0 之前
+```
+
+#### 二、在/etc/init.d目录下添加自启动脚本
+
+linux在“/etc/rc.d/init.d”下有很多的文件，每个文件都是可以看到内容的，其实都是一些shell脚本或者可执行二进制文件
+Linux开机的时候，会加载运行/etc/init.d目录下的程序，因此我们可以把想要自动运行的脚本放到这个目录下即可。系统服务的启动就是通过这种方式实现的。
+
+#### 三、把脚本注册为服务
+
+在/etc/init.d下新建示例脚本文件（startTest.sh），该脚本会启动/opt/test.sh。内容如下：
+
+```
+. /etc/init.d/functions
+start() {
+echo "Starting my process "
+cd /opt
+./test.sh
+}
+stop() {
+killall test.sh
+echo "Stoped"
+}
+```
+
+写了脚本文件之后事情还没有完，继续完成以下几个步骤：
+
+```
+chmod +x startTest　　　　　　　　 #增加执行权限
+chkconfig --add startTest 　　　 #把startTest添加到系统服务列表
+chkconfig startTest on 　　　　　 #设定startTest的开关（on/off）
+chkconfig --list startTest.sh   #就可以看到已经注册了startTest的服务
 ```
 
