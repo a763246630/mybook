@@ -1,4 +1,6 @@
-**linux ip addr 不显示ip问题**
+[TOC]
+
+### **linux ip addr 不显示ip问题**
 
 ```
 1.vi /etc/systemconfig/network-scripts/ifcfg-ens33
@@ -8,7 +10,7 @@
 3.systemctl restart network
 ```
 
-**yum源修改**
+### **yum源修改**
 
 ```
 方法一：使用wget 修改成阿里云的yum源
@@ -76,4 +78,52 @@ exit $RETVAL
 4、运行chkconfig --add mystart,把该服务添加到配置当中
 5、运行chkconfig --list mystart,可以查看该服务进程的状态
 ```
+
+### shutdown 命令
+
+```
+shutdown 参数说明:
+
+　　[-t] 在改变到其它runlevel之前﹐告诉init多久以后关机。
+
+　　[-r] 重启计算器。
+
+　　[-k] 并不真正关机﹐只是送警告信号给
+
+　　每位登录者〔login〕。
+
+　　[-h] 关机后关闭电源〔halt〕。
+
+　　[-n] 不用init﹐而是自己来关机。不鼓励使用这个选项﹐而且该选项所产生的后果往往不总是你所预期得到的。
+
+　　[-c] cancel current process取消目前正在执行的关机程序。所以这个选项当然没有时间参数﹐但是可以输入一个用来解释的讯息﹐而这信息将会送到每位使用者。
+
+　　[-f] 在重启计算器〔reboot〕时忽略fsck。
+
+　　[-F] 在重启计算器〔reboot〕时强迫fsck。
+
+　　[-time] 设定关机〔shutdown〕前的时间。
+
+　　**2.halt----最简单的关机命令**
+
+　　其实halt就是调用shutdown -h。halt执行时﹐杀死应用进程﹐执行sync系统调用﹐文件系统写操作完成后就会停止内核。
+
+　　参数说明:
+
+　　[-n] 防止sync系统调用﹐它用在用fsck修补根分区之后﹐以阻止内核用老版本的超级块〔superblock〕覆盖修补过的超级块。
+
+　　[-w] 并不是真正的重启或关机﹐只是写
+
+　　wtmp〔/var/log/wtmp〕纪录。
+
+　　[-d] 不写wtmp纪录〔已包含在选项[-n]中〕。
+
+　　[-f] 没有调用shutdown而强制关机或重启。
+
+　　[-i] 关机〔或重启〕前﹐关掉所有的网络接口。
+
+　　[-p] 该选项为缺省选项。就是关机时调用poweroff。
+```
+
+
 

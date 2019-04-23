@@ -1,3 +1,26 @@
+iptables 和 firewalls 两种安全策略
+
+防火墙会从上至下的顺序来读取配置的策略规则，在找到匹配项后就立即结束匹配工作并去执行匹配项中定义的行为（即放行或阻止）。如果在读取完所有的策略规则之后没有匹配项，就去执行默认的策略。一般而言，防火墙策略规则的设置有两种：一种是“通”（即放行），一种是“堵”（即阻止）。当防火墙的默认策略为拒绝时（堵），就要设置允许规则（通），否则谁都进不来；如果防火墙的默认策略为允许时，就要设置拒绝规则，否则谁都能进来，防火墙也就失去了防范的作用。
+
+iptables服务把用于处理或过滤流量的策略条目称之为规则，多条规则可以组成一个规则链，而规则链则依据数据包处理位置的不同进行分类，具体如下：
+
+> 在进行路由选择前处理数据包（PREROUTING）；
+>
+> 处理流入的数据包（INPUT）；
+>
+> 处理流出的数据包（OUTPUT）；
+>
+> 处理转发的数据包（FORWARD）；
+>
+> 在进行路由选择后处理数据包（POSTROUTING）
+>
+> 一般来说，从内网向外网发送的流量一般都是可控且良性的，因此我们使用最多的就是INPUT规则链，该规则链可以增大黑客人员从外网入侵内网的难度。
+
+1）Netfilter：数据包过滤机制 
+2）TCP Wrappers：程序管理机制
+
+iptables 通过ip和端口限制访问
+
 查看端口是否可访问：telnet ip 端口号 （如本机的35465：telnet localhost 35465）
 
 开放的端口位于/etc/sysconfig/iptables中
@@ -26,8 +49,6 @@
 
 \#**iptables -I INPUT -p tcp --dport 8889 -j ACCEPT**
 
-附：参考自：[http://www.cnblogs.com/alimac/p/5848372.html](http://www.cnblogs.com/alimac/p/5848372.html)
-
 若/etc/sysconfig/iptables不存在，
 
 原因：在新安装的[linux](http://lib.csdn.net/base/linux)系统中，防火墙默认是被禁掉的，一般也没有配置过任何防火墙的策略，所有不存在/etc/sysconfig/iptables文件。
@@ -35,80 +56,7 @@
 解决：
 
 1. 在控制台使用iptables命令随便写一条防火墙规则，如：iptables -P OUTPUT ACCEPT
-2. 使用service iptables save进行保存，默认就保存到了/etc/sysconfig目录下的iptables文件中
-
-[Linux防火墙iptables学习笔记](http://club.topsage.com/thread-2337852-1-9.html)
-
-一、概要
-
-1、防火墙分类
-
-```
-  ①包过滤防火墙\(pack filtering\)在网络层对数据包进行选择过滤，采用访问控制列表\(Access control table－ACL\)检查数据流的源地址，目的地址，源和目的端口，IP等信息。
-
-
-
-
-  ②代理服务器型防火墙
-```
-
-2、iptables基础
-
-```
-  ①规则\(rules\)：网络管理员预定义的条件
-
-
-
-
-  ②链\(chains\)： 是数据包传播的路径
-
-
-
-
-  ③表\(tables\)：内置3个表filter表，nat表，mangle表分别用于实现包过滤网络地址转换和包重构的功能
-
-
-
-
-  ④filter表是系统默认的，INPUT表\(进入的包\)，FORWORD\(转发的包\)，OUTPUT\(处理本地生成的包\)，filter表只能对包进行授受和丢弃的操作。
-
-
-
-
-  ⑤nat表\(网络地址转换\)，PREROUTING\(修改即将到来的数据包\)，OUTPUT\(修改在路由之前本地生成的数据包\)，POSTROUTING\(修改即将出去的数据包\)
-
-
-
-
-  ⑥mangle表，PREROUTING，OUTPUT，FORWORD，POSTROUTING，INPUT
-```
-
-3、其它
-
-iptables是按照顺序读取规则
-
-防火墙规则的配置建议
-
-```
-Ⅰ 规则力求简单
-
-
-
-
-Ⅱ 规则的顺序很重要
-
-
-
-
-Ⅲ 尽量优化规则
-
-
-
-
-Ⅳ 做好笔记
-```
-
-二、配置
+2. 使用service iptables save进行保存，默认就保存到了/etc/sysconfig目录下的iptables文件中 
 
 1、iptables命令格式
 
