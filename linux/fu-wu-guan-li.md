@@ -141,8 +141,8 @@ esac
 
 ```
 chmod +x zkService　　　　　　　　 #增加执行权限 
-chkconfig --add zkService 　　　 #把startTest添加到系统服务列表
-chkconfig zkService on 　　　　　 #设定startTest的开关（on/off）
+chkconfig --add zkService 　　　 #把服务添加到系统服务列表
+chkconfig zkService on 　　　　　 #设定服务的开关（on/off）
 chkconfig --list myStart.s   #就可以看到已经注册了startTest的服务删除服务
 chkconfig  --del myStarts.sh #删除服务
 chkconfig --list                #列出所有的系统服务 
