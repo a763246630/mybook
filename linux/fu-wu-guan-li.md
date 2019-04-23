@@ -118,27 +118,39 @@ Linux开机的时候，会加载运行/etc/init.d目录下的程序，因此我�
 
 #### 三、把脚本注册为服务
 
-在/etc/init.d下新建示例脚本文件（startTest.sh），该脚本会启动/opt/test.sh。内容如下：
+注册zookeeper 为服务，进入cd /etc/rc.d/init.d/，新建zkService内容如下：
 
 ```
-. /etc/init.d/functions
-start() {
-echo "Starting my process "
-cd /opt
-./test.sh
-}
-stop() {
-killall test.sh
-echo "Stoped"
-}
+#!/bin/sh
+//是指此脚本使用/bin/sh来解释执行
+#chkconfig: 2345 20 80
+//2345表示系统运行级别是2，3，4或者5时都启动此服务，20，是启动的优先级，80是关闭的优先级，如果启动优先级配置的数太小时如0时，则有可能启动不成功，因为此时可能其依赖的网络服务还没有启动，从而导致自启动失败。
+#description:zookeeper
+#processname:zookeeper
+export JAVA_HOME=/java/jdk1.8/
+case $1 in
+        start) su root /zookeeper/zookeeper-3.4.9/bin/zkServer.sh start;;
+        stop) su root /zookeeper/zookeeper-3.4.9/bin/zkServer.sh stop;;
+        status) su root /zookeeper/zookeeper-3.4.9/bin/zkServer.sh status;;
+        restart) su root /zookeeper/zookeeper-3.4.9/bin/zkServer.sh restart;;
+        *) echo "require start|stop|status|restart";;
+esac
 ```
 
 写了脚本文件之后事情还没有完，继续完成以下几个步骤：
 
 ```
-chmod +x startTest　　　　　　　　 #增加执行权限
-chkconfig --add startTest 　　　 #把startTest添加到系统服务列表
-chkconfig startTest on 　　　　　 #设定startTest的开关（on/off）
-chkconfig --list startTest.sh   #就可以看到已经注册了startTest的服务
+chmod +x zkService　　　　　　　　 #增加执行权限 
+chkconfig --add zkService 　　　 #把startTest添加到系统服务列表
+chkconfig zkService on 　　　　　 #设定startTest的开关（on/off）
+chkconfig --list myStart.s   #就可以看到已经注册了startTest的服务删除服务
+chkconfig  --del myStarts.sh #删除服务
+chkconfig --list                #列出所有的系统服务 
+chkconfig --add httpd           #增加httpd服务 
+chkconfig --del httpd           #删除httpd服务 
+chkconfig --level httpd 2345 on #设置httpd在运行级别为2、3、4、5的情况下都是on（开启）的状态
+chkconfig --list mysqld         #列出mysqld服务设置情况 
+chkconfig --level 35 mysqld on  #设定mysqld在等级3和5为开机运行服务，--level 35表示操作只在等级3和5执行，on表示启动，off表示关闭 
+chkconfig mysqld on             #设定mysqld在各等级为on，“各等级”包括2、3、4、5等级 
 ```
 
