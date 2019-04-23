@@ -85,6 +85,8 @@ exit $RETVAL
 shutdown 参数说明:
 
 　　[-t] 在改变到其它runlevel之前﹐告诉init多久以后关机。
+　
+    shutdown -r now 
 
 　　[-r] 重启计算器。
 
@@ -123,6 +125,11 @@ shutdown 参数说明:
 　　[-i] 关机〔或重启〕前﹐关掉所有的网络接口。
 
 　　[-p] 该选项为缺省选项。就是关机时调用poweroff。
+　　
+ halt   立刻关机
+ poweroff 立刻关机
+ shutdown -h now 立刻关机(root用户使用)
+ shutdown -h 10 10分钟后自动关机
 ```
 
 
