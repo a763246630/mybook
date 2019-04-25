@@ -128,16 +128,11 @@ dir ./
 slave-serve-stale-data yes
 
 # Health Check
-# 向Master发送ping的间隔时间单位秒
+# 向Master发送ping 时间间隔
 # repl-ping-slave-period 10
 
-# The following option sets a timeout for both Bulk transfer I/O timeout and
-# master data or ping response timeout. The default value is 60 seconds.
-#
-# It is important to make sure that this value is greater than the value
-# specified for repl-ping-slave-period otherwise a timeout will be detected
-# every time there is low traffic between the master and the slave.
-#
+# 主库传输大量数据或者ping相应的超时时间 默认 60秒
+# repl-timeout必须大于repl-ping-slave-period
 # repl-timeout 60
 
 ################################## SECURITY ###################################
