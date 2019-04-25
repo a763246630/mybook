@@ -105,9 +105,11 @@ dbfilename dump.rdb
 # 注意，这里只能指定一个目录，不能指定文件名
 dir ./
 
-################################# REPLICATION #################################
+################################# REPLICATION（复制，冗余） ############################
 
-# 主从复制。使用slaveof从 Redis服务器复制一个Redis实例。注意，该配置仅限于当前slave有效 
+# 主从复制。使用slaveof从 Redis服务器复制一个Redis实例。注意，该配置仅限于当前slave有效
+# so for example it is possible to configure the slave to save the DB with a
+# different interval, or to listen to another port, and so on.
 # 设置当本机为slav服务时，设置master服务的ip地址及端口，在Redis启动时，它会自动从master进行数据同步
 # slaveof <masterip> <masterport>
 
@@ -116,23 +118,17 @@ dir ./
 # 下文的“requirepass”配置项可以指定密码
 # masterauth <master-password>
 
-# When a slave lost the connection with the master, or when the replication
-# is still in progress, the slave can act in two different ways:
+#当slave丢失与master的连接时，或者slave仍然在于master进行数据同步时（还没有与master保持一致），#slave可以有两种方式来响应客户端请求：
 #
-# 1) if slave-serve-stale-data is set to 'yes' (the default) the slave will
-#    still reply to client requests, possibly with out of data data, or the
-#    data set may just be empty if this is the first synchronization.
+# 1) 如果 slave-serve-stale-data 设置成 'yes' (the default) slave会仍然响应客户端请求,此时可能会有问题。
 #
-# 2) if slave-serve-stale data is set to 'no' the slave will reply with
-#    an error "SYNC with master in progress" to all the kind of commands
-#    but to INFO and SLAVEOF.
+# 2) 如果 slave-serve-stale data设置成  'no'  slave会返回"SYNC with master in progress"这样的错误信息。 但 INFO 和SLAVEOF命令除外。
+#  but to INFO and SLAVEOF.
 #
 slave-serve-stale-data yes
 
-# Slaves send PINGs to server in a predefined interval. It's possible to change
-# this interval with the repl_ping_slave_period option. The default value is 10
-# seconds.
-#
+# Health Check
+# 向Master发送ping的间隔时间单位秒
 # repl-ping-slave-period 10
 
 # The following option sets a timeout for both Bulk transfer I/O timeout and
