@@ -38,9 +38,7 @@ port 6379
 # 你可以绑定单一接口，如果没有绑定，所有接口都会监听到来的连接
 # bind 127.0.0.1
 
-# Specify the path for the unix socket that will be used to listen for
-# incoming connections. There is no default, so Redis will not listen
-# on a unix socket when not specified.
+# 可以使用unix socket连接redis，这样就可以减少tcp的连接数，建立TCP需要三次握手才能建立，而断开连接则# 需要四次握手，效率低下，于是果断修改成unix socket连接redis
 #
 # unixsocket /tmp/redis.sock
 # unixsocketperm 755
