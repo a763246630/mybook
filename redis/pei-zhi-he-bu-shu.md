@@ -90,7 +90,7 @@ databases 16
 
 save 900 1
 save 300 10
-save 60 10000	
+save 60 10000    
 
 // 后台备份进程出错时,主进程停不停止写入?  主进程不停止 容易造成数据不一致
 stop-writes-on-bgsave-error
@@ -192,7 +192,7 @@ slave-serve-stale-data yes
 
 ############################## APPEND ONLY MODE ###############################
 
- 
+
 # 指定是否在每次更新操作后进行日志记录，Redis在默认情况下是异步的把数据写入磁盘，如果不开启，可能会在断电时导致一段时间内的数据丢失。 
 # 开启append only模式之后，redis会把所接收到的每一次写操作请求都追加到appendonly.aof文件中，当#redis重新启动时，会从该文件恢复出之前的状态。
 # 但是这样会造成appendonly.aof文件过大，所以redis还支持了BGREWRITEAOF指令，对appendonly.aof 进# # 行重新整理。
@@ -223,7 +223,7 @@ no-appendfsync-on-rewrite no
 # 它是这样工作的：Redis会记住上次进行些日志后文件的大小(如果从开机以来还没进行过重写，那日子大小在开机##的时候确定)
 # 基础大小会同现在的大小进行比较。如果现在的大小比基础大小大制定的百分比，重写功能将启动
 # 同时需要指定一个最小大小用于AOF重写，这个用于阻止即使文件很小但是增长幅度很大也去重写AOF文件的情况
-# 设置 percentage  指当前aof文件比上次重写的增长比例大小	
+# 设置 percentage  指当前aof文件比上次重写的增长比例大小    
 auto-aof-rewrite-percentage 100
 #aof文件重写最小的文件大小，即最开始aof文件必须要达到这个文件时才触发，后面的每次重写就不会根据这个变量#了(根据上一次重写完成之后的大小).此变量仅初始化启动redis有效.如果是redis恢复时，则lastSize等于初始#aof文件大小.
 auto-aof-rewrite-min-size 64mb
@@ -264,7 +264,7 @@ vm-enabled no
 # 虚拟内存文件路径，默认值为/tmp/redis.swap，不可多个Redis实例共享 
 vm-swap-file /tmp/redis.swap
 
- 
+
 # 将所有大于vm-max-memory的数据存入虚拟内存，无论vm-max-memory设置多少，所有索引数据都是内存存储的（Redis的索引数据就是keys）
 # 也就是说当vm-max-memory设置为0的时候，其实是所有value都存在于磁盘。默认值为0
 vm-max-memory 0
@@ -275,13 +275,13 @@ vm-page-size 32
 
 # 设置swap文件中的page数量由于页表（一种表示页面空闲或使用的bitmap）是存放在内存中的，在磁盘上每8个pages将消耗1byte的内存 
 vm-pages 134217728
- 
+
 # 设置访问swap文件的I/O线程数，最后不要超过机器的核数，如果设置为0，那么所有对swap文件的操作都是串行的，可能会造成比较长时间的延迟，默认值为4
 vm-max-threads 4
 
 ############################### ADVANCED CONFIG ###############################
 
- 
+
 # 当散列的元素的键和值都小于64字节并且键值对的数量小于512时，使用压缩列表，反之使用hashtable
 hash-max-zipmap-entries 512#配置元素个数最多512个
 hash-max-zipmap-value 64#配置value最大为64字节
