@@ -162,83 +162,45 @@ slave-serve-stale-data yes
 # 如果设置maxclients 0，表示不作限制。当客户端连接数到达限制时，Redis会关闭新的连接并向客户端返回max Number of clients reached错误信息
 # maxclients 128
 
-# Don't use more memory than the specified amount of bytes.
-# When the memory limit is reached Redis will try to remove keys with an
-# EXPIRE set. It will try to start freeing keys that are going to expire
-# in little time and preserve keys with a longer time to live.
-# Redis will also try to remove objects from free lists if possible.
-#
-# If all this fails, Redis will start to reply with errors to commands
-# that will use more memory, like SET, LPUSH, and so on, and will continue
-# to reply to most read-only commands like GET.
-#
-# WARNING: maxmemory can be a good idea mainly if you want to use Redis as a
-# 'state' server or cache, not as a real DB. When Redis is used as a real
-# database the memory usage will grow over the weeks, it will be obvious if
-# it is going to use too much memory in the long run, and you'll have the time
-# to upgrade. With maxmemory after the limit is reached you'll start to get
-# errors for write operations, and this may even lead to DB inconsistency.
 # 指定Redis最大内存限制，Redis在启动时会把数据加载到内存中，达到最大内存后，Redis会先尝试清除已到期或即将到期的Key，
 # 当此方法处理后，仍然到达最大内存设置，将无法再进行写入操作，但仍然可以进行读取操作。
 # Redis新的vm机制，会把Key存放内存，Value会存放在swap区
 # maxmemory <bytes>
 
-# MAXMEMORY POLICY: how Redis will select what to remove when maxmemory
-# is reached? You can select among five behavior:
+#内存清理策略：如果达到了maxmemory，你可以采取如下动作：
+# volatile-lru -> 使用LRU算法来删除过期的set
+# allkeys-lru -> 删除任何遵循LRU算法的key
+# volatile-random ->随机地删除过期set中的key
+# allkeys->random -> 随机地删除一个key
+# volatile-ttl -> 删除最近即将过期的key（the nearest expire time (minor TTL)）
+# noeviction -> 根本不过期，写操作直接报错
 # 
-# volatile-lru -> remove the key with an expire set using an LRU algorithm
-# allkeys-lru -> remove any key accordingly to the LRU algorithm
-# volatile-random -> remove a random key with an expire set
-# allkeys->random -> remove a random key, any key
-# volatile-ttl -> remove the key with the nearest expire time (minor TTL)
-# noeviction -> don't expire at all, just return an error on write operations
-# 
-# Note: with all the kind of policies, Redis will return an error on write
-#       operations, when there are not suitable keys for eviction.
-#
-#       At the date of writing this commands are: set setnx setex append
-#       incr decr rpush lpush rpushx lpushx linsert lset rpoplpush sadd
-#       sinter sinterstore sunion sunionstore sdiff sdiffstore zadd zincrby
-#       zunionstore zinterstore hset hsetnx hmset hincrby incrby decrby
-#       getset mset msetnx exec sort
-#
-# The default is:
+# 默认策略:
 #
 # maxmemory-policy volatile-lru
 
-# LRU and minimal TTL algorithms are not precise algorithms but approximated
-# algorithms (in order to save memory), so you can select as well the sample
-# size to check. For instance for default Redis will check three keys and
-# pick the one that was used less recently, you can change the sample size
-# using the following configuration directive.
-#
+# 对于处理redis内存来说，LRU和minor TTL算法不是精确的，而是近似的（估计的）算法。所以我们会检查某些样#本来达到内存检查的目的。默认的样本数是3，你可以修改它。 
+#Redis默认的灰选择3个样本进行检测，你可以通过maxmemory-samples进行设置
 # maxmemory-samples 3
 
 ############################## APPEND ONLY MODE ###############################
 
+ 
+# 指定是否在每次更新操作后进行日志记录，Redis在默认情况下是异步的把数据写入磁盘，如果不开启，可能会在断电时导致一段时间内的数据丢失。 
+# 开启append only模式之后，redis会把所接收到的每一次写操作请求都追加到appendonly.aof文件中，当#redis重新启动时，会从该文件恢复出之前的状态。
+# 但是这样会造成appendonly.aof文件过大，所以redis还支持了BGREWRITEAOF指令，对appendonly.aof 进# # 行重新整理。
 # 
-# Note that you can have both the async dumps and the append only file if you
-# like (you have to comment the "save" statements above to disable the dumps).
-# Still if append only mode is enabled Redis will load the data from the
-# log file at startup ignoring the dump.rdb file.
-# 指定是否在每次更新操作后进行日志记录，Redis在默认情况下是异步的把数据写入磁盘，如果不开启，可能会在断电时导致一段时间内的数据丢失。
-# 因为redis本身同步数据文件是按上面save条件来同步的，所以有的数据会在一段时间内只存在于内存中。默认为no
-# IMPORTANT: Check the BGREWRITEAOF to check how to rewrite the append
-# log file in background when it gets too big.
-
+# 你可以同时开启asynchronous dumps 和 AOF
 appendonly no
 
 # 指定更新日志文件名，默认为appendonly.aof
 # appendfilename appendonly.aof
 
-# The fsync() call tells the Operating System to actually write data on disk
-# instead to wait for more data in the output buffer. Some OS will really flush 
-# data on disk, some other OS will just try to do it ASAP.
-
-# 指定更新日志条件，共有3个可选值：
-# no:表示等操作系统进行数据缓存同步到磁盘（快）
-# always:表示每次更新操作后手动调用fsync()将数据写到磁盘（慢，安全）
-# everysec:表示每秒同步一次（折衷，默认值）
+# Redis支持三种同步AOF文件的策略:
+#
+# no: 不进行同步，系统去操作 . Faster.
+# always: 表示每次有写操作都进行同步. Slow, Safest.
+# everysec: 表示对写操作进行累积，每秒同步一次. 
 
 appendfsync everysec
 # appendfsync no
