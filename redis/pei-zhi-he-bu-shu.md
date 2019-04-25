@@ -72,14 +72,14 @@ logfile stdout
 # dbid是从0到‘databases’-1的数目
 databases 16
 
-################################ SNAPSHOTTING  #################################
+################################ SNAPSHOTTING（快照）#################################
+# Rdb快照 rdb的工作原理:    实际上就是内存快照的形式。
+# 每隔N分钟或N次写操作后, 从内存dump数据形成rdb文件,压缩放在备份目录
 # 指定在多长时间内，有多少次更新操作，就将数据同步到数据文件，可以多个条件配合
 # Save the DB on disk:
 #
 #   save <seconds> <changes>
-#
-#   Will save the DB if both the given number of seconds and the given
-#   number of write operations against the DB occurred.
+# 
 #
 #   满足以下条件将会同步数据:
 #   900秒（15分钟）内有1个更改
@@ -89,7 +89,13 @@ databases 16
 
 save 900 1
 save 300 10
-save 60 10000
+save 60 10000	
+
+// 后台备份进程出错时,主进程停不停止写入?  主进程不停止 容易造成数据不一致
+stop-writes-on-bgsave-error
+
+// 导入rbd恢复时数据时,要不要检验rdb的完整性 验证版本是不是一致
+Rdbchecksum yes   
 
 # 指定存储至本地数据库时是否压缩数据，默认为yes，Redis采用LZF压缩，如果为了节省CPU时间，可以关闭该选项，但会导致数据库文件变的巨大
 rdbcompression yes
