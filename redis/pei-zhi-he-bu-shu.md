@@ -223,26 +223,10 @@ auto-aof-rewrite-min-size 64mb
 
 ################################## SLOW LOG ###################################
 
-# The Redis Slow Log is a system to log queries that exceeded a specified
-# execution time. The execution time does not include the I/O operations
-# like talking with the client, sending the reply and so forth,
-# but just the time needed to actually execute the command (this is the only
-# stage of command execution where the thread is blocked and can not serve
-# other requests in the meantime).
-# 
-# You can configure the slow log with two parameters: one tells Redis
-# what is the execution time, in microseconds, to exceed in order for the
-# command to get logged, and the other parameter is the length of the
-# slow log. When a new command is logged the oldest one is removed from the
-# queue of logged commands.
-
-# The following time is expressed in microseconds, so 1000000 is equivalent
-# to one second. Note that a negative number disables the slow log, while
-# a value of zero forces the logging of every command.
+# 查询慢于设置的值会记录日志 单位为微秒
 slowlog-log-slower-than 10000
 
-# There is no limit to this length. Just be aware that it will consume memory.
-# You can reclaim memory used by the slow log with SLOWLOG RESET.
+# 表示慢查询最大的条数，当slowlog超过设定的最大值后，会将最早的slowlog删除，是个FIFO队列
 slowlog-max-len 1024
 
 ################################ VIRTUAL MEMORY ###############################
@@ -270,16 +254,10 @@ vm-enabled no
 # swap file is already in use.
 #
 # Redis交换文件最好的存储是SSD（固态硬盘）
-# 虚拟内存文件路径，默认值为/tmp/redis.swap，不可多个Redis实例共享
-# *** WARNING *** if you are using a shared hosting the default of putting
-# the swap file under /tmp is not secure. Create a dir with access granted
-# only to Redis user and configure Redis to create the swap file there.
+# 虚拟内存文件路径，默认值为/tmp/redis.swap，不可多个Redis实例共享 
 vm-swap-file /tmp/redis.swap
 
-# With vm-max-memory 0 the system will swap everything it can. Not a good
-# default, just specify the max amount of RAM you can in bytes, but it's
-# better to leave some margin. For instance specify an amount of RAM
-# that's more or less between 60 and 80% of your free RAM.
+ 
 # 将所有大于vm-max-memory的数据存入虚拟内存，无论vm-max-memory设置多少，所有索引数据都是内存存储的（Redis的索引数据就是keys）
 # 也就是说当vm-max-memory设置为0的时候，其实是所有value都存在于磁盘。默认值为0
 vm-max-memory 0
