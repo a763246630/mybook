@@ -135,27 +135,24 @@ slave-serve-stale-data yes
 # repl-timeout必须大于repl-ping-slave-period
 # repl-timeout 60
 
-################################## SECURITY ###################################
+################################## SECURITY 安全##############################
 
-# Warning: since Redis is pretty fast an outside user can try up to
-# 150k passwords per second against a good box. This means that you should
-# use a very strong password otherwise it will be very easy to break.
+#设置客户端连接后进行任何其他指定前需要使用的密码。
+# 
+#警告：因为redis速度相当快，所以在一台比较好的服务器下，一个外部的用户可以在一秒钟进行150K次的密码尝
+#试，这意味着你需要指定非常非常强大的密码来防止暴力破解
+#
 # 设置Redis连接密码，如果配置了连接密码，客户端在连接Redis时需要通过auth <password>命令提供密码，默认关闭
 # requirepass foobared
 
-# Command renaming.
+# 命令重命名.
 #
-# It is possilbe to change the name of dangerous commands in a shared
-# environment. For instance the CONFIG command may be renamed into something
-# of hard to guess so that it will be still available for internal-use
-# tools but not available for general clients.
+# 在一个共享环境下可以重命名相对危险的命令。比如把CONFIG重名为一个不容易猜测的字符。
 #
-# Example:
-#
+#举例:
 # rename-command CONFIG b840fc02d524045429941cc15f59e41cb7be6c52
-#
-# It is also possilbe to completely kill a command renaming it into
-# an empty string:
+# 
+如果想删除一个命令，直接把它重命名为一个空字符""即可，如下：
 #
 # rename-command CONFIG ""
 
