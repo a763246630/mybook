@@ -201,48 +201,24 @@ appendonly no
 # no: 不进行同步，系统去操作 . Faster.
 # always: 表示每次有写操作都进行同步. Slow, Safest.
 # everysec: 表示对写操作进行累积，每秒同步一次. 
-
 appendfsync everysec
-# appendfsync no
 
-# When the AOF fsync policy is set to always or everysec, and a background
-# saving process (a background save or AOF log background rewriting) is
-# performing a lot of I/O against the disk, in some Linux configurations
-# Redis may block too long on the fsync() call. Note that there is no fix for
-# this currently, as even performing fsync in a different thread will block
-# our synchronous write(2) call.
+# AOF策略设置为always或者everysec时，后台处理进程(后台保存或者AOF日志重写)会执行大量的I/O操作
+# 在某些Linux配置中会阻止过长的fsync()请求。注意现在没有任何修复，即使fsync在另外一个线程进行处理
 #
-# In order to mitigate this problem it's possible to use the following option
-# that will prevent fsync() from being called in the main process while a
-# BGSAVE or BGREWRITEAOF is in progress.
-#
-# This means that while another child is saving the durability of Redis is
-# the same as "appendfsync none", that in pratical terms means that it is
-# possible to lost up to 30 seconds of log in the worst scenario (with the
-# default Linux settings).
-# 
-# If you have latency problems turn this to "yes". Otherwise leave it as
-# "no" that is the safest pick from the point of view of durability.
+# 为了减缓这个问题，可以设置下面这个参数no-appendfsync-on-rewrite
+# 如果该参数设置为no，是最安全的方式，不会丢失数据，但是要忍受阻塞的问题
 no-appendfsync-on-rewrite no
 
-# Automatic rewrite of the append only file.
-# Redis is able to automatically rewrite the log file implicitly calling
-# BGREWRITEAOF when the AOF log size will growth by the specified percentage.
-# 
-# This is how it works: Redis remembers the size of the AOF file after the
-# latest rewrite (or if no rewrite happened since the restart, the size of
-# the AOF at startup is used).
+# AOF 自动重写
+# 当AOF文件增长到一定大小的时候Redis能够调用 BGREWRITEAOF 对日志文件进行重写
 #
-# This base size is compared to the current size. If the current size is
-# bigger than the specified percentage, the rewrite is triggered. Also
-# you need to specify a minimal size for the AOF file to be rewritten, this
-# is useful to avoid rewriting the AOF file even if the percentage increase
-# is reached but it is still pretty small.
-#
-# Specify a precentage of zero in order to disable the automatic AOF
-# rewrite feature.
-
+# 它是这样工作的：Redis会记住上次进行些日志后文件的大小(如果从开机以来还没进行过重写，那日子大小在开机##的时候确定)
+# 基础大小会同现在的大小进行比较。如果现在的大小比基础大小大制定的百分比，重写功能将启动
+# 同时需要指定一个最小大小用于AOF重写，这个用于阻止即使文件很小但是增长幅度很大也去重写AOF文件的情况
+# 设置 percentage  指当前aof文件比上次重写的增长比例大小	
 auto-aof-rewrite-percentage 100
+#aof文件重写最小的文件大小，即最开始aof文件必须要达到这个文件时才触发，后面的每次重写就不会根据这个变量#了(根据上一次重写完成之后的大小).此变量仅初始化启动redis有效.如果是redis恢复时，则lastSize等于初始#aof文件大小.
 auto-aof-rewrite-min-size 64mb
 
 ################################## SLOW LOG ###################################
@@ -312,51 +288,27 @@ vm-max-memory 0
 # 建议如果存储很多小对象，page大小最后设置为32或64bytes；如果存储很大的对象，则可以使用更大的page，如果不确定，就使用默认值
 vm-page-size 32
 
-# 设置swap文件中的page数量由于页表（一种表示页面空闲或使用的bitmap）是存放在内存中的，在磁盘上每8个pages将消耗1byte的内存
-# swap空间总容量为 vm-page-size * vm-pages
-#
-# With the default of 32-bytes memory pages and 134217728 pages Redis will
-# use a 4 GB swap file, that will use 16 MB of RAM for the page table.
-#
-# It's better to use the smallest acceptable value for your application,
-# but the default is large in order to work in most conditions.
+# 设置swap文件中的page数量由于页表（一种表示页面空闲或使用的bitmap）是存放在内存中的，在磁盘上每8个pages将消耗1byte的内存 
 vm-pages 134217728
-
-# Max number of VM I/O threads running at the same time.
-# This threads are used to read/write data from/to swap file, since they
-# also encode and decode objects from disk to memory or the reverse, a bigger
-# number of threads can help with big objects even if they can't help with
-# I/O itself as the physical device may not be able to couple with many
-# reads/writes operations at the same time.
+ 
 # 设置访问swap文件的I/O线程数，最后不要超过机器的核数，如果设置为0，那么所有对swap文件的操作都是串行的，可能会造成比较长时间的延迟，默认值为4
 vm-max-threads 4
 
 ############################### ADVANCED CONFIG ###############################
 
-# Hashes are encoded in a special way (much more memory efficient) when they
-# have at max a given numer of elements, and the biggest element does not
-# exceed a given threshold. You can configure this limits with the following
-# configuration directives.
-# 指定在超过一定的数量或者最大的元素超过某一临界值时，采用一种特殊的哈希算法
-hash-max-zipmap-entries 512
-hash-max-zipmap-value 64
+ 
+# 当散列的元素的键和值都小于64字节并且键值对的数量小于512时，使用压缩列表，反之使用hashtable
+hash-max-zipmap-entries 512#配置元素个数最多512个
+hash-max-zipmap-value 64#配置value最大为64字节
 
-# Similarly to hashes, small lists are also encoded in a special way in order
-# to save a lot of space. The special representation is only used when
-# you are under the following limits:
-list-max-ziplist-entries 512
-list-max-ziplist-value 64
+# 当列表的元素长度都小于64字节并且列表元素数量小于512时，使用压缩列表，反之使用linkedlist
+list-max-ziplist-entries 512#配置元素个数最多512个
+list-max-ziplist-value 64#配置value最大为64字节
 
-# Sets have a special encoding in just one case: when a set is composed
-# of just strings that happens to be integers in radix 10 in the range
-# of 64 bit signed integers.
-# The following configuration setting sets the limit in the size of the
-# set in order to use this special memory saving encoding.
+# 只要集合存储的整数数量没有超过512，Redis就会使用整数集合表示以减少数据的体积。.
 set-max-intset-entries 512
 
-# Similarly to hashes and lists, sorted sets are also specially encoded in
-# order to save a lot of space. This encoding is only used when the length and
-# elements of a sorted set are below the following limits:
+# 　当有序集合的元素都小于64字节并且元素数量小于128个的时候，使用压缩列表，反之使用skiplist
 zset-max-ziplist-entries 128
 zset-max-ziplist-value 64
 
