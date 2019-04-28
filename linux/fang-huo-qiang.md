@@ -219,3 +219,13 @@ firewalld.service - firewalld - dynamic firewall daemon
 [root@route ~]# systemctl enable firewalld
 [root@route ~]# firewall-cmd --state 
 
+关闭firewalld  使用iptables
+
+ systemctl stop firewalld
+
+ systemctl mask firewalld
+
+ systemctl enable iptables
+
+service iptables save
+
