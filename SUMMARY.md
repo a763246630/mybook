@@ -27,6 +27,7 @@
 * [redis](redis.md)
   * [持久化方式](redis/chi-jiu-hua-fang-shi.md)
   * [配置和部署](redis/pei-zhi-he-bu-shu.md)
+  * 常用命令
 * [IO](io.md)
   * [NIO](io/nio.md)
   * [BIO](io/bio.md)
