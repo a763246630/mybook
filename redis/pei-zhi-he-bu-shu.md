@@ -372,5 +372,3 @@ CONF="/redis/redis-5.0.4/redis.conf"  //修改成redis  redis.conf路径
 设为开机关闭:chkconfig redis off
 ```
 
-
-
