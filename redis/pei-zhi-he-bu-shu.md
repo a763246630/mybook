@@ -20,6 +20,10 @@ make install  //编译成功后，进入src文件夹，执行make install进行R
 
 ### Redis部署
 
+redis.config 里bind 127.0.0.1 设置成bind 0.0.0.0  （允许所有ip连接 ）
+
+或者注释掉
+
 ```
 # Redis配置文件样例
 
