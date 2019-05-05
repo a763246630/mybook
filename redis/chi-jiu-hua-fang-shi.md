@@ -169,6 +169,36 @@ sentinel会向master发送心跳PING来确认master是否存活，如果master�
 
 ![](/assets/rediszc12.png)
 
+ b) 当主节点出现故障，此时3个Sentinel节点共同选举了Sentinel3节点为领导，负载处理主节点的故障转移
+
+ c) 由Sentinel3领导者节点执行故障转移，过程和主从复制一样，但是自动执行
+
+流程：
+
+　　  1. 将slave-1脱离原从节点，升级主节点，
+
+​         \2. 将从节点slave-2指向新的主节点
+
+​         \3. 通知客户端主节点已更换
+
+​         \4. 将原主节点（oldMaster）变成从节点，指向新的主节点
+
+ d) 故障转移后的redis sentinel的拓扑结构图
+
+
+
+### 哨兵机制－故障转移详细流程-确认主节点
+
+a) 过滤掉不健康的（下线或断线），没有回复过哨兵ping响应的从节点
+
+b) 选择salve-priority从节点优先级最高（redis.conf）的
+
+c) 选择复制偏移量最大，指复制最完整的从节点
+
+###  实战：如何安装和部署哨兵
+
+以3个Sentinel节点、2个从节点、1个主节点为例进行安装部署
+
 ### **主从数据库的配置** 哨兵
 
 从redis的conf文件加入 slaveof ip port  最新版本 replicaof ip port  
