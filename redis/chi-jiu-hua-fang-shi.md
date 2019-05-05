@@ -102,7 +102,7 @@ AOF和RDB各有优缺点，这是有它们各自的特点所决定：
 
 > 在复制的概念中，数据库分为两类，一类是主数据库（master），另一类是从数据库[1] （slave）。主数据库可以进行读写操作，当写操作导致数据变化时会自动将数据同步给从数据库。而从数据库一般是只读的，并接受主数据库同步过来的数据。一个主数据库可以拥有多个从数据库，而一个从数据库只能拥有一个主数据库。
 
-#### **主从数据库的配置**
+#### **主从数据库的配置** 哨兵
 
  从redis的conf文件加入 slaveof ip port  最新版本 replicaof ip port
 或者从redis启动时  redis-server --port 6380 --slaveof 127.0.0.1 6379 
@@ -142,3 +142,63 @@ AOF和RDB各有优缺点，这是有它们各自的特点所决定：
 如果在新的主刚被选出来时，我把原来的主起来，它就能成为新主的从节点。 
 如果在新的主选出来过一会再起原来的主，就不能成为新主的从节点 
 或者在老的主起来后，重启哨兵也能把它变成从，哨兵配置文件里有，哨兵会执行“+convert-to-slave”
+
+**1. 前提：**先搭好一主两从redis的主从复制，和之前的主从复制搭建一样，搭建方式如下：
+
+　　A）主节点6379节点（/usr/local/bin/conf/redis6379.conf）：
+
+　　　　修改 requirepass 123456，注释掉#bind 127.0.0.1
+
+　　B) 从节点redis.conf
+
+　　　　修改 requirepass 123456 ,注释掉#bind 127.0.0.1,
+
+　　　　 访问主节点的密码masterauth 123456  slaveof 192.168.152.128 6379
+
+​    **注意****：**当主从起来后，主节点可读写，从节点只可读不可写
+
+**2. redis sentinel哨兵机制核心配置**(也是3个节点)：
+
+​       /usr/local/bin/conf/sentinel.conf  
+
+ 默认端口 26379  
+
+然后：sentinel monitor mymaster 192.168.152.128 **6379** 2  //监听主节点6379
+
+​      sentinel auth-pass mymaster 12345678     //连接主节点时的密码
+
+**三个配置除端口外，其它一样。**
+
+**3. 哨兵其它的配置**：只要修改每个sentinel.conf的这段配置即可：
+
+sentinel monitor mymaster 192.168.152.128 6379 2  
+
+//监控主节点的IP地址端口，sentinel监控的master的名字叫做mymaster，2代表，当集群中有2个sentinel认为master死了时，才能真正认为该master已经不可用了
+
+sentinel auth-pass mymaster 12345678  //sentinel连主节点的密码
+
+sentinel config-epoch mymaster 2  //故障转移时最多可以有2从节点同时对新主节点进行数据同步
+
+sentinel leader-epoch mymaster 2
+
+sentinel failover-timeout mymasterA **180000** //故障转移超时时间180s，                            
+
+a,如果转移超时失败，下次转移时时间为之前的2倍；
+
+b,从节点变主节点时，从节点执行slaveof no one命令一直失败的话，当时间超过**180S**时，则故障转移失败
+
+c,从节点复制新主节点时间超过**180S**转移失败
+
+sentinel down-after-milliseconds mymasterA **300000**//sentinel节点定期向主节点ping命令，当超过了**300S**时间后没有回复，可能就认定为此主节点出现故障了……
+
+sentinel parallel-syncs mymasterA **1** //故障转移后，**1**代表每个从节点按顺序排队一个一个复制主节点数据，如果为3，指3个从节点同时并发复制主节点数据，不会影响阻塞，但存在网络和IO开销
+
+**4. 启动redis服务和sentinel服务:**
+
+**a)先把之前安装的redis里面的标绿色的文件都拷贝到 usr/local/bin目录下，然后再再bin目录下新建一个conf文件夹存放配置好的redis主从配置文件和哨兵配置文件**
+
+```
+cd redis/redis5.0.4/src
+./redis_sentinel ../sentinel.conf
+```
+
