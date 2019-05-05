@@ -161,6 +161,12 @@ c\)如果哨兵3发现自己在选举的票数大于等于num\(sentinels\)/2+1�
 
 ![](/assets/rediszc8.png)
 
+### 故障转移机制
+
+a)由Sentinel节点定期监控发现主节点是否出现了故障
+
+sentinel会向master发送心跳PING来确认master是否存活，如果master在“一定时间范围”内不回应PONG 或者是回复了一个错误消息，那么这个sentinel会主观地(单方面地)认为这个master已经不可用了
+
 ### **主从数据库的配置** 哨兵
 
 从redis的conf文件加入 slaveof ip port  最新版本 replicaof ip port  
