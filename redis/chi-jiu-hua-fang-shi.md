@@ -151,6 +151,8 @@ c\)需要人工干预，无法实现高可用。
 
 客观下线：当主观下线的节点是主节点时，此时该哨兵3节点会通过指令sentinel is-masterdown-by-addr寻求其它哨兵节点对主节点的判断，当超过quorum（选举）个数，此时哨兵节点则认为该主节点确实有问题，这样就客观下线了，大部分哨兵节点都同意下线操作，也就说是客观下线
 
+![](/assets/rediszc7.png)
+
 ### **主从数据库的配置** 哨兵
 
 从redis的conf文件加入 slaveof ip port  最新版本 replicaof ip port  
