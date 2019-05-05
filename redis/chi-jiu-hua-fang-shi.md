@@ -173,6 +173,8 @@ b\) 当主节点出现故障，此时3个Sentinel节点共同选举了Sentinel3�
 
 c\) 由Sentinel3领导者节点执行故障转移，过程和主从复制一样，但是自动执行
 
+![](/assets/rediszc22.png)
+
 流程：
 
 1. 将slave-1脱离原从节点，升级主节点，
