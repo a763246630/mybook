@@ -9,5 +9,7 @@ get key
 set key value  
 #slaver连接master
 slaveof host:ip
+#查看主从状态
+info replication
 ```
 
