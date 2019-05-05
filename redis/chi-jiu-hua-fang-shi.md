@@ -141,6 +141,8 @@ c\)需要人工干预，无法实现高可用。
 
 ![](/assets/rediszc3.png)
 
+
+
 ### **主从数据库的配置** 哨兵
 
 从redis的conf文件加入 slaveof ip port  最新版本 replicaof ip port  
