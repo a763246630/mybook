@@ -12,6 +12,8 @@ JMM（Java Memory Model）即java内存模型
 
 ![](/assets/jvm1.png)
 
+cpu上加入了高速缓存这样做解决了处理器和内存的矛盾(一快一慢)，但是引来的新的问题 - **缓存一致性**
+
 #### 内存屏障\(Memory Barrier\)
 
 ### JVM
