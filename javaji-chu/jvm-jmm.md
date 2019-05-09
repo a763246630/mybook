@@ -1,4 +1,4 @@
-### JMM  
+### JMM
 
 JMM（Java Memory Model）即java内存模型
 
@@ -10,17 +10,11 @@ JMM（Java Memory Model）即java内存模型
 
 但是随着cpu的发展，内存的读写速度也远远赶不上cpu。因此cpu厂商在每颗cpu上加上高速缓存，用于缓解这种情况。现在cpu和内存的交互大致如下。
 
+![](/assets/jvm1.png)
 
-
-#### 内存屏障(Memory Barrier)
-
-
+#### 内存屏障\(Memory Barrier\)
 
 ### JVM
-
-
-
-
 
 
 
