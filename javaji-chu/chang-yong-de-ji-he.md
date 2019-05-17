@@ -241,15 +241,40 @@ ArrayList和LinkedList的区别（也是顺序表和链表的区别）：
 
 #### HashMap
 
+我们知道HashMap是线程不安全的，在多线程环境下，使用Hashmap进行put操作会引起死循环，导致CPU利用率接近100%，所以在并发情况下不能使用HashMap。
+
 #### HashTable
+
+HashTable和HashMap的实现原理几乎一样，差别无非是
+
+-  HashTable不允许key和value为null
+-  HashTable是线程安全的
+
+但是HashTable线程安全的策略实现代价却太大了，简单粗暴，get/put所有相关操作都是synchronized的，这相当于给整个哈希表加了一把大锁。
+
+多线程访问时候，只要有一个线程访问或操作该对象，那其他线程只能阻塞，相当于将所有的操作串行化，在竞争激烈的并发场景中性能就会非常差。
 
 #### HashSet
 
 #### ConcurrentHashMap
 
+JDK1.7和1.8实现线程安全的区别
+
+JDK1.7采用分段锁 	
+
+在JDK1.7中ConcurrentHashMap采用了数组+Segment+分段锁的方式实现。
+
+1.Segment(分段锁)
+
+ConcurrentHashMap中的分段锁称为Segment，它即类似于HashMap的结构，即内部拥有一个Entry数组，数组中的每个元素又是一个链表,同时又是一个ReentrantLock（Segment继承了ReentrantLock）。
+
+
+
+2.内部结构
+
+ConcurrentHashMap使用分段锁技术，将数据分成一段一段的存储，然后给每一段数据配一把锁，当一个线程占用锁访问其中一个段数据的时候，其他段的数据也能被其他线程访问，能够实现真正的并发访问。如下图是ConcurrentHashMap的内部结构图：
+
 #### CopyOnWriteArrayList
 
-```
 
-```
 
