@@ -1,6 +1,8 @@
 ## java常见的集合
 
-\[TOC\]
+[TOC]
+
+
 
 ### ArrayList
 
