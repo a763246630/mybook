@@ -229,7 +229,7 @@ ArrayList和LinkedList的区别（也是顺序表和链表的区别）：
 
 （4）ArrayList会造成一定的空间浪费，因为随时需要探测数组容量然后扩容；LinkedList通过节点方式进行存放数据，不存在空间浪费。
 
-#### LinkList
+### LinkList
 
 1.基本特性
 
@@ -237,14 +237,15 @@ ArrayList和LinkedList的区别（也是顺序表和链表的区别）：
 
 ![](/assets/集合2.png)
 
-### **victor**
+### Victor
 
-#### HashMap
+### HashMap
 
 我们知道HashMap是线程不安全的，在多线程环境下，使用Hashmap进行put操作会引起死循环，导致CPU利用率接近100%，所以在并发情况下不能使用HashMap。
 
 * HashMap概念和底层结构
 
+```
 HashMap是基于哈希表的Map接口的非同步实现。此实现提供所有可选的映射操作，并允许使用null值和null键。HashMap储存的是键值对，HashMap很快。此类不保证映射的顺序，特别是它不保证该顺序恒久不变。
 
 HashMap实际上是一个“链表散列”的数据结构，即数组和链表的结合体。
@@ -252,10 +253,22 @@ HashMap实际上是一个“链表散列”的数据结构，即数组和链表�
 数组：存储区间连续，占用内存严重，寻址容易，插入删除困难；  
 链表：存储区间离散，占用内存比较宽松，寻址困难，插入删除容易；  
 Hashmap综合应用了这两种数据结构，实现了寻址容易，插入删除也容易。
+```
 
 ![](/assets/hashmap1.png)
 
-#### HashTable
+- **HashMap的基本存储原理以及存储内容的组成**
+
+```
+最外层是个数组（transient Node<K,V>[] table）,在new HashMap()只是将initialCapacity初始容量（默认大小16）负载因子loadFactor(默认16)，。另外设计一个哈希函数（也叫做散列函数）来获得每一个元素的Key（关键字）的函数值（即数组下标，hash值）相对应，数组存储的元素是一个Entry类，这个类有三个数据域，key、value（键值对），next(指向下一个Entry)。
+例如， 第一个键值对A进来。通过计算其key的hash得到的index=0。记做:Entry[0] = A。
+第二个键值对B，通过计算其index也等于0， HashMap会将B.next =A,Entry[0] =B,
+第三个键值对 C,index也等于0,那么C.next = B,Entry[0] = C；这样我们发现index=0的地方事实上存取了A,B,C三个键值对,它们通过next这个属性链接在一起。我们可以将这个地方称为桶。 对于不同的元素，可能计算出了相同的函数值，这样就产生了“冲突”，这就需要解决冲突，“直接定址”与“解决冲突”是哈希表的两大特点。
+```
+
+
+
+### HashTable
 
 HashTable和HashMap的实现原理几乎一样，差别无非是
 
@@ -266,7 +279,7 @@ HashTable和HashMap的实现原理几乎一样，差别无非是
 
 多线程访问时候，只要有一个线程访问或操作该对象，那其他线程只能阻塞，相当于将所有的操作串行化，在竞争激烈的并发场景中性能就会非常差。
 
-#### HashSet
+### HashSet
 
 #### ConcurrentHashMap
 
