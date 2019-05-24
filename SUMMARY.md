@@ -28,7 +28,7 @@
   * [持久化方式和集群主从复制配置](redis/chi-jiu-hua-fang-shi.md)
   * [配置和部署](redis/pei-zhi-he-bu-shu.md)
   * [常用命令](redis/chang-yong-ming-ling.md)
-  * redis用途及使用中可能遇到的问题
+  * [redis用途及使用中可能遇到的问题](redis/redisyong-tu-ji-shi-yong-zhong-ke-neng-yu-dao-de-wen-ti.md)
 * [IO](io.md)
   * [NIO](io/nio.md)
   * [BIO](io/bio.md)
