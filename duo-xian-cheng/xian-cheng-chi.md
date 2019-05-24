@@ -57,11 +57,36 @@
   **有限队列**   
 
   **SynchronousQueue**
-  同步阻塞队列，每次插入都要等待上一个元素被删除，使用此队列的线程池池只能存在一个线程；
+
+  一个**不存储元素的阻塞队列**。每个插入操作必须等到另一个线程调用移除操作，否则插入操作一直处于**阻塞状态**，吞吐量通常要高于LinkedBlockingQueue，静态工厂方法Executors.newCachedThreadPool使用了这个队列。
+
+  **ArrayBlockingQueue**
 
   
 
+  **LinkedBlockingQueue**
+
+  一个基于**链表结构**的阻塞队列，此队列按FIFO （先进先出） 排序元素，吞吐量通常要高于ArrayBlockingQueue。静态工厂方法Executors.newFixedThreadPool()使用了这个队列
+
+  **PriorityBlockingQueue**
+
+  一个具有**优先级的无限阻塞队列**
+
   
+
+  注意事项
+
+  1. ThreadPoolExecutor的使用还是很有技巧的。
+  2. 使用无界queue可能会耗尽系统资源。
+  3. 使用有界queue可能不能很好的满足性能，需要调节线程数和queue大小
+  4. 线程数自然也有开销，所以需要根据不同应用进行调节。
+
+  通常来说对于静态任务可以归为： 
+  1. 数量大，但是执行时间很短 
+  2. 数量小，但是执行时间较长 
+  3. 数量又大执行时间又长 
+  4. 除了以上特点外，任务间还有些内在关系 
+  5. CPU密集或者IO密集型任务
 
 * threadFactory 实现工厂自定义线程创建方法
 
