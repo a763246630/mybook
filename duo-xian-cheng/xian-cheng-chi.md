@@ -51,7 +51,38 @@
 
 * unit   keepAliveTime存活时间 的单位
 
-* workQueue
+* workQueue 队列
+  在使用ThreadPoolExecutor线程池的时候，需要指定一个实现了BlockingQueue接口的任务等待队列。在ThreadPoolExecutor线程池的API文档中，一共推荐了三种等待队列，它们是：SynchronousQueue、LinkedBlockingQueue和ArrayBlockingQueue； 
+
+  **有限队列**   
+
+  **SynchronousQueue**
+  同步阻塞队列，每次插入都要等待上一个元素被删除，使用此队列的线程池池只能存在一个线程；
+
+  
+
+  
+
+* threadFactory 实现工厂自定义线程创建方法
+
+```
+//线程的创建工厂
+ThreadFactory threadFactory = new ThreadFactory() {
+    private final AtomicInteger mCount = new AtomicInteger(1);
+
+    public Thread newThread(Runnable r) {
+        return new Thread(r, "AdvacnedAsyncTask #" + mCount.getAndIncrement());
+    }
+};
+```
+
+
+
+#### Executors提供的线程池配置方案
+
+构造一个固定线程数目的线程池，配置的corePoolSize与maximumPoolSize大小相同，同时使用了一个无界LinkedBlockingQueue存放阻塞任务，因此多余的任务将存在再阻塞队列，不会由RejectedExecutionHandler处理
+
+
 
 **ThreadPoolExecutor执行顺序：**
 
