@@ -1,6 +1,8 @@
 ## 线程池ThreadPool
 
-**线程池**（thread pool）：是一种线程使用模式。线程过多会带来调度开销，进而影响缓存局部性和整体性能。而线程池维护着多个线程，等待着监督管理者分配可并发执行的任务。这避免了在处理短时间任务时创建与销毁线程的代价。线程池不仅能够保证内核的充分利用，还能防止过分调度。可用线程数量应该取决于可用的并发处理器、处理器内核、内存、网络sockets等的数量。 例如，线程数一般取cpu数量+2比较合适，线程数过多会导致额外的线程切换开销。
+[TOC]
+
+线程池**（thread pool）：是一种线程使用模式。线程过多会带来调度开销，进而影响缓存局部性和整体性能。而线程池维护着多个线程，等待着监督管理者分配可并发执行的任务。这避免了在处理短时间任务时创建与销毁线程的代价。线程池不仅能够保证内核的充分利用，还能防止过分调度。可用线程数量应该取决于可用的并发处理器、处理器内核、内存、网络sockets等的数量。 例如，线程数一般取cpu数量+2比较合适，线程数过多会导致额外的线程切换开销。
 
 线程池的[伸缩性](https://baike.baidu.com/item/伸缩性)对性能有较大的影响。
 
@@ -54,15 +56,19 @@
 * workQueue 队列
   在使用ThreadPoolExecutor线程池的时候，需要指定一个实现了BlockingQueue接口的任务等待队列。在ThreadPoolExecutor线程池的API文档中，一共推荐了三种等待队列，它们是：SynchronousQueue、LinkedBlockingQueue和ArrayBlockingQueue； 
 
-  **有限队列**   
+  **有界队列**   
 
   **SynchronousQueue**
 
-  一个**不存储元素的阻塞队列**。每个插入操作必须等到另一个线程调用移除操作，否则插入操作一直处于**阻塞状态**，吞吐量通常要高于LinkedBlockingQueue，静态工厂方法Executors.newCachedThreadPool使用了这个队列。
+  一个**不存储元素的阻塞队列**。其中每个 put 必须等待一个 take，每个插入操作必须等到另一个线程调用移除操作，否则插入操作一直处于**阻塞状态**，吞吐量通常要高于LinkedBlockingQueue，静态工厂方法Executors.newCachedThreadPool使用了这个队列。
 
   **ArrayBlockingQueue**
 
+  一个由数组支持的有界阻塞队列。此队列按 FIFO（先进先出）原则对元素进行排序。
+
   
+
+  **无界队列**  
 
   **LinkedBlockingQueue**
 
