@@ -53,32 +53,18 @@
 
 * unit   keepAliveTime存活时间 的单位
 
-* workQueue 队列
+* workQueue 队列 
+    ThreadPoolExecutors线程添加策略
+    1、线程数量未到corePoolSize(核心线程数)，则新建一个线程(核心线程)执行任务
+    2、线程数量达到了corePoolSize，则将任务移入队列（workqueue）等待核心线程执行完后执行
+    3、队列已满，新建线程(非核心线程)执行任务
+    4、队列已满，线程数又达到了maximumPoolSize（最大线程数），执行拒绝策略  
+
   在使用ThreadPoolExecutor线程池的时候，需要指定一个实现了BlockingQueue接口的任务等待队列。在ThreadPoolExecutor线程池的API文档中，一共推荐了三种等待队列，它们是：SynchronousQueue、LinkedBlockingQueue和ArrayBlockingQueue； 
 
-  **有界队列**   
-
-  **SynchronousQueue**
-
-  一个**不存储元素的阻塞队列**。其中每个 put 必须等待一个 take，每个插入操作必须等到另一个线程调用移除操作，否则插入操作一直处于**阻塞状态**，吞吐量通常要高于LinkedBlockingQueue，静态工厂方法Executors.newCachedThreadPool使用了这个队列。
-
-  **ArrayBlockingQueue**
-
-  一个由数组支持的有界阻塞队列。此队列按 FIFO（先进先出）原则对元素进行排序。
-
-  
-
-  **无界队列**  
-
-  **LinkedBlockingQueue**
-
-  一个基于**链表结构**的阻塞队列，此队列按FIFO （先进先出） 排序元素，吞吐量通常要高于ArrayBlockingQueue。静态工厂方法Executors.newFixedThreadPool()使用了这个队列
-
-  **PriorityBlockingQueue**
-
-  一个具有**优先级的无限阻塞队列**
-
-  
+  1. **直接提交**。工作队列的默认选项是 `SynchronousQueue`，它将任务直接提交给线程而不保存它们。如果不存在可用于立即运行任务的线程，则试图把任务加入队列将失败，因此会构造一个新的线程。此策略可以避免在处理可能具有内部依赖性的请求集时出现锁。直接提交通常要求无界 maximumPoolSizes 以避免拒绝新提交的任务。当命令以超过队列所能处理的平均数连续到达时，此策略允许无界线程具有增长的可能性。
+  2. **无界队列**。使用无界队列（例如，不具有预定义容量的 `LinkedBlockingQueue`）将导致在所有 corePoolSize 线程都忙时新任务在队列中等待。这样，创建的线程就不会超过 corePoolSize。（因此，maximumPoolSize 的值也就无效了。）当每个任务完全独立于其他任务，即任务执行互不影响时，适合于使用无界队列；例如，在 Web 页服务器中。这种排队可用于处理瞬态突发请求，当命令以超过队列所能处理的平均数连续到达时，此策略允许无界线程具有增长的可能性。
+  3. **有界队列**。当使用有限的 maximumPoolSizes 时，有界队列（如 `ArrayBlockingQueue`）有助于防止资源耗尽，但是可能较难调整和控制。队列大小和最大池大小可能需要相互折衷：使用大型队列和小型池可以最大限度地降低 CPU 使用率、操作系统资源和上下文切换开销，但是可能导致人工降低吞吐量。如果任务频繁阻塞（例如，如果它们是 I/O 边界），则系统可能为超过您许可的更多线程安排时间。使用小型队列通常要求较大的池大小，CPU 使用率较高，但是可能遇到不可接受的调度开销，这样也会降低吞吐量。
 
   注意事项
 
@@ -112,6 +98,22 @@ ThreadFactory threadFactory = new ThreadFactory() {
 #### Executors提供的线程池配置方案
 
 构造一个固定线程数目的线程池，配置的corePoolSize与maximumPoolSize大小相同，同时使用了一个无界LinkedBlockingQueue存放阻塞任务，因此多余的任务将存在再阻塞队列，不会由RejectedExecutionHandler处理
+
+Executors提供的几种定制线程
+
+**ExecutorService newFixedThreadPool(int nThreads):固定大小线程池。**
+
+该线程池keepalive为0 线程执行完直接释放 ，核心线程和最大线程数相等,	workqueue选择了LinkedBlockingQueue,队列是无界的.
+
+**ExecutorService newSingleThreadExecutor()：单线程。**
+
+和 newFixedThreadPool 类似 ，唯一区别线程数固定为1。
+
+**ExecutorService newCachedThreadPool()：无界线程池，可以进行自动线程回收。**
+
+该线程池使用synchronousQueue ,keepalive为60秒,核心线程数为0 最大线程池数为Integer.MAX_VALUE
+
+
 
 
 
