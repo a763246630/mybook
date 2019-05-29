@@ -43,6 +43,13 @@
 
 * rejectedExecutionHandler：任务拒绝处理器
 
+    ```
+    ThreadPoolExecutor.AbortPolicy:丢弃任务并抛出RejectedExecutionException异常。
+    ThreadPoolExecutor.DiscardPolicy：也是丢弃任务，但是不抛出异常。
+    ThreadPoolExecutor.DiscardOldestPolicy：丢弃队列最前面的任务，然后重新尝试执行任务（重复此过程）
+    ThreadPoolExecutor.CallerRunsPolicy：由调用线程处理该任务
+    ```
+
 * 两种情况会拒绝处理任务：
 
   * 当线程数已经达到maxPoolSize，且队列已满，会拒绝新任务
@@ -58,11 +65,11 @@
 * unit   keepAliveTime存活时间 的单位
 
 * workQueue 队列 
-    ThreadPoolExecutors线程添加策略
-    1、线程数量未到corePoolSize(核心线程数)，则新建一个线程(核心线程)执行任务
-    2、线程数量达到了corePoolSize，则将任务移入队列（workqueue）等待核心线程执行完后执行
-    3、队列已满，新建线程(非核心线程)执行任务
-    4、队列已满，线程数又达到了maximumPoolSize（最大线程数），执行拒绝策略  
+  ThreadPoolExecutors线程添加策略
+  1、线程数量未到corePoolSize(核心线程数)，则新建一个线程(核心线程)执行任务
+  2、线程数量达到了corePoolSize，则将任务移入队列（workqueue）等待核心线程执行完后执行
+  3、队列已满，新建线程(非核心线程)执行任务
+  4、队列已满，线程数又达到了maximumPoolSize（最大线程数），执行拒绝策略  
 
   在使用ThreadPoolExecutor线程池的时候，需要指定一个实现了BlockingQueue接口的任务等待队列。在ThreadPoolExecutor线程池的API文档中，一共推荐了三种等待队列，它们是：SynchronousQueue、LinkedBlockingQueue和ArrayBlockingQueue； 
 
@@ -241,7 +248,7 @@ Speedup <= 1/ (F + (1-F)/N)
 
 当N足够大时，串行化比率F越小，加速比Speedup越大。
 
-
+##### 
 
 # 不同的业务放在不同的线程/线程池里面
 
