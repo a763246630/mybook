@@ -2,9 +2,7 @@
 
 RabbitMQ是流行的开源消息队列系统，是AMQP（Advanced Message Queuing Protocol高级消息队列协议）的标准实现，用erlang语言开发。RabbitMQ据说具有良好的性能和时效性，同时还能够非常好的支持集群和负载部署，非常适合在较大规模的分布式系统中使用。
 
-[TOC]
-
-
+\[TOC\]
 
 #### 安装和启动
 
@@ -44,7 +42,6 @@ export PAHT=$PATH:/usr/local/RabbitMQ/sbin
 
 常见问题
 erlang 和 rabbitmq 版本不匹配 decription  nopro
-
 ```
 
 RabbitMQ是用Erlang语言编写的，服务器必须先安装erlang
@@ -52,6 +49,7 @@ RabbitMQ是用Erlang语言编写的，服务器必须先安装erlang
 ```
 直接使用对应的rpm 
 rpm -i erlang-22.0.1-1.el7.x86_64.rpm
-
 ```
+
+
 
