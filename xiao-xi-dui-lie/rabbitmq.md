@@ -23,6 +23,9 @@ export PAHT=$PATH:/usr/local/RabbitMQ/sbin
 # ./rabbitmq-plugins enable rabbitmq_management
 后台运行
 # ./rabbitmq-server -detached
+
+rabbitmqctl stop ：停止rabbitmq 
+rabbitmq-server restart : 重启rabbitmq
 好了，到这里rabbitmq已经配置好了，可以启动了：
 1 我们再来查看看一下rabbitmq的默认监听端口5672
 2 #netstat -tnlp|grep 5672
