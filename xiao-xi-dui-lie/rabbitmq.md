@@ -54,9 +54,24 @@ RabbitMQ是用Erlang语言编写的，服务器必须先安装erlang
 rpm -i erlang-22.0.1-1.el7.x86_64.rpm
 ```
 
+#### VirtualHost
+
+```
+RabbitMq的VirtualHost（虚拟消息服务器），每个VirtualHost相当于一个相对独立的RabbitMQ服务器；每个VirtualHost之间是相互隔离的，exchange、queue、message不能互通。 
+
+拿数据库（用MySQL）来类比：RabbitMq相当于MySQL，RabbitMq中的VirtualHost就相当于MySQL中的一个库。
+
+创建VirtualHost
+一、命令行
+rabbitmqctl add_vhost 虚拟服务器名称
+例如：rabbitmqctl add_vhost my_test 
+```
+
+
+
 #### 概念
 
-* Brocker：消息队列服务器实体。
+* Broker：消息队列服务器实体。
 * Exchange：消息交换机，指定消息按什么规则，路由到哪个队列。
 * Queue：消息队列，每个消息都会被投入到一个或者多个队列里。
 * Binding：绑定，它的作用是把exchange和queue按照路由规则binding起来。
