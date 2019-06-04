@@ -97,9 +97,14 @@ rabbitmqctl add_vhost 虚拟服务器名称
   * 绿色的 X 就是 Exchange ，红色的是 Queue ，这两者都在 Server 端，又称作 Broker
   * 这部分是 RabbitMQ 实现的，而蓝色的则是客户端，通常有 Producer 和 Consumer 两种类型。
 * Exchange通常分为四种：
-  * fanout：该类型路由规则非常简单，会把所有发送到该Exchange的消息路由到所有与它绑定的Queue中，相当于广播功能
+  * fanout：该类型路由规则非常简单，会把所有发送到该Exchange的消息路由到所有与它绑定的Queue中，相当于广播功能，无须对消息的routingkey进行匹配操作。
+
+    
+
   * direct：该类型路由规则会将消息路由到binding key与routing key完全匹配的Queue中
+
   * topic：与direct类型相似，只是规则没有那么严格，可以模糊匹配和多条件匹配
+
   * headers：该类型不依赖于routing key与binding key的匹配规则来路由消息，而是根据发送的消息内容中的headers属性进行匹配
 
 
