@@ -98,6 +98,14 @@ rabbitmqctl add_vhost 虚拟服务器名称
 
   * fanout：不需要RouteKey，需要提前将Exchange与Queue进行绑定，一个Exchange可以绑定多个Queue，一个Queue可以同多个Exchange进行绑定。如果接受到消息的Exchange没有与任何Queue绑定，则消息会被抛弃。
 
+     适用场景：
+
+    ​                第一：大型玩家在玩在线游戏的时候，可以用它来广播重大消息。这让我想到电影微微一笑很倾城中，有款游戏需要在世界上公布玩家重大消息，也许这个就是用的MQ实现的。这让我不禁佩服肖奈，人家在大学的时候就知道RabbitMQ的这种特性了。
+
+    ​                第二：体育新闻实时更新到手机客户端。
+
+    ​                第三：群聊功能，广播消息给当前群聊中的所有人。
+
   * direct：该类型不需要Exchange进行绑定，消息发送时需要RouteKey，Exchange收到消息后会转发RouteKey对应的Queue中,如果vhost中不存在RouteKey中指定的队列名，则该消息会被抛弃。
 
     适用场景：
@@ -105,6 +113,16 @@ rabbitmqctl add_vhost 虚拟服务器名称
     ​        这种类型的Exchange，通常是将同一个message以一种循环的方式分发到不同的Queue，即不同的消费者手中，使用这种方式，值得注意的是message在消费者之间做了一个均衡，而不是说message在Queues之间做了均衡。
 
   * topic：与direct类型相似，只是规则没有那么严格，可以模糊匹配和多条件匹配
+
+     使用场景：
+
+    ​               新闻的分类更新
+
+    ​               同意任务多个工作者协调完成
+
+    ​               同一问题需要特定人员知晓
+
+    ​         Topic Exchange的使用场景很多，我们公司就在使用这种模式，将足球事件信息发布，需要使用这些事件消息的人只需要绑定对应的Exchange就可以获取最新消息。
 
   * headers：该类型不依赖于routing key与binding key的匹配规则来路由消息，而是根据发送的消息内容中的headers属性进行匹配
 
