@@ -102,7 +102,7 @@ rabbitmqctl add_vhost 虚拟服务器名称
 
 * direct：该类型路由规则会将消息路由到binding key与routing key完全匹配的Queue中
 
-       ![](/assets/direct.png)
+  ![](/assets/direct.png)
 
 * topic：与direct类型相似，只是规则没有那么严格，可以模糊匹配和多条件匹配
 
