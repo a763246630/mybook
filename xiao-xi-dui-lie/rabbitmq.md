@@ -128,3 +128,41 @@ rabbitmqctl add_vhost 虚拟服务器名称
 
  性能排序：fanout > direct >> topic。比例大约为11：10：6
 
+##### 死信队列介绍
+
+- 死信队列：DLX，`dead-letter-exchange` 
+- 利用DLX，当消息在一个队列中变成死信 `(dead message)` 之后，它能被重新publish到另一个Exchange，这个Exchange就是DLX
+
+##### 消息变成死信有以下几种情况
+
+- 消息被拒绝(basic.reject / basic.nack)，并且requeue = false
+- 消息TTL过期
+- 队列达到最大长度 
+
+##### 死信处理过程
+
+- DLX也是一个正常的Exchange，和一般的Exchange没有区别，它能在任何的队列上被指定，实际上就是设置某个队列的属性。
+- 当这个队列中有死信时，RabbitMQ就会自动的将这个消息重新发布到设置的Exchange上去，进而被路由到另一个队列。
+- 可以监听这个队列中的消息做相应的处理。 
+
+##### 死信队列设置
+
+1. 首先需要设置死信队列的exchange和queue，然后进行绑定：
+
+```
+Exchange: dlx.exchange
+Queue: dlx.queue
+RoutingKey: #
+#表示只要有消息到达了Exchange，那么都会路由到这个queue上
+```
+
+1. 然后需要有一个监听，去监听这个队列进行处理
+2. 然后我们进行正常声明交换机、队列、绑定，只不过我们需要在队列加上一个参数即可：`arguments.put(" x-dead-letter-exchange"，"dlx.exchange");`，这样消息在过期、requeue、 队列在达到最大长度时，消息就可以直接路由到死信队列！ 
+
+
+
+此时关闭消费端，然后启动生产端，查看管控台队列的消息情况，`test_dlx_queue`的值为1，而`dlx_queue`的值为0。
+10s后的队列结果如图，由于生产端发送消息时指定了消息的过期时间为10s，而此时没有消费端进行消费，消息便被路由到死信队列中。
+
+
+  
