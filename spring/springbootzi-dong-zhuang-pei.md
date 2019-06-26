@@ -1,5 +1,13 @@
 ## Spring 启动流程
 
+### SpringBoot 启动类SpringApplication构造方法
+
+
+
+
+
+
+
 ##### getRunListeners
 
 我们先看看SpringApplicationRunListeners和SpringApplicationRunListener。
