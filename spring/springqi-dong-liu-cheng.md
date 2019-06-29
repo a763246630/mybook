@@ -2,7 +2,7 @@
 
 #### 1.执行启动类SpringApplication构造
 
- SpringApplication(ResourceLoader resourceLoader, Class<?>... primarySources)
+SpringApplication(ResourceLoader resourceLoader, Class<?>... primarySources)
 
 ResourceLoader接口 
 
