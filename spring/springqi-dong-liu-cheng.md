@@ -2,13 +2,7 @@
 
 #### 1.执行启动类SpringApplication构造
 
-SpringApplication(ResourceLoader resourceLoader, Class<?>... primarySources)
 
-ResourceLoader接口 
-
-接口有一个特别重要的方法：Resource getResource(String location)，返回Resource实例
-
-内部构造：
 
 ```java
 public interface ResourceLoader {
