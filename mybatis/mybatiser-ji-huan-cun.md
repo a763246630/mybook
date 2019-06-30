@@ -16,6 +16,10 @@
 
 两次查询之间执行 update add delete
 
-实现原理
+#### 实现原理
 
 都是实现了Cache接口,
+
+DefaultSqlSession
+
+### 二级缓存 SqlSessionFactory 跨会话全局缓存
