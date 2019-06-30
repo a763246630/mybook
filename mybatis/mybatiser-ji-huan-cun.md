@@ -8,8 +8,10 @@ Mybatis的两级缓存
 
 同一个方法名(mapper key)
 
+相同的namespace和statement
+
 失效条件
 
 执行 session.clearCache()
 
-两次查询之间执行 update
+两次查询之间执行 update add delete
