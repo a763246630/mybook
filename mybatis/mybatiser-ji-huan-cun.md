@@ -1,8 +1,8 @@
-Mybatis的两级缓存
+## Mybatis的两级缓存
 
-一级缓存 Session(会话)级 缓存
+### 一级缓存 Session(会话)级 缓存
 
-使用条件 
+#### 使用条件 
 
 同一会话session 中
 
@@ -10,8 +10,12 @@ Mybatis的两级缓存
 
 相同的namespace和statement
 
-失效条件
+#### 失效条件
 
 执行 session.clearCache()
 
 两次查询之间执行 update add delete
+
+实现原理
+
+都是实现了Cache接口,
