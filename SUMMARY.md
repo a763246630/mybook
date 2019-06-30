@@ -65,4 +65,5 @@
 * [大数据相关](da-shu-ju-xiang-guan.md)
   * hive
 * [Mybatis](mybatis.md)
+  * Mybatis二级缓存
 
