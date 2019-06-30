@@ -64,4 +64,5 @@
   * [rabbitmq](xiao-xi-dui-lie/rabbitmq.md)
 * [大数据相关](da-shu-ju-xiang-guan.md)
   * hive
+* [Mybatis](mybatis.md)
 
