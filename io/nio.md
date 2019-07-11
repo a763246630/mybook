@@ -10,3 +10,5 @@ NIO （同步非阻塞I/O）
 
 ​    8种基本类型都有相应的缓冲区：ByteBuffe、CharBuffer、 ShortBuffer、IntBuffer、LongBuffer、FloatBuffer、DoubleBuffer。他们实现了相同的接口：Buffer。
 
+### Channel
+
