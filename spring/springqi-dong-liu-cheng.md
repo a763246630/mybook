@@ -81,5 +81,23 @@ createSpringFactoriesInstances 用上面获取的名字反射创建实例,
  获取或创建所有 类型的ApplicationListener 实例放到 List<ApplicationContextInitializer<?>>  initializers 里
 ```
 
+1.6 this.mainApplicationClass = deduceMainApplicationClass();
 
+```
+private Class<?> deduceMainApplicationClass() {
+   try {
+      //根据调用栈，获取 main 方法的类名 根据类目反射创建启动类
+      StackTraceElement[] stackTrace = new RuntimeException().getStackTrace();
+      for (StackTraceElement stackTraceElement : stackTrace) {
+         if ("main".equals(stackTraceElement.getMethodName())) {
+            return Class.forName(stackTraceElement.getClassName());
+         }
+      }
+   }
+   catch (ClassNotFoundException ex) {
+      // Swallow and continue
+   }
+   return null;
+}
+```
 
