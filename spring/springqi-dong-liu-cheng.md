@@ -26,19 +26,6 @@ public interface ResourceLoader {
 
 
 ```
-ClassUtils.isPresent 传入类className 返回类是否存在 true or false
-#server config
-#是否设定web应用，none-非web，servlet-web应用
-spring.main.web-application-type=servlet
-#加载springboot banner的方式：off-关闭，console-控制台，log-日志
-spring.main.banner-mode=off
-```
-
-1.4 setInitializers((Collection) getSpringFactoriesInstances(ApplicationContextInitializer.class))；
-
-面的 SpringFactoriesLoader.loadFactoryNames() ，是从 META-INF/spring.factories 的资源文件中，读取 key 为org.springframework.context.ApplicationContextInitializer 的 value。
-
-```
 org.springframework.boot.context.ConfigurationWarningsApplicationContextInitializer
 org.springframework.boot.context.ContextIdApplicationContextInitializer
 org.springframework.boot.context.config.DelegatingApplicationContextInitializer
