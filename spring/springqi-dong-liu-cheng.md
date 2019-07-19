@@ -64,17 +64,31 @@ createSpringFactoriesInstances 用上面获取的名字反射创建实例,
 
 面的 SpringFactoriesLoader.loadFactoryNames() ，是从 META-INF/spring.factories 的资源文件中，读取 key 为org.springframework.context.ApplicationContextInitializer 的 value。
 
-org.springframework.boot.context.ConfigurationWarningsApplicationContextInitializer
+org.springframework.boot.ClearCachesApplicationListener
 
-org.springframework.boot.context.ContextIdApplicationContextInitializer
+org.springframework.boot.builder.ParentContextCloserApplicationListener
 
-org.springframework.boot.context.config.DelegatingApplicationContextInitializer
+org.springframework.boot.context.FileEncodingApplicationListener
 
-org.springframework.boot.web.context.ServerPortInfoApplicationContextInitializer
+org.springframework.boot.context.config.AnsiOutputApplicationListener
 
-org.springframework.boot.autoconfigure.SharedMetadataReaderFactoryContextInitializer
+org.springframework.boot.context.config.ConfigFileApplicationListener
 
-org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener
+org.springframework.boot.context.config.DelegatingApplicationListener
+
+org.springframework.boot.context.logging.ClasspathLoggingApplicationListener
+
+org.springframework.boot.context.logging.LoggingApplicationListener
+
+org.springframework.boot.liquibase.LiquibaseServiceLocatorApplicationListener
+
+org.springframework.boot.autoconfigure.BackgroundPreinitializer
+
+org.springframework.cloud.bootstrap.BootstrapApplicationListener
+
+org.springframework.cloud.bootstrap.LoggingSystemShutdownListener
+
+org.springframework.cloud.context.restart.RestartListener
 
 createSpringFactoriesInstances 用上面获取的名字反射创建实例,
 
