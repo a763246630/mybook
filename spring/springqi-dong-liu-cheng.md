@@ -23,13 +23,7 @@ public interface ResourceLoader {
 }
 ```
 
-DefaultResourceLoader ： 作为 ResourceLoader 接口的直接实现类，该类实现了基本的资源加载功能，可以实现对单个资源的加载。
 
-ResourcePatternResolver ：该接口继承了 ResourceLoader，定义了加载多个资源的方法， 可以实现对多个资源的加载。
-
-1.2 Set<Class<?>>   primarySources存储启动类 
-
-1.3 this.webApplicationType = deduceWebApplicationType();   应用的类型 ，创建的是一个 SERVLET （WEB）应用还是 REACTIVE应用或者是 NONE
 
 ```
 ClassUtils.isPresent 传入类className 返回类是否存在 true or false
