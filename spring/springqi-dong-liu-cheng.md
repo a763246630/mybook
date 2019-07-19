@@ -42,4 +42,40 @@ spring.main.banner-mode=off
 
 1.4 setInitializers((Collection) getSpringFactoriesInstances(ApplicationContextInitializer.class))；
 
- 获取或创建 ApplicationContextInitializer 实例放到 List<ApplicationContextInitializer<?>>  initializers 里
+面的 SpringFactoriesLoader.loadFactoryNames() ，是从 META-INF/spring.factories 的资源文件中，读取 key 为org.springframework.context.ApplicationContextInitializer 的 value。
+
+org.springframework.boot.context.ConfigurationWarningsApplicationContextInitializer
+
+org.springframework.boot.context.ContextIdApplicationContextInitializer
+
+org.springframework.boot.context.config.DelegatingApplicationContextInitializer
+
+org.springframework.boot.web.context.ServerPortInfoApplicationContextInitializer
+
+org.springframework.boot.autoconfigure.SharedMetadataReaderFactoryContextInitializer
+
+org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener
+
+createSpringFactoriesInstances 用上面获取的名字反射创建实例,
+
+ 获取或创建所有 类型的ApplicationContextInitializer 实例放到 List<ApplicationContextInitializer<?>>  initializers 里
+
+1.5 setListeners((Collection) getSpringFactoriesInstances(ApplicationListener.class)); 
+
+面的 SpringFactoriesLoader.loadFactoryNames() ，是从 META-INF/spring.factories 的资源文件中，读取 key 为org.springframework.context.ApplicationContextInitializer 的 value。
+
+org.springframework.boot.context.ConfigurationWarningsApplicationContextInitializer
+
+org.springframework.boot.context.ContextIdApplicationContextInitializer
+
+org.springframework.boot.context.config.DelegatingApplicationContextInitializer
+
+org.springframework.boot.web.context.ServerPortInfoApplicationContextInitializer
+
+org.springframework.boot.autoconfigure.SharedMetadataReaderFactoryContextInitializer
+
+org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener
+
+createSpringFactoriesInstances 用上面获取的名字反射创建实例,
+
+ 获取或创建所有 类型的ApplicationListener 实例放到 List<ApplicationContextInitializer<?>>  initializers 里
