@@ -2,11 +2,11 @@
 
 #### 1.执行启动类SpringApplication构造
 
-SpringApplication(ResourceLoader resourceLoader, Class<?>... primarySources)
+SpringApplication\(ResourceLoader resourceLoader, Class&lt;?&gt;... primarySources\)
 
-1.1 ResourceLoader接口 
+1.1 ResourceLoader接口
 
-接口有一个特别重要的方法：Resource getResource(String location)，返回Resource实例
+接口有一个特别重要的方法：Resource getResource\(String location\)，返回Resource实例
 
 内部构造：
 
@@ -27,9 +27,9 @@ DefaultResourceLoader ： 作为 ResourceLoader 接口的直接实现类，该�
 
 ResourcePatternResolver ：该接口继承了 ResourceLoader，定义了加载多个资源的方法， 可以实现对多个资源的加载。
 
-1.2 primarySources存储启动类 
+1.2 primarySources存储启动类
 
-1.3 this.webApplicationType = deduceWebApplicationType();   应用的类型 ，创建的是一个 SERVLET （WEB）应用还是 REACTIVE应用或者是 NONE
+1.3 this.webApplicationType = deduceWebApplicationType\(\);   应用的类型 ，创建的是一个 SERVLET （WEB）应用还是 REACTIVE应用或者是 NONE
 
 ```
 ClassUtils.isPresent 传入类className 返回类是否存在 true or false
@@ -40,9 +40,9 @@ spring.main.web-application-type=servlet
 spring.main.banner-mode=off
 ```
 
-1.4 setInitializers((Collection) getSpringFactoriesInstances(ApplicationContextInitializer.class))；
+1.4 setInitializers\(\(Collection\) getSpringFactoriesInstances\(ApplicationContextInitializer.class\)\)；
 
-面的 SpringFactoriesLoader.loadFactoryNames() ，是从 META-INF/spring.factories 的资源文件中，读取 key 为org.springframework.context.ApplicationContextInitializer 的 value。
+面的 SpringFactoriesLoader.loadFactoryNames\(\) ，是从 META-INF/spring.factories 的资源文件中，读取 key 为org.springframework.context.ApplicationContextInitializer 的 value。
 
 ```
 org.springframework.boot.context.ConfigurationWarningsApplicationContextInitializer
@@ -57,11 +57,9 @@ createSpringFactoriesInstances 用上面获取的名字反射创建实例,
  获取或创建所有 类型的ApplicationContextInitializer 实例放到 List<ApplicationContextInitializer<?>>  initializers 里
 ```
 
+1.5 setListeners\(\(Collection\) getSpringFactoriesInstances\(ApplicationListener.class\)\);
 
-
-1.5 setListeners((Collection) getSpringFactoriesInstances(ApplicationListener.class)); 
-
-面的 SpringFactoriesLoader.loadFactoryNames() ，是从 META-INF/spring.factories 的资源文件中，读取 key 为org.springframework.context.ApplicationContextInitializer 的 value。
+面的 SpringFactoriesLoader.loadFactoryNames\(\) ，是从 META-INF/spring.factories 的资源文件中，读取 key 为org.springframework.context.ApplicationContextInitializer 的 value。
 
 ```
 org.springframework.boot.ClearCachesApplicationListener
@@ -82,4 +80,6 @@ createSpringFactoriesInstances 用上面获取的名字反射创建实例,
 
  获取或创建所有 类型的ApplicationListener 实例放到 List<ApplicationContextInitializer<?>>  initializers 里
 ```
+
+
 
