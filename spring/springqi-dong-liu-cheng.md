@@ -27,7 +27,7 @@ DefaultResourceLoader ： 作为 ResourceLoader 接口的直接实现类，该�
 
 ResourcePatternResolver ：该接口继承了 ResourceLoader，定义了加载多个资源的方法， 可以实现对多个资源的加载。
 
-1.2 Set<Class<?>>   primarySources存储启动类 
+1.2 primarySources存储启动类 
 
 1.3 this.webApplicationType = deduceWebApplicationType();   应用的类型 ，创建的是一个 SERVLET （WEB）应用还是 REACTIVE应用或者是 NONE
 
@@ -51,11 +51,13 @@ org.springframework.boot.context.config.DelegatingApplicationContextInitializer
 org.springframework.boot.web.context.ServerPortInfoApplicationContextInitializer
 org.springframework.boot.autoconfigure.SharedMetadataReaderFactoryContextInitializer
 org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener
-```
 
 createSpringFactoriesInstances 用上面获取的名字反射创建实例,
 
  获取或创建所有 类型的ApplicationContextInitializer 实例放到 List<ApplicationContextInitializer<?>>  initializers 里
+```
+
+
 
 1.5 setListeners((Collection) getSpringFactoriesInstances(ApplicationListener.class)); 
 
@@ -75,8 +77,9 @@ org.springframework.boot.autoconfigure.BackgroundPreinitializer
 org.springframework.cloud.bootstrap.BootstrapApplicationListener
 org.springframework.cloud.bootstrap.LoggingSystemShutdownListener
 org.springframework.cloud.context.restart.RestartListener
-```
 
 createSpringFactoriesInstances 用上面获取的名字反射创建实例,
 
  获取或创建所有 类型的ApplicationListener 实例放到 List<ApplicationContextInitializer<?>>  initializers 里
+```
+
