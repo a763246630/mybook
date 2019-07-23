@@ -61,6 +61,7 @@
   * [模拟并发 CountDownLatch用法](duo-xian-cheng/mo-ni-bing-fa-countdownlatch-yong-fa.md)
   * [线程池](duo-xian-cheng/xian-cheng-chi.md)
   * 常用的锁和实现原理
+  * ThreadLocal线程本地变量
 * [消息队列](xiao-xi-dui-lie.md)
   * [rabbitmq](xiao-xi-dui-lie/rabbitmq.md)
 * [大数据相关](da-shu-ju-xiang-guan.md)
