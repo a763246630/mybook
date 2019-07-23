@@ -60,7 +60,7 @@
 * [多线程](duo-xian-cheng.md)
   * [模拟并发 CountDownLatch用法](duo-xian-cheng/mo-ni-bing-fa-countdownlatch-yong-fa.md)
   * [线程池](duo-xian-cheng/xian-cheng-chi.md)
-  * 常用的锁和实现原理
+  * [常用的锁和实现原理](duo-xian-cheng/chang-yong-de-suo-he-shi-xian-yuan-li.md)
   * [ThreadLocal线程本地变量](duo-xian-cheng/threadlocalxian-cheng-ben-di-bian-liang.md)
 * [消息队列](xiao-xi-dui-lie.md)
   * [rabbitmq](xiao-xi-dui-lie/rabbitmq.md)
