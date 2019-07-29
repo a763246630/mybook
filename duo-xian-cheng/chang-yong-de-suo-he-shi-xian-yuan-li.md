@@ -58,6 +58,10 @@ synchronized关键字被编译成字节码后会被翻译成monitorenter 和 mon
 
 ![](/assets/sync1.png)
 
+##### 
+
+##### 
+
 ##### Syncronized锁的膨胀 无锁-&gt;偏向锁-&gt;轻量级锁-&gt;重量级锁
 
 无锁状态到偏向锁
