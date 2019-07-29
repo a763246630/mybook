@@ -60,6 +60,8 @@ synchronized关键字被编译成字节码后会被翻译成monitorenter 和 mon
 
 每个同步对象都有一个自己的Monitor\(监视器锁\)，加锁过程如下图所示：
 
+
+
 ##### 
 
 ##### Syncronized锁的膨胀 无锁-&gt;偏向锁-&gt;轻量级锁-&gt;重量级锁
