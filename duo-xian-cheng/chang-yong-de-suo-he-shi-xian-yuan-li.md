@@ -62,7 +62,7 @@ synchronized关键字被编译成字节码后会被翻译成monitorenter 和 mon
 
 ##### ![](/assets/sync2.png)
 
-##### 
+锁状态是被记录在每个对象的对象头（Mark Word）
 
 ##### Syncronized锁的膨胀 无锁-&gt;偏向锁-&gt;轻量级锁-&gt;重量级锁
 
