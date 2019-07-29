@@ -40,6 +40,26 @@ zookeeper锁
 
 在节点下再每个线程创建临时有序节点，判断当前节点是不是最小节点，是最小节点则获取到锁
 
+### Syncronized JVM内置锁 原理
+
+synchronized内置锁是一种对象锁(锁的是对象而非引用)，作用粒度是对象，可以用来实现对临界资源的同步互斥访问，是可重入的。
+
+加锁的方式：
+
+同步实例方法，锁是当前实例对象 
+
+同步类方法，锁是当前类对象
+
+同步代码块，锁是括号里面的对象 
+
+synchronized是基于JVM内置锁实现，通过内部对象Monitor(监视器锁)实现，基于进入与退出Monitor对象实现方法与代码块同步，监视器锁的实现依赖 底层操作系统的Mutex lock（互斥锁）实现，它是一个重量级锁性能较低（在java1.5及以前）。JVM内置锁在1.5之后版本做了重大的优化，如锁粗化（Lock Coarsening）、锁消除（Lock Elimination）、轻量级（Lightweight Locking）、偏向锁（Biased Locking）、适应性自旋（Adaptive Spinning）等 技术来减少锁操作的开销，，内置锁的并发性能已经基本与Lock持平。
+
+synchronized关键字被编译成字节码后会被翻译成monitorenter 和 monitorexit 两条指令分别在同步块逻辑代码的起始位置与结束位置。
+
+
+
+
+
 ##### Syncronized锁的膨胀 无锁->偏向锁->轻量级锁->重量级锁
 
 无锁状态到偏向锁
