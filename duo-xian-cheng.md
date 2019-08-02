@@ -1,4 +1,4 @@
-**线程**（英语：thread）是[操作系统](https://baike.baidu.com/item/操作系统)能够进行运算[调度](https://baike.baidu.com/item/调度)的最小单位。它被包含在[进程](https://baike.baidu.com/item/进程)之中，是[进程](https://baike.baidu.com/item/进程)中的实际运作单位。一条线程指的是[进程](https://baike.baidu.com/item/进程)中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务
+**	线程**（英语：thread）是[操作系统](https://baike.baidu.com/item/操作系统)能够进行运算[调度](https://baike.baidu.com/item/调度)的最小单位。它被包含在[进程](https://baike.baidu.com/item/进程)之中，是[进程](https://baike.baidu.com/item/进程)中的实际运作单位。一条线程指的是[进程](https://baike.baidu.com/item/进程)中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务
 
 一个进程可以有很多线程，每条线程并行执行不同的任务。
 
@@ -68,4 +68,13 @@ notifyAll\(\)
 yield\(\)
 
 执行此方法会向系统线程调度器（Schelduler）发出一个暗示，告诉其当前JAVA线程打算放弃对CPU的使用，但该暗示，有可能被调度器忽略。使用该方法，可以防止线程对CPU的过度使用，提高系统性能。
+
+suspend()
+
+暂停当前线程，必须其对应的resume() 被调用suspend()和resume()必须要成对出现，否则非常容易发生死锁。
+因为suspend方法并不会释放锁，如果使用suspend的目标线程对一个重要的系统资源持有锁，那么没任何线程可以使用这个资源直到要suspend的目标线程被resumed，如果一个线程在resume目标线程之前尝试持有这个重要的系统资源锁再去resume目标线程，这两条线程就相互死锁了，也就冻结线程。**容易造成死锁不建议使用**。
+
+stop()
+
+终止当前线程，即刻停止run()方法中剩余的全部工作，包括在catch或finally语句中，并抛出ThreadDeath异常(通常情况下此异常不需要显示的捕获)，因此可能会导致一些清理性的工作的得不到完成，如文件，数据库等的关闭。会立即释放该线程所持有的所有的锁，导致数据得不到同步的处理，出现数据不一致的问题。
 
