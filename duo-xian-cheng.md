@@ -29,7 +29,7 @@
 
 **5、死亡状态\(Dead\)：**线程执行完了或者因遇到error或exception退出了run\(\)方法，该线程结束生命周期。线程调用 stop\(\)方法、destory\(\)方法或 run\(\)方法执行结束后，线程即处于死亡状态。处于死亡状态的线程不具有继续运行的能力。
 
-可以通过getState\(\)方法来获取线程当前的状态：NEW 、RUNNABLE、BLOCKED、WAITING、TIMED\_WAITING、TERMINATED
+可以通过getState\(\)方法来获取线程当前的状态：NEW（新创建） 、RUNNABLE（就绪状态）、BLOCKED（阻塞）、WAITING（等待）、TIMED\_WAITING（计时等待）、TERMINATED（终止）
 
 ##### ![](/assets/thread1.png)
 
