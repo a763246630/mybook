@@ -31,7 +31,7 @@
 
 可以通过getState\(\)方法来获取线程当前的状态：NEW 、RUNNABLE、BLOCKED、WAITING、TIMED\_WAITING、TERMINATED
 
-##### 
+##### ![](/assets/thread1.png)
 
 ##### 
 
