@@ -5,6 +5,8 @@
 * 位于M-1和M key的子节点的值位于M-1 和M key对应的Value之间
 * 其它节点至少有M/2个子节点
 
+![](/assets/btree1.png)
+
 下图是一个M=4 阶的B树:
 
 [![](https://images0.cnblogs.com/blog/94031/201403/290047064066682.png "B tree")](https://images0.cnblogs.com/blog/94031/201403/290047034539184.png)
