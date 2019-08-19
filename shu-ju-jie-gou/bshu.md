@@ -24,6 +24,10 @@
 
 ![](/assets/btree2.png)
 
+![](/assets/btree3.png)
+
+
+
 
 
 
