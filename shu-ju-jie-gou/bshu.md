@@ -7,6 +7,10 @@
 
 ![](/assets/btree1.png)
 
+  二叉搜索树的搜索，从根结点开始，如果查询的关键字与结点的关键字相等，那么就命中；
+
+
+
 下图是一个M=4 阶的B树:
 
 [![](https://images0.cnblogs.com/blog/94031/201403/290047064066682.png "B tree")](https://images0.cnblogs.com/blog/94031/201403/290047034539184.png)
