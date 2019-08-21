@@ -2,7 +2,7 @@
 
 * [mynotes](README.md)
 * [数据结构](shu-ju-jie-gou.md)
-  * 红黑树
+  * [红黑树](shu-ju-jie-gou/hong-hei-shu.md)
   * [常见的数据结构](shu-ju-jie-gou/chang-jian-de-shu-ju-jie-gou.md)
   * [B树](shu-ju-jie-gou/bshu.md)
   * [B+树](shu-ju-jie-gou/bshu.md)
