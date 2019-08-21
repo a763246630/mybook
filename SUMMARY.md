@@ -5,6 +5,7 @@
   * [B树](shu-ju-jie-gou/bshu.md)
   * [常见的数据结构](shu-ju-jie-gou/chang-jian-de-shu-ju-jie-gou.md)
   * 红黑树
+  * B+树
 * [java基础](javaji-chu.md)
   * [过滤器（Filter）与拦截器（Interceptor \)区别](javaji-chu/guo-lv-qi-ff08-filterff09-yu-lan-jie-qi-ff08-interceptor-qu-bie.md)
   * [java环境配置](javaji-chu/javahuan-jing-pei-zhi.md)
