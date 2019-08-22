@@ -200,10 +200,6 @@ private void rightRotate(RBTNode<T> y) {
 
 添加操作的实现代码(Java语言)
 
-[![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
-
-![复制代码](https://common.cnblogs.com/images/copycode.gif)
-
 ```
 /* 
  * 将结点插入到红黑树中
@@ -264,10 +260,6 @@ public void insert(T key) {
 
 
 添加修正操作的实现代码(Java语言)
-
-[![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
-
-![复制代码](https://common.cnblogs.com/images/copycode.gif)
 
 ```
 /*
@@ -358,10 +350,6 @@ private void insertFixUp(RBTNode<T> node) {
  
 
 删除操作的实现代码(Java语言)
-
-[![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
-
-![复制代码](https://common.cnblogs.com/images/copycode.gif)
 
 ```
 /* 
@@ -471,19 +459,13 @@ public void remove(T key) {
 }
 ```
 
-![复制代码](https://common.cnblogs.com/images/copycode.gif)
 
-[![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
 
 **内部接口** -- remove(node)的作用是将"node"节点插入到红黑树中。
 **外部接口** -- remove(key)删除红黑树中键值为key的节点。
 
 
 删除修正操作的实现代码(Java语言)
-
-[![复制代码](https://common.cnblogs.com/images/copycode.gif)](javascript:void(0);)
-
-![复制代码](https://common.cnblogs.com/images/copycode.gif)
 
 ```
 /*
