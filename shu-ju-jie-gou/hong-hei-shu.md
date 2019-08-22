@@ -67,5 +67,5 @@ RBTree是红黑树对应的类，RBTNode是红黑树的节点类。在RBTree中�
 
 **2. 左旋**
 
-![](/assets/rbtree2.png)
+![](/assets/RBTREE2.png)
 
