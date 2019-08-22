@@ -44,8 +44,8 @@ public class RBTree<T extends Comparable<T>> {
     public class RBTNode<T extends Comparable<T>> {
         boolean color;        // 颜色
         T key;                // 关键字(键值)
-        RBTNode<T> left;    // 左孩子
-        RBTNode<T> right;    // 右孩子
+        RBTNode<T> left;    // 左子字节
+        RBTNode<T> right;    // 右子字节
         RBTNode<T> parent;    // 父结点
 
         public RBTNode(T key, boolean color, RBTNode<T> parent, RBTNode<T> left, RBTNode<T> right) {
@@ -69,5 +69,53 @@ RBTree是红黑树对应的类，RBTNode是红黑树的节点类。在RBTree中�
 
 ![](/assets/RBTREE2.png)
 
+对x进行左旋，意味着"将x变成一个左节点"。
 
+左旋的实现代码(Java语言)
+
+```
+/* 
+ * 对红黑树的节点(x)进行左旋转
+ *
+ * 左旋示意图(对节点x进行左旋)：
+ *      px                              px
+ *     /                               /
+ *    x                               y                
+ *   /  \      --(左旋)-.           / \                #
+ *  lx   y                          x  ry     
+ *     /   \                       /  \
+ *    ly   ry                     lx  ly  
+ *
+ *
+ */
+private void leftRotate(RBTNode<T> x) {
+    // 设置x的右子节点为y
+    RBTNode<T> y = x.right;
+
+    // 将 “y的左子节点” 设为 “x的右子节点”；
+    // 如果y的左子节点非空，将 “x” 设为 “y的左子节点的父字节”
+    x.right = y.left;
+    if (y.left != null)
+        y.left.parent = x;
+
+    // 将 “x的父节点” 设为 “y的父节点”
+    y.parent = x.parent;
+
+    if (x.parent == null) {
+        this.mRoot = y;            // 如果 “x的父节点” 是空节点，则将y设为根节点
+    } else {
+        if (x.parent.left == x)
+            x.parent.left = y;    // 如果 x是它父节点的左子节点，则将y设为“x的父节点的左子节点”
+        else
+            x.parent.right = y;    // 如果 x是它父节点的左子节点，则将y设为“x的父节点的左子节点”
+    }
+    
+    // 将 “x” 设为 “y的左子节点”
+    y.left = x;
+    // 将 “x的父节点” 设为 “y”
+    x.parent = y;
+}
+```
+
+**3. 右旋**
 
