@@ -71,7 +71,7 @@ RBTree是红黑树对应的类，RBTNode是红黑树的节点类。在RBTree中�
 
 对x进行左旋，意味着"将x变成一个左节点"。
 
-左旋的实现代码(Java语言)
+左旋的实现代码\(Java语言\)
 
 ```
 /* 
@@ -109,7 +109,7 @@ private void leftRotate(RBTNode<T> x) {
         else
             x.parent.right = y;    // 如果 x是它父节点的左子节点，则将y设为“x的父节点的左子节点”
     }
-    
+
     // 将 “x” 设为 “y的左子节点”
     y.left = x;
     // 将 “x的父节点” 设为 “y”
@@ -118,4 +118,8 @@ private void leftRotate(RBTNode<T> x) {
 ```
 
 **3. 右旋**
+
+
+
+![](/assets/RBTREE3.png)
 
