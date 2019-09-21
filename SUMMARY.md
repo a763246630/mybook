@@ -61,4 +61,5 @@
   * [1.3 命令](gitbook/13-ming-ling.md)
 * [Mybatis](mybatis.md)
   * [Mybatis二级缓存](mybatis/mybatiser-ji-huan-cun.md)
+  * [MyBatis面试题](mybatis/mybatismian-shi-ti.md)
 
