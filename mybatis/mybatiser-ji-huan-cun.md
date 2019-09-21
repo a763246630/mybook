@@ -23,3 +23,13 @@
 DefaultSqlSession
 
 ### 二级缓存 SqlSessionFactory 跨会话全局缓存
+
+mybatis和hibernate的相同与不同点 ORM(Object Relational Mapping）
+
+Hibernate ：Hibernate 是当前最流行的ORM框架，对数据库结构提供了较为完整的封装。
+
+Mybatis：Mybatis同样也是非常流行的ORM框架，主要着力点在于POJO 与SQL之间的映射关系。
+
+相同点
+
+1.都是orm框架
