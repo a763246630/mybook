@@ -15,7 +15,7 @@
   * [JVM JMM](javaji-chu/jvm-jmm.md)
   * [响应式编程Rxjava](javaji-chu/xiang-ying-shi-bian-cheng-rxjava.md)
   * [序列化](javaji-chu/xu-lie-hua.md)
-  * GC和JVM调优
+  * [GC和JVM调优](javaji-chu/gche-jvm-diao-you.md)
 * [多线程](duo-xian-cheng.md)
   * [模拟并发 CountDownLatch用法](duo-xian-cheng/mo-ni-bing-fa-countdownlatch-yong-fa.md)
   * [线程池](duo-xian-cheng/xian-cheng-chi.md)
