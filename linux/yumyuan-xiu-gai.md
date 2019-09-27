@@ -1,13 +1,25 @@
 [TOC]
 
-### **linux ip addr 不显示ip问题**
+### **虚拟机 linux ip addr 不显示ip问题**
 
 ```
+解决方案一
 1.vi /etc/systemconfig/network-scripts/ifcfg-ens33
 
 2.ONBOOT=no 改成yes
 
 3.systemctl restart network
+
+方案二
+dhclient 0：指定dhcp客户端监听的端口号；
+dhclient -d：总是以前台方式运行程序；
+dhclient -q：安静模式，不打印任何错误的提示信息；
+dhclient -r：释放ip地址。
+
+设置虚拟机网络
+NAT改成自定义网络NAT网络
+dhclient -r
+dhclient -d
 ```
 
 ### **yum源修改**
