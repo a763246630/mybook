@@ -368,46 +368,7 @@ zookeeper 集群中总共有三种角色，分别是leader（主节点）followe
 server.3=127.0.0.1:2889:3889:observer
 ```
 
-### 3.选举机制
-
-通过 ./bin/zkServer.sh status <zoo配置文件> 命令可以查看到节点状态
-
-```
-./bin/zkServer.sh status conf/zoo1.cfg
-Mode: follower
-./bin/zkServer.sh status conf/zoo2.cfg
-Mode: leader
-./bin/zkServer.sh status conf/zoo3.cfg
-Mode: follower
-```
-
-**选举触发：**
-当集群中的服务器出现已下两种情况时会进行Leader的选举
-
-1. 服务节点初始化启动
-2. 半数以上的节点无法和Leader建立连接
-
-当节点初始起动时会在集群中寻找Leader节点，如果找到则与Leader建立连接，其自身状态变化**follower**或**observer。**如果没有找到Leader，当前节点状态将变化LOOKING，进入选举流程。
-在集群运行其间如果有follower或observer节点宕机只要不超过半数并不会影响整个集群服务的正常运行。但如果leader宕机，将暂停对外服务，所有follower将进入LOOKING 状态，进入选举流程。
-
-1. 数据同步机制
-
-zookeeper 的数据同步是为了保证各节点中数据的一至性，同步时涉及两个流程，一个是正常的客户端数据提交，另一个是集群某个节点宕机在恢复后的数据同步。
-
-**客户端写入请求：**
-
-写入请求的大至流程是，收leader接收客户端写请求，并同步给各个子节点。如下图：
-![图片](https://uploader.shimo.im/f/k2Dqe4W0OCoumzf3.png!thumbnail)
-但实际情况要复杂的多，比如client 它并不知道哪个节点是leader 有可能写的请求会发给follower ，由follower在转发给leader进行同步处理
-![图片](https://uploader.shimo.im/f/zQHJd478VV8GoCaK.png!thumbnail)
-
-客户端写入流程说明：
-
-1. client向zk中的server发送写请求，如果该server不是leader，则会将该写请求转发给leader server，leader将请求事务以proposal形式分发给follower；
-2. 当follower收到收到leader的proposal时，根据接收的先后顺序处理proposal；
-3. 当Leader收到follower针对某个proposal过半的ack后，则发起事务提交，重新发起一个commit的proposal
-4. Follower收到commit的proposal后，记录事务提交，并把数据更新到内存数据库；
-5. 当写成功后，反馈给client。
+1. 
 
 **服务节点初始化同步：**
 在集群运行过程当中如果有一个follower节点宕机，由于宕机节点没过半，集群仍然能正常服务。当leader 收到新的客户端请求，此时无法同步给宕机的节点。造成数据不一至。为了解决这个问题，当节点启动时，第一件事情就是找当前的Leader，比对数据是否一至。不一至则开始同步,同步完成之后在进行对外提供服务。
