@@ -345,7 +345,7 @@ ConcurrentHashMap使用分段锁技术，将数据分成一段一段的存储，
 
 第一次Hash定位到Segment，第二次Hash定位到元素所在的链表的头部
 
-![](/assets/jh1.png)
+
 
 **坏处**
 
@@ -368,6 +368,12 @@ JDK8中彻底放弃了Segment转而采用的是Node，其设计思想也不再�
 Node：保存key，value及key的hash值的数据结构。其中value和next都用volatile修饰，保证并发的可见性。
 
 其中抛弃了原有的 Segment 分段锁，而采用了CAS + synchronized来保证并发安全性。
+
+数据结构：取消了Segment分段锁的数据结构，取而代之的是数组+链表+红黑树的结构。
+
+保证线程安全机制：JDK1.7采用segment的分段锁机制实现线程安全，其中segment继承自ReentrantLock。JDK1.8采用CAS+Synchronized保证线程安全。
+
+锁的粒度：原来是对需要进行数据操作的Segment加锁，现调整为对每个数组元素加锁（Node）。链表转化为红黑树:定位结点的hash算法简化会带来弊端,Hash冲突加剧,因此在链表节点数量大于8时，会将链表转化为红黑树进行存储
 
 #### CopyOnWriteArrayList
 
