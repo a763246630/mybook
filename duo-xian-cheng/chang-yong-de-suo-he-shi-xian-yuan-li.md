@@ -12,11 +12,25 @@
 
 服务级锁（JVM级）
 
+隐式锁:jvm 内置锁,不需要手动加解锁
+
+### synchronized
+
+不能跨方法.
+
+```
+synchronized(这个锁对象){
+
+
+
+}//括号开始结束是锁的范围
+```
+
+显式锁:需要手动加解锁 ,juc包，灵活度更好
+
 Lock
 
-synchronized
-
-ReentrantLock
+### ReentrantLock
 
 数据库锁
 
