@@ -397,9 +397,8 @@ zookeeper 的数据同步是为了保证各节点中数据的一至性，同步�
 **客户端写入请求：**
 
 写入请求的大至流程是，收leader接收客户端写请求，并同步给各个子节点。如下图：
-![图片](https://uploader.shimo.im/f/k2Dqe4W0OCoumzf3.png!thumbnail)
 但实际情况要复杂的多，比如client 它并不知道哪个节点是leader 有可能写的请求会发给follower ，由follower在转发给leader进行同步处理
-![图片](https://uploader.shimo.im/f/zQHJd478VV8GoCaK.png!thumbnail)
+
 
 客户端写入流程说明：
 
