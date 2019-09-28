@@ -45,7 +45,7 @@ zookeeper锁
 不能跨方法.
 
 ```
-synchronized(这个锁对象){
+synchronized(对象){
 
 
 
