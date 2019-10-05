@@ -347,13 +347,14 @@ nextWaiter获取下一个节点
   5.如果获取锁成功并且中断状态不是异常中断（ THROW_IE    = -1），将中断状态改为 interruptMode = REINTERRUPT;（该模式表示在退出等待时重新中断）
   6.如果节点的下一个节点nextWaiter不等于空，轮询队列清除节点状态不为Condition的节点，根据不同中断状态，如果中断状态为THROW_IE抛出异常，如果中断状态为REINTERRUPT中断当前线程。
   
- signal()
+ signal()将条件队列的节点放入同步队列去竞争锁
  1.判断isHeldExclusively()当前节点没有持有锁就抛出异常。
  2.如果条件队列firstWaiter不为空，执行唤醒firstWaiter。
  3.》》doSignal唤醒
-      3.1》》transferForSignal 
+      3.1》》轮询取出条件队列传入transferForSignal (firstWaiter)直到transferForSignal返回true或者条件队列为空
             3.1.1 用CAS替换当前节点waitStatus为0，失败则返回false.
-            3.
+            3.1.2 将当前节点加入同步队列尾部当中，返回前驱节点
+            3.1.3 前驱节点的waitStatus>0或者CAS替换前驱节点的waitStatus为SIGNAL失败，则唤醒当前节点，最后返回true
 ```
 
 
