@@ -299,7 +299,7 @@ getState\(\)、setState\(\)、compareAndSetState\(\)
 
 双向链表来实现
 
-![](/assets/AQS1.png)
+![](/assets/aqs2.png)
 
 结构 head-&gt;Node1&lt;=&gt;Node2&lt;-tail
 
