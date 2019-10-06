@@ -22,6 +22,7 @@
   * [线程池](duo-xian-cheng/xian-cheng-chi.md)
   * [常用的锁和实现原理](duo-xian-cheng/chang-yong-de-suo-he-shi-xian-yuan-li.md)
   * [ThreadLocal线程本地变量](duo-xian-cheng/threadlocalxian-cheng-ben-di-bian-liang.md)
+  * [类加载](duo-xian-cheng/lei-jia-zai.md)
 * [maven](maven.md)
   * [1.1 安装和配置](maven/11-an-zhuang-he-pei-zhi.md)
 * [linux](linux.md)
