@@ -201,12 +201,13 @@ ReentrantLock lock=new ReentrantLock \(true\);//true 实例化FairSync为公平�
 ```
 1.公平锁调用FairSync类的lock()>>acquire(1)>>tryAcquire
 尝试获取锁
- 如果锁的state为0（锁没有被占用），则判断当前节点是否有前驱节点，没有则CAS替换state锁状态为1独占,有则获取锁失败(公平锁必须让排队让前驱节点先获取锁).
+ 如果锁的state为0（锁没有被占用），则判断
+     如果当前节点没有有前驱节点，并且CAS替换state锁状态为1获取独占锁次数加1,设置setExclusiveOwnerThread为当前线程，有则获取锁失败(公平锁必须让排队让前驱节点先获取锁).
  如果state不为0，则判断getExclusiveOwnerThread()当前独占线程是否是当前线程，不是则获取锁失败，是当前线程将state加1(获取锁次数加1).
 2.如果获取锁失败，则调用acquireQueued(addWaiter(Node.EXCLUSIVE), arg)>>addWaiter(Node mode)
 新建一个nextWaiter为null的Node节点放入到同步队列中（CAS替换tail指向当前节点）如果失败循环执行。
   2.1执行>>acquireQueued
-  2.1.1判断当前节点是否等于当前节点的前驱节点(head会指向队列的第一个节点),
+  2.1.1判断当前节点的前驱节点是否是head,
   如果是则调用tryAcquire尝试获取锁如果成功则将当前结点设置为头结点(head),当前节点的下一个节点等null，返回true获取锁成功
   如果前驱节点不是Head或者tryAcquire失败,
     则调用>>shouldParkAfterFailedAcquire
@@ -226,7 +227,22 @@ ReentrantLock lock=new ReentrantLock \(true\);//true 实例化FairSync为公平�
 
 
 如果shouldParkAfterFailedAcquire或者parkAndCheckInterrupt都返回true.则执行selfInterrupt()中断线程.
+
+
+
 ```
+
+主要步骤
+
+1. 尝试获取锁（如果当前节点没有前驱节点，CAS替换state+1，或者独占线程为当前线程则成功），获取失败就创建一个独占节点用CAS替换tail(放入同步队列尾部)，
+
+2. 如果当前节点的前驱节点是head再次尝试获取锁，
+
+​               如果成功，将当前节点设为head;
+
+​                如果失败,阻塞当前线程。
+
+
 
 公平锁释放锁过程
 
@@ -250,6 +266,18 @@ ReentrantLock lock=new ReentrantLock \(true\);//true 实例化FairSync为公平�
  如果state不为0，则判断getExclusiveOwnerThread()当前独占线程是否是当前线程，不是则获取锁失败，是当前线程将state加1(获取锁次数加1).
 之后的逻辑与公平锁2一致.
 ```
+
+主要步骤
+
+1.尝试获取锁（如果直接CAS替换state+1，或者独占线程为当前线程则成功），获取失败就创建一个独占节点用CAS替换tail(放入同步队列尾部)，
+
+2.如果当前节点的前驱节点是head再次尝试获取锁（跟1.的尝试锁步骤一致），
+
+​               如果成功，将当前节点设为head;
+
+​                如果失败,阻塞当前线程。
+
+
 
 可重入
 
@@ -384,6 +412,16 @@ tryReleaseShared\(int\)：共享方式。尝试释放资源，如果释放后允
 
 读写锁
 
+读写锁对于同步状态的实现是在一个整形变量上通过“按位切割使用”：将变量切割成两部分，高16位表示读，低16位表示写。
+
+1）获取写状态：
+
+​    S&0x0000FFFF:将高16位全部抹去
+
+（2）获取读状态：
+
+​    S>>>16:无符号补0，右移16位
+
 内部维护一个读锁一个写锁
 
 ```
@@ -392,24 +430,100 @@ private final ReentrantReadWriteLock.ReadLock readerLock;
 /** Inner class providing writelock */
 private final ReentrantReadWriteLock.WriteLock writerLock；
 
-读锁共享   子类ReadLock里的>>lock()>>sync.acquireShared(1)>>tryAcquireShared(int unused)
-如果state状态当前被加独占写锁，则返回加共享锁失败
-判断读锁是否应该阻塞，判断依据
+读锁共享获取过程
+1.子类ReadLock里的>>lock()>>sync.acquireShared(1)>>tryAcquireShared(int unused) 
+2.如果获取独占锁的次数不等于0并且独占线程不是当前线程直接获取失败 return -1;
+3.判断读锁是否应该阻塞，判断依据
 公平锁
 FairSync》》readerShouldBlock 有前驱节点应该阻塞返回true
 非公平锁
-NonfairSync》》readerShouldBlock》》apparentlyFirstQueuedIsExclusive
+NonfairSync》》readerShouldBlock》》apparentlyFirstQueuedIsExclusive有写请求都返回true
+如果不应该阻塞，并且读锁小于读锁最大获取数量，并且CAS替换state读锁数量加1成功。
+   如果是第一次加读锁,则firstReader赋值为当前线程，firstReaderHoldCount(第一次获得读锁线程持有的锁的次数)等于1；
+   如果firstReader等于当前线程，则firstReaderHoldCount++；
+   如果上面的两个条件都不满足，
+      则判断如果cachedHoldCounter（每线程读取保持计数的计数器。作为threadlocal维护，缓存）等于null或者线程id不等于当前线程id，readHolds.get()赋值给cachedHoldCounter。
+      如果cachedHoldCounter.count(缓存里锁计数器为0)，保存到readHolds；
+      cachedHoldCounter.count++；
+   return 1；
 
+如果应该阻塞，或者读锁大于或等于读锁最大获取数量，并且CAS替换state读锁数量加1失败。
+     执行》》fullTryAcquireShared
+      轮询上面的操作直到
+      1.第一步return -1;
+      2.读锁应该阻塞，cachedHoldCounter.count==0 return -1;
+      3.大于读锁最大获取次数抛出异常
+      4.return 1;
+      这几种情况;
+  
 
 其中exclusiveCount方法表示占有写锁的线程数量，源码如下：
 static int exclusiveCount(int c) { return c & EXCLUSIVE_MASK; }
 说明：直接将状态state和（2^16 - 1）做与运算，其等效于将state模上2^16。写锁数量由state的低十六位表示。
 
-判断读锁是否应该阻塞，判断依据
-公平锁
-FairSync》》writerShouldBlock 有前驱节点应该阻塞返回true
-非公平锁
+4.tryAcquireShared(int unused)返回-1 则获取锁失败去排队>>doAcquireShared
+  共享的状态加入同步队列中addWaiter(Node.SHARED)
+  判断如果前驱节点是head 节点，则再次tryAcquireShared尝试获取锁，如果成功设置node为head节点，设置node.waitStatus->Node.PROPAGATE，然后唤醒node.thread。
+
+读锁释放
+ReadLock>>unlock()>>sync.releaseShared(1)>>
+tryReleaseShared(arg)
+1.如果firstReader等于当前线程
+   如果firstReaderHoldCount==1（当前线程获取读锁次数为1），firstReader==null;
+   否则firstReaderHoldCount--.
+如果firstReader不等于当前线程
+   如果缓存计数器cachedHoldCounter==null或者线程id不等于当前线程id,readHolds.get();覆盖掉cachedHoldCounter.
+   如果cachedHoldCounter.count缓存数量小于等于1， readHolds.remove();
+         如果cachedHoldCounter.count缓存数量小于等于0抛出异常
+   --rh.count;
+2.轮询直到CAS替换state=state-1成功,如果state==0则return true;
+3.如果tryReleaseShared失败 return false;
+4.如果tryReleaseShared成功，唤醒后面的节点去竞争锁
+      >>doReleaseShared()
+      如果head不为null并且head不等于tail
+         如果head的waitStatus为SIGNAL,CAS替换head的waitStatus为0失败中断该次循环;
+         唤醒head节点（此时head、head.next的线程都唤醒了，head.next会去竞争锁，成功后head会指向获取锁的节点，head会发生变化）
+         如果head的waitStatus为0，CAS替换head的waitStatus为共享（PROPAGATE可以传播到后面的共享节点 ），然后跳出此次循环;
+      如果以上没有跳出循环，head没有发生变化（表示没有竞争锁了） 跳出循环
+
+
 ```
+
+写锁获取过程
+
+```
+WriteLock >>lock()>>sync.acquire(1);>>
+1.如果state不等于0（不是初始状态）
+      如果写锁获取数量等于0或者当前线程，直接返回 return false;
+      如果写锁获取数量大于最大数量（根据）抛出异常
+      state加1，return true;
+2.writerShouldBlock
+  判断如果读锁应该阻塞，判断依据如下，或者CAS替换state加1失败，直接返回false；
+     公平锁
+     FairSync》》writerShouldBlock 有前驱节点应该阻塞返回true
+     非公平锁
+     都返回false
+  设置setExclusiveOwnerThread(current);独占线程为当前线程，return true;
+ 
+释放过程
+  >>unlock()>> sync.release(1)
+  >>tryRelease(arg)
+    判断如果当前线程不是独占线程抛出异常，state减1
+       如果state减1后写锁获取数量（ exclusiveCount(state减1)）为0，赋值独占线程为null,return true;
+    如果tryRelease失败returnfalse
+    如果tryRelease成功
+     判断如果head不为null并且head的waitStatus不为0，唤醒后继节点,return true;
+```
+
+而读写锁有以下三个重要的特性：
+
+（1）公平选择性：支持非公平（默认）和公平的锁获取方式，吞吐量还是非公平优于公平。
+
+（2）重进入：读锁和写锁都支持线程重进入。
+
+（3）锁降级：遵循获取写锁、获取读锁再释放写锁的次序，写锁能够降级成为读锁。
+
+一个线程要想同时持有写锁和读锁，必须先获取写锁再获取读锁；写锁可以“降级”为读锁；读锁不能“升级”为写锁。如果先获取读锁再获取写锁会造成死锁
 
 ### Syncronized JVM内置锁 原理
 
