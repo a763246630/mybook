@@ -395,6 +395,39 @@ tryReleaseShared(int)：共享方式。尝试释放资源，如果释放后允�
 
 允许中断
 
+### ReentrantReadWriteLock
+
+读写锁
+
+内部维护一个读锁一个写锁
+
+```
+/** Inner class providing readlock */
+private final ReentrantReadWriteLock.ReadLock readerLock;
+/** Inner class providing writelock */
+private final ReentrantReadWriteLock.WriteLock writerLock；
+
+读锁共享   子类ReadLock里的>>lock()>>sync.acquireShared(1)>>tryAcquireShared(int unused)
+如果state状态当前被加独占写锁，则返回加共享锁失败
+判断读锁是否应该阻塞，判断依据
+公平锁
+FairSync》》readerShouldBlock 有前驱节点应该阻塞返回true
+非公平锁
+NonfairSync》》readerShouldBlock》》apparentlyFirstQueuedIsExclusive
+
+
+其中exclusiveCount方法表示占有写锁的线程数量，源码如下：
+static int exclusiveCount(int c) { return c & EXCLUSIVE_MASK; }
+说明：直接将状态state和（2^16 - 1）做与运算，其等效于将state模上2^16。写锁数量由state的低十六位表示。
+
+判断读锁是否应该阻塞，判断依据
+公平锁
+FairSync》》writerShouldBlock 有前驱节点应该阻塞返回true
+非公平锁
+
+
+```
+
 
 
 ### Syncronized JVM内置锁 原理
