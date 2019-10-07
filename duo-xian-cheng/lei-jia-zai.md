@@ -148,7 +148,5 @@ loadClass\(String, boolean\)，实现了**双亲委派机制**，大体逻辑
 
 这个jsp类加载器。重新创建类加载器，重新加载jsp文件。
 
-
-
-![](/assets/类加载2.png)
+![](/assets/类加载3.png)
 
