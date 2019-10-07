@@ -150,3 +150,48 @@ loadClass\(String, boolean\)，实现了**双亲委派机制**，大体逻辑
 
 ![](/assets/类加载3.png)
 
+tomcat的几个主要类加载器： 
+
+commonLoader：Tomcat最基本的类加载器，加载路径中的class可以被 
+
+Tomcat容器本身以及各个Webapp访问； 
+
+catalinaLoader：Tomcat容器私有的类加载器，加载路径中的class对于 
+
+Webapp不可见； 
+
+sharedLoader：各个Webapp共享的类加载器，加载路径中的class对于所有 
+
+Webapp可见，但是对于Tomcat容器不可见； 
+
+WebappClassLoader：各个Webapp私有的类加载器，加载路径中的class只对 
+
+当前Webapp可见；从图中的委派关系中可以看出： 
+
+CommonClassLoader能加载的类都可以被CatalinaClassLoader和SharedClassLoader使 
+
+用，从而实现了公有类库的共用，而CatalinaClassLoader和SharedClassLoader自己能加 
+
+载的类则与对方相互隔离。 
+
+WebAppClassLoader可以使用SharedClassLoader加载到的类，但各个 
+
+WebAppClassLoader实例之间相互隔离。 
+
+而JasperLoader的加载范围仅仅是这个JSP文件所编译出来的那一个.Class文件，它出现的 
+
+目的就是为了被丢弃：当Web容器检测到JSP文件被修改时，会替换掉目前的 
+
+JasperLoader的实例，并通过再建立一个新的Jsp类加载器来实现JSP文件的热加载功能。 
+
+tomcat 这种类加载机制违背了java 推荐的双亲委派模型了吗？答案是：违背了。 
+
+我们前面说过，双亲委派机制要求除了顶层的启动类加载器之外，其余的类加载器都应当由 
+
+自己的父类加载器加载。 
+
+很显然，tomcat 不是这样实现，tomcat 为了实现隔离性，没有遵守这个约定，**每个** 
+
+**webappClassLoader加载自己的目录下的class文件，不会传递给父类加载器，打破了双** 
+
+**亲委派机制**。
