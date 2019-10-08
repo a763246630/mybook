@@ -10,9 +10,9 @@ java  gc主要是对堆内存和方法区空间的清理（回收没有引用的
 
 ##### 堆大小设置  初始堆大小 -Xms100M  最大堆大小   -Xmx100M
 
-##### 设置年轻代大小 -Xmn 100M 
+##### 设置年轻代大小 -Xmn 100M
 
-##### 设置年轻代比例 -XX:SurvivorRatio=8:1:1  年轻代默认比例为Eden:to:from(8:1:1
+##### 设置年轻代比例 -XX:SurvivorRatio=8:1:1  年轻代默认比例为Eden:to:from\(8:1:1
 
 ##### 设置元空间大 初始-XX:MetaspaceSize=8m  最大-XX:MaxMetaspaceSize=50m
 
@@ -34,13 +34,13 @@ jvm内存设置案例
 
 
 
+![](/assets/ty1.png)
+
 #### 内存调优工具
 
 **Jinfo**
 
-查看jvm的运行时参数  jinfo -flags 30880(端口号)
+查看jvm的运行时参数  jinfo -flags 30880\(端口号\)
 
-查看正在运行的Java应用程序的扩展参数  jinfo -sysprop 30880(端口号)
-
-
+查看正在运行的Java应用程序的扩展参数  jinfo -sysprop 30880\(端口号\)
 
