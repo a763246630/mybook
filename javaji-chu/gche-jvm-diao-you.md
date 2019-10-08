@@ -27,3 +27,7 @@ java  gc主要是对堆内存和方法区空间的清理（回收没有引用的
 ##### 对象gc轮转过程
 
 新创建的对象会放入Eden（伊甸园区）伊甸园区放满会发生minorGC，发生gc会将Eden区存活对象放入Survivor区from，再次发生GC将Eden区和Survivor区from存活对象放入to区。**Survivor不够用直接放入老年代，** 15次GC没有回收的对象会移到老年代，老年代满了会发生fullGC
+
+jvm内存设置案例
+
+订单系统
