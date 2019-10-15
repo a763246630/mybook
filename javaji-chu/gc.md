@@ -48,6 +48,10 @@ ParNew收集器其实就是Serial收集器的多线程版本，除了使用多�
 
 ##### Parallel Scavenge收集器\(-XX:+UseParallelGC\(年轻代\),XX:+UseParallelOldGC\(老年代\)\)
 
+
+
+![](/assets/gcsjqParallel.png)
+
 ##### CMS收集器\(-XX:+UseConcMarkSweepGC\(old\)\)
 
 ##### G1收集器\(-XX:+UseG1GC\)
