@@ -92,7 +92,7 @@ CMS的相关参数
 
 3. -XX:+UseCMSCompactAtFullCollection：FullGC之后做压缩整理（减少碎片）
 
-4. -XX:CMSFullGCsBeforeCompaction：多少次FullGC之后压缩一次，默认是0，代表每次 FullGC后都会压缩一次
+4. -XX:CMSFullGCsBeforeCompaction：多少次FullGC之后压缩整理一次，默认是0，代表每次 FullGC后都会压缩一次
 
 5. -XX:CMSInitiatingOccupancyFraction: 当老年代使用达到该比例时会触发FullGC（默认 是92，这是百分比）
 
