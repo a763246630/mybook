@@ -309,20 +309,12 @@ String b = "test";
 * String对象
 
 ```
-String a = 
-new
- String(
-"holtenObj"
-);
-String b = 
-new
- String(
-"holtenObj"
-);
+String a = new String("holtenObj");
+String b = new String("holtenObj");
 ```
 
-* Class被加载时就在常量池中创建了一个值为holtenObj的String对象，第一句执行时会在堆里创建new String\("holtenObj"\)对象；
-* 第二句执行时，因为常量池中存在holtenObj所以就不再创建新的String对象了，直接在堆里创建new String\("holtenObj"\)对象。
+* Class被加载时就在常量池中创建了一个值为test的String对象，第一句执行时会在堆里创建new String\("test"\)对象；
+* 第二句执行时，因为常量池中存在test所以就不再创建新的String对象了，直接在堆里创建new String\("test"\)对象。
 
 
 
