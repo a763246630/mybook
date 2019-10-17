@@ -72,6 +72,8 @@ CMS（Concurrent Mark Sweep）收集器是一种以获取最短回收停顿时�
 
 ![](/assets/gcsjqg1.png)
 
+
+
 ##### G1收集器\(-XX:+UseG1GC\)
 
 
