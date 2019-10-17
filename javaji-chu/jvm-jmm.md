@@ -298,19 +298,15 @@ Jdk1.8及之后： 无永久代，常量池在元空间
 1. 显式的String常量
 
 ```
-String a = 
-"holten"
-;
-String b = 
-"holten"
-;
+String a = "test";
+String b = "test";
 ```
 
-* 第一句代码执行后就在常量池中创建了一个值为holten的String对象；
-* 第二句执行时，因为常量池中存在holten所以就不再创建新的String对象了。
+* 第一句代码执行后就在常量池中创建了一个值为test的String对象；
+* 第二句执行时，因为常量池中存在test所以就不再创建新的String对象了。
 * 此时该字符串的引用在虚拟机栈里面。
 
-1. String对象
+* String对象
 
 ```
 String a = 
