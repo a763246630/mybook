@@ -291,5 +291,42 @@ Jdk1.8及之后： 无永久代，常量池在元空间
 
 使用直接内存，不是jvm分配内存
 
-常量池
+###### 常量池
+
+### String内存位置说明 {#string内存位置说明}
+
+1. 显式的String常量
+
+```
+String a = 
+"holten"
+;
+String b = 
+"holten"
+;
+```
+
+* 第一句代码执行后就在常量池中创建了一个值为holten的String对象；
+* 第二句执行时，因为常量池中存在holten所以就不再创建新的String对象了。
+* 此时该字符串的引用在虚拟机栈里面。
+
+1. String对象
+
+```
+String a = 
+new
+ String(
+"holtenObj"
+);
+String b = 
+new
+ String(
+"holtenObj"
+);
+```
+
+* Class被加载时就在常量池中创建了一个值为holtenObj的String对象，第一句执行时会在堆里创建new String\("holtenObj"\)对象；
+* 第二句执行时，因为常量池中存在holtenObj所以就不再创建新的String对象了，直接在堆里创建new String\("holtenObj"\)对象。
+
+
 
