@@ -70,7 +70,7 @@ CMS（Concurrent Mark Sweep）收集器是一种以获取最短回收停顿时�
 
 ###### 并发清理： 开启用户线程，同时GC线程开始对未标记的区域做清扫。
 
-
+![](/assets/gcsjqg1.png)
 
 ##### G1收集器\(-XX:+UseG1GC\)
 
