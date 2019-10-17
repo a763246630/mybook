@@ -94,7 +94,7 @@ CMS（Concurrent Mark Sweep）收集器是一种以获取最短回收停顿时�
 
 4. -XX:CMSFullGCsBeforeCompaction：多少次FullGC之后压缩整理一次，默认是0，代表每次 FullGC后都会压缩一次
 
-5. -XX:CMSInitiatingOccupancyFraction: 当老年代空间被占达到该比例时会触发FullGC（默认 是92，这是百分比）
+5. -XX:CMSInitiatingOccupancyFraction: 当老年代空间被占达到该比例时会触发FullGC（默认 是92，这是百分比，值越小次数越多时间越短，值越大次数越少时间越短）
 
 6. -XX:+UseCMSInitiatingOccupancyOnly：只使用设定的回收阈值\(XX:CMSInitiatingOccupancyFraction设定的值\)，如果不指定，JVM仅在第一次使用设定 值，后续则会自动调整
 
