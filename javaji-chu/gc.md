@@ -82,11 +82,7 @@ CMS（Concurrent Mark Sweep）收集器是一种以获取最短回收停顿时�
 
 它使用的回收算法-“标记-清除”算法会导致收集结束时会有大量空间碎片产生，当然 通过参XX:+UseCMSCompactAtFullCollection 可以让jvm在执行完标记清除后再做整理 .
 
-执行过程中的不确定性，会存在上一次垃圾回收还没执行完，然后垃圾回收又被触 发的情况，特别是在并发标记和并发清理阶段会出现，一边回收，系统一边运行，也许没回 收完就再次触发full gc，也就是"concurrent mode failure"，此时会进入stop the world，用serial old垃圾收集器来回收
-
-
-
-
+执行过程中的不确定性，会存在上一次垃圾回收还没执行完，然后垃圾回收又被触 发的情况，特别是在并发标记和并发清理阶段会出现，一边回收，系统一边运行，**也许没回 收完就再次触发full gc，也就是"concurrent mode failure"，此时会进入stop the world，用serial old垃圾收集器来回收**
 
 ##### G1收集器\(-XX:+UseG1GC\)
 
