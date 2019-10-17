@@ -56,7 +56,7 @@ CMS（Concurrent Mark Sweep）收集器是一种以获取最短回收停顿时�
 
 ###### 初始标记 暂停所有的其他线程，并记录下gc roots（直接能引用的对象），速度很快 ；
 
-
+![](/assets/ljsjqg11.png)
 
 ###### 并发标记
 
