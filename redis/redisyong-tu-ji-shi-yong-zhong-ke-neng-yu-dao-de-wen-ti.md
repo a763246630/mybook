@@ -12,6 +12,8 @@ redis 缓存击穿
 
 redis 分布式锁setnx 
 
+可能出现的问题
+
 确保过期时间大于业务执行时间
 
 方法1.抽象类RedisLock增加一个boolean类型的属性isOpenExpirationRenewal，用来标识是否开启定时刷新过期时间。
