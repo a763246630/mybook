@@ -298,7 +298,7 @@ YoungGC并不是说现有的Eden区放满了就会马上触发，而且G1会计�
 
 **MixedGC**
 
-不是FullGC，老年代的堆占有率达到参数\(**-XX:InitiatingHeapOccupancyPercen**\)设定的值
+不是FullGC，老年代的堆占有率达到参数\(**-XX:InitiatingHeapOccupancyPercen**\)默认45%设定的值
 
 则触发，回收所有的Young和部分Old\(根据期望的GC停顿时间确定old区垃圾收集的优先顺序\)以
 
