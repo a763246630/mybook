@@ -50,6 +50,12 @@ ParNew收集器其实就是Serial收集器的多线程版本，除了使用多�
 
 ![](/assets/gcsjqParallel.png)
 
+**Parallel Old收集器是Parallel Scavenge收集器的老年代版本**。使用多线程和“标记-整理”算
+
+法。在注重吞吐量以及CPU资源的场合，都可以优先考虑 Parallel Scavenge收集器和Parallel
+
+Old收集器。
+
 ##### CMS收集器\(-XX:+UseConcMarkSweepGC\(old\)\)只能用在老年代
 
 CMS（Concurrent Mark Sweep）收集器是一种以获取最短回收停顿时间为目标的收集器。它 非常符合在注重用户体验的应用上使用，它是HotSpot虚拟机第一款真正意义上的并发收集器， 它第一次实现了让垃圾收集线程与用户线程（基本上）同时工作。 从名字中的Mark Sweep这两个词可以看出，CMS收集器是一种 “标记-清除”算法实现的，它 的运作过程相比于前面几种垃圾收集器来说更加复杂一些。整个过程分为四个步骤：
@@ -182,134 +188,133 @@ region中，这种不会像CMS那样回收完因为有很多内存碎片还需�
 
 ![](/assets/gcg1.png)
 
+**G1收集器在后台维护了一个优先列表，每次根据允许的收集时间，优先选择回收价值最大的**
 
+**Region\(这也就是它的名字Garbage-First的由来\)，比如一个Region花200ms能回收10M垃**
 
-**G1收集器在后台维护了一个优先列表，每次根据允许的收集时间，优先选择回收价值最大的** 
+**圾，另外一个Region花50ms能回收20M垃圾，在回收时间有限情况下，G1当然会优先选择后面**
 
-**Region(这也就是它的名字Garbage-First的由来)，比如一个Region花200ms能回收10M垃** 
+**这个Region回收**。这种使用Region划分内存空间以及有优先级的区域回收方式，保证了G1收集
 
-**圾，另外一个Region花50ms能回收20M垃圾，在回收时间有限情况下，G1当然会优先选择后面** 
+器在有限时间内可以尽可能高的收集效率。
 
-**这个Region回收**。这种使用Region划分内存空间以及有优先级的区域回收方式，保证了G1收集 
+被视为JDK1.7以上版本Java虚拟机的一个重要进化特征。它具备以下特点：
 
-器在有限时间内可以尽可能高的收集效率。 
+**并行与并发**：G1能充分利用CPU、多核环境下的硬件优势，使用多个CPU（CPU或者
 
-被视为JDK1.7以上版本Java虚拟机的一个重要进化特征。它具备以下特点： 
+CPU核心）来缩短Stop-The-World停顿时间。部分其他收集器原本需要停顿Java线程来执
 
-**并行与并发**：G1能充分利用CPU、多核环境下的硬件优势，使用多个CPU（CPU或者 
+行GC动作，G1收集器仍然可以通过并发的方式让java程序继续执行。**分代收集**：虽然G1可以不需要其他收集器配合就能独立管理整个GC堆，但是还是保留
 
-CPU核心）来缩短Stop-The-World停顿时间。部分其他收集器原本需要停顿Java线程来执 
+了分代的概念。
 
-行GC动作，G1收集器仍然可以通过并发的方式让java程序继续执行。**分代收集**：虽然G1可以不需要其他收集器配合就能独立管理整个GC堆，但是还是保留 
+**空间整合**：与CMS的“标记--清理”算法不同，G1从整体来看是基于“**标记整理**”算法
 
-了分代的概念。 
+实现的收集器；从局部上来看是基于“复制”算法实现的。
 
-**空间整合**：与CMS的“标记--清理”算法不同，G1从整体来看是基于“**标记整理**”算法 
+**可预测的停顿**：这是G1相对于CMS的另一个大优势，降低停顿时间是G1 和 CMS 共同
 
-实现的收集器；从局部上来看是基于“复制”算法实现的。 
+的关注点，但G1 除了追求低停顿外，还能建立**可预测的停顿时间模型**，能让使用者明确指
 
-**可预测的停顿**：这是G1相对于CMS的另一个大优势，降低停顿时间是G1 和 CMS 共同 
+定在一个长度为M毫秒的时间片段\(通过参数"**-XX:MaxGCPauseMillis**"指定\)内完成垃圾收
 
-的关注点，但G1 除了追求低停顿外，还能建立**可预测的停顿时间模型**，能让使用者明确指 
+集。
 
-定在一个长度为M毫秒的时间片段(通过参数"**-XX:MaxGCPauseMillis**"指定)内完成垃圾收 
+**G1收集器参数设置**
 
-集。 
+-XX:+UseG1GC:使用G1收集器
 
-**G1收集器参数设置** 
+-XX:ParallelGCThreads:指定GC工作的线程数量
 
--XX:+UseG1GC:使用G1收集器 
+-XX:G1HeapRegionSize:指定分区大小\(1MB~32MB，且必须是2的幂\)，默认将整堆划分为
 
--XX:ParallelGCThreads:指定GC工作的线程数量 
+2048个分区
 
--XX:G1HeapRegionSize:指定分区大小(1MB~32MB，且必须是2的幂)，默认将整堆划分为 
+-XX:MaxGCPauseMillis:目标暂停时间\(默认200ms\)
 
-2048个分区 
+-XX:G1NewSizePercent:新生代内存初始空间\(默认整堆5%\)
 
--XX:MaxGCPauseMillis:目标暂停时间(默认200ms) 
+-XX:G1MaxNewSizePercent:新生代内存最大空间
 
--XX:G1NewSizePercent:新生代内存初始空间(默认整堆5%) 
+-XX:TargetSurvivorRatio:Survivor区的填充容量\(默认50%\)，Survivor区域里的一批对象\(年龄
 
--XX:G1MaxNewSizePercent:新生代内存最大空间 
+1+年龄2+年龄n的多个年龄对象\)总和超过了Survivor区域的50%，此时就会把年龄n\(含\)以上的对
 
--XX:TargetSurvivorRatio:Survivor区的填充容量(默认50%)，Survivor区域里的一批对象(年龄 
+象都放入老年代
 
-1+年龄2+年龄n的多个年龄对象)总和超过了Survivor区域的50%，此时就会把年龄n(含)以上的对 
+-XX:MaxTenuringThreshold:最大年龄阈值\(默认15\)
 
-象都放入老年代 
+-XX:InitiatingHeapOccupancyPercent:老年代占用空间达到整堆内存阈值\(默认45%\)，则执行
 
--XX:MaxTenuringThreshold:最大年龄阈值(默认15) 
+新生代和老年代的混合收集\(**MixedGC**\)，比如我们之前说的堆默认有2048个region，如果有接近
 
--XX:InitiatingHeapOccupancyPercent:老年代占用空间达到整堆内存阈值(默认45%)，则执行 
+1000个region都是老年代的region，则可能就要触发MixedGC了
 
-新生代和老年代的混合收集(**MixedGC**)，比如我们之前说的堆默认有2048个region，如果有接近 
+-XX:G1HeapWastePercent\(默认5%\): gc过程中空出来的region是否充足阈值，在混合回收的时
 
-1000个region都是老年代的region，则可能就要触发MixedGC了 
+候，对Region回收都是基于复制算法进行的，都是把要回收的Region里的存活对象放入其他
 
--XX:G1HeapWastePercent(默认5%): gc过程中空出来的region是否充足阈值，在混合回收的时 
+Region，然后这个Region中的垃圾对象全部清理掉，这样的话在回收过程就会不断空出来新的
 
-候，对Region回收都是基于复制算法进行的，都是把要回收的Region里的存活对象放入其他 
+Region，一旦空闲出来的Region数量达到了堆内存的5%，此时就会立即停止混合回收，意味着
 
-Region，然后这个Region中的垃圾对象全部清理掉，这样的话在回收过程就会不断空出来新的 
+本次混合回收就结束了。
 
-Region，一旦空闲出来的Region数量达到了堆内存的5%，此时就会立即停止混合回收，意味着 
+-XX:G1MixedGCLiveThresholdPercent\(默认85%\) region中的存活对象低于这个值时才会回收
 
-本次混合回收就结束了。 
+该region，如果超过这个值，存活对象过多，回收的的意义不大。
 
--XX:G1MixedGCLiveThresholdPercent(默认85%) region中的存活对象低于这个值时才会回收 
+-XX:G1MixedGCCountTarget:在一次回收过程中指定做几次筛选回收\(默认8次\)，在最后一个筛
 
-该region，如果超过这个值，存活对象过多，回收的的意义不大。 
+选回收阶段可以回收一会，然后暂停回收，恢复系统运行，一会再开始回收，这样可以让系统不至
 
--XX:G1MixedGCCountTarget:在一次回收过程中指定做几次筛选回收(默认8次)，在最后一个筛 
+于单次停顿时间过长。
 
-选回收阶段可以回收一会，然后暂停回收，恢复系统运行，一会再开始回收，这样可以让系统不至 
+**G1垃圾收集分类\*\***YoungGC\*\*
 
-于单次停顿时间过长。 
+YoungGC并不是说现有的Eden区放满了就会马上触发，而且G1会计算下现在Eden区回收大
 
-**G1垃圾收集分类****YoungGC** 
+概要多久时间，如果回收时间远远小于参数 -XX:MaxGCPauseMills 设定的值，那么增加年轻代
 
-YoungGC并不是说现有的Eden区放满了就会马上触发，而且G1会计算下现在Eden区回收大 
+的region，继续给新对象存放，不会马上做Young GC，直到下一次Eden区放满，G1计算回收时
 
-概要多久时间，如果回收时间远远小于参数 -XX:MaxGCPauseMills 设定的值，那么增加年轻代 
+间接近参数 -XX:MaxGCPauseMills 设定的值，那么就会触发Young GC
 
-的region，继续给新对象存放，不会马上做Young GC，直到下一次Eden区放满，G1计算回收时 
+**MixedGC**
 
-间接近参数 -XX:MaxGCPauseMills 设定的值，那么就会触发Young GC 
+不是FullGC，老年代的堆占有率达到参数\(**-XX:InitiatingHeapOccupancyPercen**\)设定的值
 
-**MixedGC** 
+则触发，回收所有的Young和部分Old\(根据期望的GC停顿时间确定old区垃圾收集的优先顺序\)以
 
-不是FullGC，老年代的堆占有率达到参数(**-XX:InitiatingHeapOccupancyPercen**)设定的值 
+及大对象区，正常情况G1的垃圾收集是先做MixedGC，主要使用复制算法，需要把各个region中
 
-则触发，回收所有的Young和部分Old(根据期望的GC停顿时间确定old区垃圾收集的优先顺序)以 
+存活的对象拷贝到别的region里去，拷贝过程中如果发现**没有足够的空region**能够承载拷贝对象
 
-及大对象区，正常情况G1的垃圾收集是先做MixedGC，主要使用复制算法，需要把各个region中 
+就会触发一次Full GC
 
-存活的对象拷贝到别的region里去，拷贝过程中如果发现**没有足够的空region**能够承载拷贝对象 
+**Full GC**
 
-就会触发一次Full GC 
+停止系统程序，然后采用单线程进行标记、清理和压缩整理，好空闲出来一批Region来供下
 
-**Full GC** 
+一次MixedGC使用，这个过程是非常耗时的。
 
-停止系统程序，然后采用单线程进行标记、清理和压缩整理，好空闲出来一批Region来供下 
+**G1垃圾收集器优化建议**
 
-一次MixedGC使用，这个过程是非常耗时的。 
+假设参数 -XX:MaxGCPauseMills 设置的值很大，导致系统运行很久，年轻代可能都占用了堆
 
-**G1垃圾收集器优化建议** 
+内存的60%了，此时才触发年轻代gc。
 
-假设参数 -XX:MaxGCPauseMills 设置的值很大，导致系统运行很久，年轻代可能都占用了堆 
+那么存活下来的对象可能就会很多，此时就会导致Survivor区域放不下那么多的对象，就会进
 
-内存的60%了，此时才触发年轻代gc。 
+入老年代中。
 
-那么存活下来的对象可能就会很多，此时就会导致Survivor区域放不下那么多的对象，就会进 
+或者是你年轻代gc过后，存活下来的对象过多，导致进入Survivor区域后触发了动态年龄判定
 
-入老年代中。 
+规则，达到了Survivor区域的50%，也会快速导致一些对象进入老年代中。
 
-或者是你年轻代gc过后，存活下来的对象过多，导致进入Survivor区域后触发了动态年龄判定 
+所以这里核心还是在于调节 -XX:MaxGCPauseMills 这个参数的值，在保证他的年轻代gc别太
 
-规则，达到了Survivor区域的50%，也会快速导致一些对象进入老年代中。 
-
-所以这里核心还是在于调节 -XX:MaxGCPauseMills 这个参数的值，在保证他的年轻代gc别太 
-
-频繁的同时，还得考虑每次gc过后的存活对象有多少,避免存活对象太多快速进入老年代，频繁触 
+频繁的同时，还得考虑每次gc过后的存活对象有多少,避免存活对象太多快速进入老年代，频繁触
 
 发mixed gc.
+
