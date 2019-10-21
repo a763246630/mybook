@@ -1,4 +1,8 @@
-## Spring中Bean生命周期过程
+[TOC]
+
+
+
+### Spring中Bean生命周期过程
 
 1.Spring对Bean进行实例化（相当于程序中的new Xx\(\)）
 
@@ -22,7 +26,7 @@
 
 10、最后，如果这个Bean的配置了destroy-method属性，会自动调用其配置的销毁方法。
 
-## spring事务
+### Spring事务
 
 什么是事务:事务逻辑上的一组操作,组成这组操作的各个逻辑单元,要么一起成功,要么一起失败，不存在中间状态.
 
@@ -110,7 +114,40 @@ Oracle 默认:读已提交
 
 提交，相反未捕获则回滚。
 
+### Spring IOC
+
+控制反转，将对象管理权（创建，销毁）全交给spring容器去管理。
+
+### Spring AOP
+
+面向切面编程，选择一个切入点，将原来的方法进行包装后执行。
+
+静态代理：代码编译期，利用ASM修改类字节码生产代理类.
+
+jdk动态代理：运行时,通过反射获取到类信息，进行包装后加装载到jvm,要求类必须要实现接口。
 
 
 
+Aspect（切面）： Aspect 声明类似于 Java 中的类声明，在 Aspect 中会包含着一些 Pointcut 以及相应的 Advice。
+
+Pointcut（切点）：表示一组 joint point，这些 joint point 或是通过逻辑关系组合起来，或是通过通配、正则表达式等方式集中起来，它定义了相应的 Advice 将要发生的地方。
+
+Joint point（连接点）：表示在程序中明确定义的点，典型的包括方法调用，对类成员的访问以及异常处理程序块的执行等等，它自身还可以嵌套其它 joint point。
+
+Advice（增强）：Advice 定义了在 Pointcut 里面定义的程序点具体要做的操作，它通过 before、after 和 
+
+around 来区别是在每个 joint point 之前、之后还是代替执行的代码。
+
+Target（目标对象）：织入 Advice 的目标对象.。
+
+Weaving（织入）：将 Aspect 和其他对象连接起来, 并创建 Adviced object 的过程
+
+
+### Springboot 如何区分是浏览器请求还是ajax
+
+通过 request head 来识别
+
+ accept:text/html 是浏览器
+
+accept:*/* 是请求接口
 
