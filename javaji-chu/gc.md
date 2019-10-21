@@ -48,6 +48,22 @@ ParNew收集器其实就是Serial收集器的多线程版本，除了使用多�
 
 ##### Parallel Scavenge收集器\(-XX:+UseParallelGC\(年轻代\),XX:+UseParallelOldGC\(老年代\)\)
 
+Parallel Scavenge 收集器类似于ParNew 收集器，是Server 模式（**内存大于2G，2个cpu**）下的
+
+**默认收集器**，**那么它有什么特别之处呢？**
+
+**Parallel Scavenge收集器关注点是吞吐量（高效率的利用CPU）。CMS等垃圾收集器的关注点**
+
+**更多的是用户线程的停顿时间（提高用户体验）。所谓吞吐量就是CPU中用于运行用户代码的时**
+
+**间与CPU总消耗时间的比值。**Parallel Scavenge收集器提供了很多参数供用户找到最合适的停顿
+
+时间或最大吞吐量，如果对于收集器运作不太了解的话，可以选择把内存管理优化交给虚拟机去完
+
+成也是一个不错的选择。
+
+**新生代采用复制算法，老年代采用标记-整理算法。**
+
 ![](/assets/gcsjqParallel.png)
 
 **Parallel Old收集器是Parallel Scavenge收集器的老年代版本**。使用多线程和“标记-整理”算
