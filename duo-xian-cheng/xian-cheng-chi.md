@@ -154,7 +154,7 @@ Executors提供的几种定制线程
   * maxPoolSize = \(max\(tasks\)- queueCapacity\)/\(1/taskcost\)
   * 计算可得 maxPoolSize = \(1000-80\)/10 = 92
   * （最大任务数-队列容量）/每个线程每秒处理能力 = 最大线程数
-  * rejectedExecutionHandler：根据具体情况来决定，任务不重要可丢弃，任务重要则要利用一些缓冲机制来处理                  rejected = new ThreadPoolExecutor.AbortPolicy\(\);//默认，队列满了丢任务抛出异常  
+  * rejectedExecutionHandler：根据具体情况来决定，任务不重要可丢弃，任务重要则要利用一些缓冲机制来处理                  rejected = new ThreadPoolExecutor.AbortPolicy\(\);//默认，队列满了丢任务抛出RejectedExecutionException异常  
     rejected = new ThreadPoolExecutor.DiscardPolicy\(\);//队列满了丢任务不异常  
     rejected = new ThreadPoolExecutor.DiscardOldestPolicy\(\);//将最早进入队列的任务删，之后再尝试加入队列  
     rejected = new ThreadPoolExecutor.CallerRunsPolicy\(\);//如果添加到线程池失败，那么主线程会自己去执行该任务
