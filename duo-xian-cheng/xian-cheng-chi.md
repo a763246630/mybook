@@ -156,7 +156,7 @@ Executors提供的几种定制线程
   * （最大任务数-队列容量）/每个线程每秒处理能力 = 最大线程数
   * rejectedExecutionHandler：根据具体情况来决定，任务不重要可丢弃，任务重要则要利用一些缓冲机制来处理                  rejected = new ThreadPoolExecutor.AbortPolicy\(\);//默认，队列满了丢任务抛出RejectedExecutionException异常  
     rejected = new ThreadPoolExecutor.DiscardPolicy\(\);//队列满了丢任务不做任何处理  
-    rejected = new ThreadPoolExecutor.DiscardOldestPolicy\(\);//将最早进入队列的任务删，之后再尝试加入队列  
+    rejected = new ThreadPoolExecutor.DiscardOldestPolicy\(\);//先将阻塞队列中的头元素出队抛弃，再尝试提交任务。如果此时阻塞队列使用PriorityBlockingQueue优先级队列，将会导致优先级最高的任务被抛弃，因此不建议将该种策略配合优先级队列使用。  
     rejected = new ThreadPoolExecutor.CallerRunsPolicy\(\);//如果添加到线程池失败，那么主线程会自己去执行该任务
 
   * keepAliveTime和allowCoreThreadTimeout采用默认通常能满足
