@@ -62,7 +62,7 @@
 
 * unit   keepAliveTime存活时间 的单位
 
-* workQueue 队列   
+* workQueue 队列  
   ThreadPoolExecutors线程添加策略  
   1、线程数量未到corePoolSize\(核心线程数\)，则新建一个线程\(核心线程\)执行任务  
   2、线程数量达到了corePoolSize，则将任务移入队列（workqueue）等待核心线程执行完后执行  
@@ -82,11 +82,11 @@
   3. 使用有界queue可能不能很好的满足性能，需要调节线程数和queue大小
   4. 线程数自然也有开销，所以需要根据不同应用进行调节。
 
-  通常来说对于静态任务可以归为：   
-  1. 数量大，但是执行时间很短   
-  2. 数量小，但是执行时间较长   
-  3. 数量又大执行时间又长   
-  4. 除了以上特点外，任务间还有些内在关系   
+  通常来说对于静态任务可以归为：  
+  1. 数量大，但是执行时间很短  
+  2. 数量小，但是执行时间较长  
+  3. 数量又大执行时间又长  
+  4. 除了以上特点外，任务间还有些内在关系  
   5. CPU密集或者IO密集型任务
 
 * threadFactory 实现工厂自定义线程创建方法
@@ -140,6 +140,7 @@ Executors提供的几种定制线程
   * allowCoreThreadTimeout=false
   * rejectedExecutionHandler=AbortPolicy\(\)
 * 如何来设置
+
   * 需要根据几个值来决定
   * tasks ：每秒的任务数，假设为500~1000
   * taskcost：每个任务花费时间，假设为0.1s
@@ -153,15 +154,13 @@ Executors提供的几种定制线程
   * maxPoolSize = \(max\(tasks\)- queueCapacity\)/\(1/taskcost\)
   * 计算可得 maxPoolSize = \(1000-80\)/10 = 92
   * （最大任务数-队列容量）/每个线程每秒处理能力 = 最大线程数
-  * rejectedExecutionHandler：根据具体情况来决定，任务不重要可丢弃，任务重要则要利用一些缓冲机制来处理rejected = new ThreadPoolExecutor.AbortPolicy\(\);//默认，队列满了丢任务抛出异常
-        rejected = new ThreadPoolExecutor.DiscardPolicy\(\);//队列满了丢任务不异常
-        rejected = new ThreadPoolExecutor.DiscardOldestPolicy\(\);//将最早进入队列的任务删，之后再尝试加入队列
-        rejected = new ThreadPoolExecutor.CallerRunsPolicy\(\);//如果添加到线程池失败，那么主线程会自己去执行该任务
-    ————————————————
-    版权声明：本文为CSDN博主「草青工作室」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
-    原文链接：https://blog.csdn.net/xxj\_jing/article/details/84835476
+  * rejectedExecutionHandler：根据具体情况来决定，任务不重要可丢弃，任务重要则要利用一些缓冲机制来处理                  rejected = new ThreadPoolExecutor.AbortPolicy\(\);//默认，队列满了丢任务抛出异常  
+    rejected = new ThreadPoolExecutor.DiscardPolicy\(\);//队列满了丢任务不异常  
+    rejected = new ThreadPoolExecutor.DiscardOldestPolicy\(\);//将最早进入队列的任务删，之后再尝试加入队列  
+    rejected = new ThreadPoolExecutor.CallerRunsPolicy\(\);//如果添加到线程池失败，那么主线程会自己去执行该任务
 
   * keepAliveTime和allowCoreThreadTimeout采用默认通常能满足
+
 * 以上都是理想值，实际情况下要根据机器性能来决定。如果在未达到最大线程数的情况机器cpu load已经满了，则需要通过升级硬件（呵呵）和优化代码，降低taskcost来处理。
 
 ### 合理的设置线程池参数
