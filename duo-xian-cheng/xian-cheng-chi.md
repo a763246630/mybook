@@ -1,10 +1,8 @@
 ## 线程池ThreadPool
 
-[TOC]
+\[TOC\]
 
 **更快读写的存储介质+减少IO+减少CPU计算=性能优化。**
-
-
 
 线程池（thread pool）：是一种线程使用模式。线程过多会带来调度开销，进而影响缓存局部性和整体性能。而线程池维护着多个线程，等待着监督管理者分配可并发执行的任务。这避免了在处理短时间任务时创建与销毁线程的代价。线程池不仅能够保证内核的充分利用，还能防止过分调度。可用线程数量应该取决于可用的并发处理器、处理器内核、内存、网络sockets等的数量。 例如，线程数一般取cpu数量+2比较合适，线程数过多会导致额外的线程切换开销。
 
@@ -43,12 +41,12 @@
 
 * rejectedExecutionHandler：任务拒绝处理器
 
-    ```
+  ```
     ThreadPoolExecutor.AbortPolicy:丢弃任务并抛出RejectedExecutionException异常。
     ThreadPoolExecutor.DiscardPolicy：也是丢弃任务，但是不抛出异常。
     ThreadPoolExecutor.DiscardOldestPolicy：丢弃队列最前面的任务，然后重新尝试执行任务（重复此过程）
     ThreadPoolExecutor.CallerRunsPolicy：由调用线程处理该任务
-    ```
+  ```
 
 * 两种情况会拒绝处理任务：
 
@@ -64,14 +62,14 @@
 
 * unit   keepAliveTime存活时间 的单位
 
-* workQueue 队列 
-  ThreadPoolExecutors线程添加策略
-  1、线程数量未到corePoolSize(核心线程数)，则新建一个线程(核心线程)执行任务
-  2、线程数量达到了corePoolSize，则将任务移入队列（workqueue）等待核心线程执行完后执行
-  3、队列已满，新建线程(非核心线程)执行任务
-  4、队列已满，线程数又达到了maximumPoolSize（最大线程数），执行拒绝策略  
+* workQueue 队列   
+  ThreadPoolExecutors线程添加策略  
+  1、线程数量未到corePoolSize\(核心线程数\)，则新建一个线程\(核心线程\)执行任务  
+  2、线程数量达到了corePoolSize，则将任务移入队列（workqueue）等待核心线程执行完后执行  
+  3、队列已满，新建线程\(非核心线程\)执行任务  
+  4、队列已满，线程数又达到了maximumPoolSize（最大线程数），执行拒绝策略
 
-  在使用ThreadPoolExecutor线程池的时候，需要指定一个实现了BlockingQueue接口的任务等待队列。在ThreadPoolExecutor线程池的API文档中，一共推荐了三种等待队列，它们是：SynchronousQueue、LinkedBlockingQueue和ArrayBlockingQueue； 
+  在使用ThreadPoolExecutor线程池的时候，需要指定一个实现了BlockingQueue接口的任务等待队列。在ThreadPoolExecutor线程池的API文档中，一共推荐了三种等待队列，它们是：SynchronousQueue、LinkedBlockingQueue和ArrayBlockingQueue；
 
   1. **直接提交**。工作队列的默认选项是 `SynchronousQueue`，它将任务直接提交给线程而不保存它们。如果不存在可用于立即运行任务的线程，则试图把任务加入队列将失败，因此会构造一个新的线程。此策略可以避免在处理可能具有内部依赖性的请求集时出现锁。直接提交通常要求无界 maximumPoolSizes 以避免拒绝新提交的任务。当命令以超过队列所能处理的平均数连续到达时，此策略允许无界线程具有增长的可能性。
   2. **无界队列**。使用无界队列（例如，不具有预定义容量的 `LinkedBlockingQueue`）将导致在所有 corePoolSize 线程都忙时新任务在队列中等待。这样，创建的线程就不会超过 corePoolSize。（因此，maximumPoolSize 的值也就无效了。）当每个任务完全独立于其他任务，即任务执行互不影响时，适合于使用无界队列；例如，在 Web 页服务器中。这种排队可用于处理瞬态突发请求，当命令以超过队列所能处理的平均数连续到达时，此策略允许无界线程具有增长的可能性。
@@ -84,12 +82,12 @@
   3. 使用有界queue可能不能很好的满足性能，需要调节线程数和queue大小
   4. 线程数自然也有开销，所以需要根据不同应用进行调节。
 
-  通常来说对于静态任务可以归为： 
-  1. 数量大，但是执行时间很短 
-  2. 数量小，但是执行时间较长 
-  3. 数量又大执行时间又长 
-  4. 除了以上特点外，任务间还有些内在关系 
-  5. CPU密集或者IO密集型任务
+  通常来说对于静态任务可以归为：   
+  1. 数量大，但是执行时间很短   
+  2. 数量小，但是执行时间较长   
+  3. 数量又大执行时间又长   
+  4. 除了以上特点外，任务间还有些内在关系   
+  5. CPU密集或者IO密集型任务
 
 * threadFactory 实现工厂自定义线程创建方法
 
@@ -104,29 +102,23 @@ ThreadFactory threadFactory = new ThreadFactory() {
 };
 ```
 
-
-
 #### Executors提供的线程池配置方案
 
 构造一个固定线程数目的线程池，配置的corePoolSize与maximumPoolSize大小相同，同时使用了一个无界LinkedBlockingQueue存放阻塞任务，因此多余的任务将存在再阻塞队列，不会由RejectedExecutionHandler处理
 
 Executors提供的几种定制线程
 
-**ExecutorService newFixedThreadPool(int nThreads):固定大小线程池。**
+**ExecutorService newFixedThreadPool\(int nThreads\):固定大小线程池。**
 
-该线程池keepalive为0 线程执行完直接释放 ，核心线程和最大线程数相等,	workqueue选择了LinkedBlockingQueue,队列是无界的.
+该线程池keepalive为0 线程执行完直接释放 ，核心线程和最大线程数相等,    workqueue选择了LinkedBlockingQueue,队列是无界的.
 
-**ExecutorService newSingleThreadExecutor()：单线程。**
+**ExecutorService newSingleThreadExecutor\(\)：单线程。**
 
 和 newFixedThreadPool 类似 ，唯一区别线程数固定为1。
 
-**ExecutorService newCachedThreadPool()：无界线程池，可以进行自动线程回收。**
+**ExecutorService newCachedThreadPool\(\)：无界线程池，可以进行自动线程回收。**
 
-该线程池使用synchronousQueue ,keepalive为60秒,核心线程数为0 最大线程池数为Integer.MAX_VALUE
-
-
-
-
+该线程池使用synchronousQueue ,keepalive为60秒,核心线程数为0 最大线程池数为Integer.MAX\_VALUE
 
 **ThreadPoolExecutor执行顺序：**
 
@@ -161,7 +153,14 @@ Executors提供的几种定制线程
   * maxPoolSize = \(max\(tasks\)- queueCapacity\)/\(1/taskcost\)
   * 计算可得 maxPoolSize = \(1000-80\)/10 = 92
   * （最大任务数-队列容量）/每个线程每秒处理能力 = 最大线程数
-  * rejectedExecutionHandler：根据具体情况来决定，任务不重要可丢弃，任务重要则要利用一些缓冲机制来处理
+  * rejectedExecutionHandler：根据具体情况来决定，任务不重要可丢弃，任务重要则要利用一些缓冲机制来处理rejected = new ThreadPoolExecutor.AbortPolicy\(\);//默认，队列满了丢任务抛出异常
+        rejected = new ThreadPoolExecutor.DiscardPolicy\(\);//队列满了丢任务不异常
+        rejected = new ThreadPoolExecutor.DiscardOldestPolicy\(\);//将最早进入队列的任务删，之后再尝试加入队列
+        rejected = new ThreadPoolExecutor.CallerRunsPolicy\(\);//如果添加到线程池失败，那么主线程会自己去执行该任务
+    ————————————————
+    版权声明：本文为CSDN博主「草青工作室」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
+    原文链接：https://blog.csdn.net/xxj\_jing/article/details/84835476
+
   * keepAliveTime和allowCoreThreadTimeout采用默认通常能满足
 * 以上都是理想值，实际情况下要根据机器性能来决定。如果在未达到最大线程数的情况机器cpu load已经满了，则需要通过升级硬件（呵呵）和优化代码，降低taskcost来处理。
 
@@ -181,18 +180,18 @@ Executors提供的几种定制线程
 
 * 如果是CPU密集型应用，则线程池大小设置为N+1
 
-  尽量使用较小的线程池，一般为CPU核心数+1。   
+  尽量使用较小的线程池，一般为CPU核心数+1。  
   因为CPU密集型任务使得CPU使用率很高，若开过多的线程数，只能增加上下文切换的次数，因此会带来额外的开销。
 
 * 如果是IO密集型应用，则线程池大小设置为2N+1
 
-  可以使用稍大的线程池，一般为2\*CPU核心数。   
+  可以使用稍大的线程池，一般为2\*CPU核心数。  
   IO密集型任务CPU使用率并不高，因此可以让CPU在等待IO的时候去处理别的任务，充分利用CPU时间。
 
 * 混合型任务
 
-  可以将任务分成IO密集型和CPU密集型任务，然后分别用不同的线程池去处理。   
-  只要分完之后两个任务的执行时间相差不大，那么就会比串行执行来的高效。   
+  可以将任务分成IO密集型和CPU密集型任务，然后分别用不同的线程池去处理。  
+  只要分完之后两个任务的执行时间相差不大，那么就会比串行执行来的高效。  
   因为如果划分之后两个任务执行时间相差甚远，那么先执行完的任务就要等后执行完的任务，最终的时间仍然取决于后执行完的任务，而且还要加上任务拆分与合并的开销，得不偿失。
 
   ```
@@ -201,31 +200,29 @@ Executors提供的几种定制线程
 
 如果一台服务器上只部署这一个应用并且只有这一个线程池，那么这种估算或许合理，具体还需自行测试验证。
 
-
-
 * 如果是CPU密集型应用，则线程池大小设置为N+1
 
   因为CPU密集型任务使得CPU使用率很高，若开过多的线程数，只能增加上下文切换的次数，因此会带来额外的开销。
 
 * 如果是IO密集型应用，则线程池大小设置为2N+1
 
-  可以使用稍大的线程池，一般为2\*CPU核心数。   
+  可以使用稍大的线程池，一般为2\*CPU核心数。  
   IO密集型任务CPU使用率并不高，因此可以让CPU在等待IO的时候去处理别的任务，充分利用CPU时间。
 
-  混合型任务   
-  可以将任务分成IO密集型和CPU密集型任务，然后分别用不同的线程池去处理。   
-  只要分完之后两个任务的执行时间相差不大，那么就会比串行执行来的高效。   
+  混合型任务  
+  可以将任务分成IO密集型和CPU密集型任务，然后分别用不同的线程池去处理。  
+  只要分完之后两个任务的执行时间相差不大，那么就会比串行执行来的高效。  
   因为如果划分之后两个任务执行时间相差甚远，那么先执行完的任务就要等后执行完的任务，最终的时间仍然取决于后执行完的任务，而且还要加上任务拆分与合并的开销，得不偿失。
 
 如果一台服务器上只部署这一个应用并且只有这一个线程池，那么这种估算或许合理，具体还需自行测试验证。
 
 接下来在这个文档：服务器性能IO优化 中发现一个估算公式：
 
-最佳线程数目 = （（线程等待时间+线程CPU时间）/线程CPU时间 ）* CPU数目
+最佳线程数目 = （（线程等待时间+线程CPU时间）/线程CPU时间 ）\* CPU数目
 
-比如平均每个线程CPU运行时间为0.5s，而线程等待时间（非CPU运行时间，比如IO）为1.5s，CPU核心数为8，那么根据上面这个公式估算得到：((0.5+1.5)/0.5)*8=32。这个公式进一步转化为：
+比如平均每个线程CPU运行时间为0.5s，而线程等待时间（非CPU运行时间，比如IO）为1.5s，CPU核心数为8，那么根据上面这个公式估算得到：\(\(0.5+1.5\)/0.5\)\*8=32。这个公式进一步转化为：
 
-最佳线程数目 = （线程等待时间与线程CPU时间之比 + 1）* CPU数目
+最佳线程数目 = （线程等待时间与线程CPU时间之比 + 1）\* CPU数目
 
 可以得出一个结论：
 
@@ -235,8 +232,8 @@ Executors提供的几种定制线程
 
 一个系统最快的部分是CPU，所以决定一个系统吞吐量上限的是CPU。增强CPU处理能力，可以提高系统吞吐量上限。但根据短板效应，真实的系统吞吐量并不能单纯根据CPU来计算。那要提高系统吞吐量，就需要从“系统短板”（比如网络延迟、IO）着手：
 
-- 尽量提高短板操作的并行化比率，比如多线程下载技术
-- 增强短板能力，比如用NIO替代IO
+* 尽量提高短板操作的并行化比率，比如多线程下载技术
+* 增强短板能力，比如用NIO替代IO
 
 第一条可以联系到Amdahl定律，这条定律定义了串行系统并行化后的加速比计算公式：
 
@@ -244,7 +241,7 @@ Executors提供的几种定制线程
 
 加速比越大，表明系统并行化的优化效果越好。Addahl定律还给出了系统并行度、CPU数目和加速比的关系，加速比为Speedup，系统串行化比率（指串行执行代码所占比率）为F，CPU数目为N：
 
-Speedup <= 1/ (F + (1-F)/N)
+Speedup &lt;= 1/ \(F + \(1-F\)/N\)
 
 当N足够大时，串行化比率F越小，加速比Speedup越大。
 
@@ -261,3 +258,4 @@ Speedup <= 1/ (F + (1-F)/N)
 解决这个问题方法就是把不同模块放在不同的线程里面，如果之前使用的是线程池那么 不同业务也要用不同的线程池分开。因为如果这个业务有问题，这个业务所在的线程池也会很快的阻塞掉。
 
 如果不同的业务分开到不同的线程池里面去，至少不会因为这个业务导致其他业务不可用。
+
