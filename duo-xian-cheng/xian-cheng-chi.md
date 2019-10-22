@@ -120,7 +120,7 @@ Executors提供的几种定制线程
 
 该线程池使用synchronousQueue ,keepalive为60秒,核心线程数为0 最大线程池数为Integer.MAX\_VALUE
 
-newScheduledThreadPool\(\): 创建一个定长线程池，支持定时及周期性任务执行。
+**newScheduledThreadPool\(\): 创建一个定长线程池，支持定时及周期性任务执行。**
 
 **ThreadPoolExecutor执行顺序：**
 
