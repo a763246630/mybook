@@ -867,7 +867,7 @@ FGCT：老年代垃圾回收消耗时间
 
 GCT：垃圾回收消耗总时间
 
-
+##### -XX:+PrintGCDetails -Xloggc:d:\gc.log 打印gc日志
 
 **JVM运行情况预估** 
 
