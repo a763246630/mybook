@@ -76,4 +76,5 @@
   * [spring常见问题](spring/springchang-jian-wen-ti.md)
 * SpringBoot
 * [SQL优化](sql.md)
+  * mysql优化相关
 
