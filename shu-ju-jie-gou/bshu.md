@@ -51,6 +51,3 @@
 
 [![](https://images0.cnblogs.com/blog/94031/201403/290047064066682.png "B tree")](https://images0.cnblogs.com/blog/94031/201403/290047034539184.png)
 
-
-
-B树对比红黑树
