@@ -6,6 +6,7 @@
   * [常见的数据结构](shu-ju-jie-gou/chang-jian-de-shu-ju-jie-gou.md)
   * [B树](shu-ju-jie-gou/bshu.md)
   * [B+TREE](shu-ju-jie-gou/b+tree.md)
+  * 几种常见的树形数据结构比较
 * [java基础](javaji-chu.md)
   * [过滤器（Filter）与拦截器（Interceptor \)区别](javaji-chu/guo-lv-qi-ff08-filterff09-yu-lan-jie-qi-ff08-interceptor-qu-bie.md)
   * [java环境配置](javaji-chu/javahuan-jing-pei-zhi.md)
