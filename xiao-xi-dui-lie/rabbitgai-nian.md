@@ -1,4 +1,4 @@
-RabbitMQ是流行的开源消息队列系统，是AMQP（Advanced Message Queuing Protocol高级消息队列协议）的标准实现，用erlang语言开发。RabbitMQ据说具有良好的性能和时效性，同时还能够非常好的支持集群和负载部署，非常适合在较大规模的分布式系统中使用。
+RabbitMQ是流行的开源消息队列系统，是**AMQP（Advanced Message Queuing Protocol高级消息队列协议）**的标准实现，用erlang语言开发。RabbitMQ据说具有良好的**性能和时效性**，同时还能够非常好的支持**集群和负载部署**，非常适合在较大规模的分布式系统中使用。
 
 #### 概念
 
