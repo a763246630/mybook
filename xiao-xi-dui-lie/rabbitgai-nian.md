@@ -66,15 +66,7 @@ Rabbitmq**高性能是如何做到的**
 
 * Exchange通常分为四种：
 
-  * fanout：不需要RouteKey，需要提前将Exchange与Queue进行绑定，一个Exchange可以绑定多个Queue，一个Queue可以同多个Exchange进行绑定。如果接受到消息的Exchange没有与任何Queue绑定，则消息会被抛弃。
-
-    适用场景：
-
-    第一：大型玩家在玩在线游戏的时候，可以用它来广播重大消息。这让我想到电影微微一笑很倾城中，有款游戏需要在世界上公布玩家重大消息，也许这个就是用的MQ实现的。这让我不禁佩服肖奈，人家在大学的时候就知道RabbitMQ的这种特性了。
-
-    第二：体育新闻实时更新到手机客户端。
-
-    第三：群聊功能，广播消息给当前群聊中的所有人。
+  * fanout：不需要RouteKey性能最高，需要提前将Exchange与Queue进行绑定，一个Exchange可以绑定多个Queue，一个Queue可以同多个Exchange进行绑定。如果接受到消息的Exchange没有与任何Queue绑定，则消息会被抛弃。 
 
   * direct：该类型不需要Exchange进行绑定，**消息发送时需要RouteKey，Exchange收到消息后会转发RouteKey对应的Queue中**,如果vhost中不存在RouteKey中指定的队列名，则该消息会被抛弃。
 
