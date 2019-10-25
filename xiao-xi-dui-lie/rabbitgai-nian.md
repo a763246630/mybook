@@ -58,7 +58,7 @@ RabbitMQ是流行的开源消息队列系统，是**AMQP（Advanced Message Queu
 
     第三：群聊功能，广播消息给当前群聊中的所有人。
 
-  * direct：该类型不需要Exchange进行绑定，消息发送时需要RouteKey，Exchange收到消息后会转发RouteKey对应的Queue中,如果vhost中不存在RouteKey中指定的队列名，则该消息会被抛弃。
+  * direct：该类型不需要Exchange进行绑定，**消息发送时需要RouteKey，Exchange收到消息后会转发RouteKey对应的Queue中**,如果vhost中不存在RouteKey中指定的队列名，则该消息会被抛弃。
 
     适用场景：
 
