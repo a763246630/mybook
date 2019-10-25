@@ -66,5 +66,3 @@ RabbitMq的VirtualHost（虚拟消息服务器），每个VirtualHost相当于�
 rabbitmqctl add_vhost 虚拟服务器名称
 例如：rabbitmqctl add_vhost my_test
 ```
-
-- 
