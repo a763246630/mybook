@@ -79,5 +79,5 @@
   * [mysql优化相关](sql/mysqlyou-hua-xiang-guan.md)
 * [消息队列](xiao-xi-dui-lie.md)
   * [rabbitmq](xiao-xi-dui-lie/rabbitmq.md)
-  * rabbit概念
+  * [rabbit概念](xiao-xi-dui-lie/rabbitgai-nian.md)
 
