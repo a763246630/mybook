@@ -1,6 +1,6 @@
 ## 常见的并发问题和解决并发方案
 
-[TOC]
+\[TOC\]
 
 #### 常见的并发问题
 
@@ -227,22 +227,17 @@ ReentrantLock lock=new ReentrantLock \(true\);//true 实例化FairSync为公平�
 
 
 如果shouldParkAfterFailedAcquire或者parkAndCheckInterrupt都返回true.则执行selfInterrupt()中断线程.
-
-
-
 ```
 
 主要步骤
 
-1. 尝试获取锁（如果当前节点没有前驱节点，CAS替换state+1，或者独占线程为当前线程则成功），获取失败就创建一个独占节点用CAS替换tail(放入同步队列尾部)，
+1. 尝试获取锁（如果当前节点没有前驱节点，CAS替换state+1，或者独占线程为当前线程则成功），获取失败就创建一个独占节点用CAS替换tail\(放入同步队列尾部\)，
 
 2. 如果当前节点的前驱节点是head再次尝试获取锁，
 
 ​               如果成功，将当前节点设为head;
 
 ​                如果失败,阻塞当前线程。
-
-
 
 公平锁释放锁过程
 
@@ -269,15 +264,13 @@ ReentrantLock lock=new ReentrantLock \(true\);//true 实例化FairSync为公平�
 
 主要步骤
 
-1.尝试获取锁（如果直接CAS替换state+1，或者独占线程为当前线程则成功），获取失败就创建一个独占节点用CAS替换tail(放入同步队列尾部)，
+1.尝试获取锁（如果直接CAS替换state+1，或者独占线程为当前线程则成功），获取失败就创建一个独占节点用CAS替换tail\(放入同步队列尾部\)，
 
 2.如果当前节点的前驱节点是head再次尝试获取锁（跟1.的尝试锁步骤一致），
 
 ​               如果成功，将当前节点设为head;
 
 ​                如果失败,阻塞当前线程。
-
-
 
 可重入
 
@@ -420,7 +413,7 @@ tryReleaseShared\(int\)：共享方式。尝试释放资源，如果释放后允
 
 （2）获取读状态：
 
-​    S>>>16:无符号补0，右移16位
+​    S&gt;&gt;&gt;16:无符号补0，右移16位
 
 内部维护一个读锁一个写锁
 
@@ -455,7 +448,7 @@ NonfairSync》》readerShouldBlock》》apparentlyFirstQueuedIsExclusive有写�
       3.大于读锁最大获取次数抛出异常
       4.return 1;
       这几种情况;
-  
+
 
 其中exclusiveCount方法表示占有写锁的线程数量，源码如下：
 static int exclusiveCount(int c) { return c & EXCLUSIVE_MASK; }
@@ -485,8 +478,6 @@ tryReleaseShared(arg)
          唤醒head节点（此时head、head.next的线程都唤醒了，head.next会去竞争锁，成功后head会指向获取锁的节点，head会发生变化）
          如果head的waitStatus为0，CAS替换head的waitStatus为共享（PROPAGATE可以传播到后面的共享节点 ），然后跳出此次循环;
       如果以上没有跳出循环，head没有发生变化（表示没有竞争锁了） 跳出循环
-
-
 ```
 
 写锁获取过程
@@ -504,7 +495,7 @@ WriteLock >>lock()>>sync.acquire(1);>>
      非公平锁
      都返回false
   设置setExclusiveOwnerThread(current);独占线程为当前线程，return true;
- 
+
 释放过程
   >>unlock()>> sync.release(1)
   >>tryRelease(arg)
@@ -716,4 +707,22 @@ Syncronized锁的膨胀 无锁-&gt;偏向锁-&gt;轻量级锁-&gt;重量级锁
 如果替换成功，整个同步过程就完成了，恢复到无锁的状态\(01\)。
 
 如果替换失败，说明有其他线程尝试获取该锁\(此时锁已膨胀\)，那就要在释放锁的同时，唤醒被挂起的线程。
+
+
+
+##### Lock与synchronized有以下区别：
+
+Lock是一个接口，而synchronized是关键字。
+
+synchronized会自动释放锁，而Lock必须手动释放锁。
+
+Lock可以让等待锁的线程响应中断，而synchronized不会，线程会一直等待下去。
+
+通过Lock可以知道线程有没有拿到锁，而synchronized不能。
+
+Lock能提高多个线程读操作的效率。
+
+synchronized能锁住类、方法和代码块，而Lock是块范围内的
+
+
 
