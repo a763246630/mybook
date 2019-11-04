@@ -1,8 +1,6 @@
 ## java常见的集合
 
-[TOC]
-
-
+\[TOC\]
 
 ### ArrayList
 
@@ -239,19 +237,29 @@ ArrayList和LinkedList的区别（也是顺序表和链表的区别）：
 
 ### Victor
 
-
-
 ### HashMap
 
-##### 默认初始容量为16，负载因子是0.75，超过12（16*0.75）就扩容2倍
+##### 默认初始容量为16，负载因子是0.75，超过12（16\*0.75）就扩容2倍
 
 我们知道HashMap是线程不安全的，在多线程环境下，使用Hashmap进行put操作会引起死循环，导致CPU利用率接近100%，所以在并发情况下不能使用HashMap。
 
-为什么HashMap长度是2的幂次方
+##### 为什么HashMap长度是2的幂次方
 
 因为计算hashmap元素的index时hashcode&length-1
 
-偶数（比如 hashcode为2，length为9时，转换为2进制0000 0010 & 0000 1000）不容易发生hash碰撞，数据存储均匀。
+偶数不容易发生hash碰撞，数据存储均匀。
+
+例如hashcode为2，length为9时，转换为2进制0000 0010 & 0000 1000得出并集0000 0000
+
+hashcode为3，length为9时，转换为2进制0000 0010 & 0000 1000得出并集0000 0000
+
+有碰撞。
+
+例如hashcode为2，length为8时，转换为2进制0000 0010 & 0000 0111得出并集0000 0010
+
+hashcode为3，length为8时，转换为2进制0000 0011 & 0000 1000得出并集0000 0011
+
+无碰撞。
 
 * HashMap概念和底层结构
 
@@ -267,7 +275,7 @@ Hashmap综合应用了这两种数据结构，实现了寻址容易，插入删�
 
 ![](/assets/hashmap1.png)
 
-- **HashMap的基本存储原理以及存储内容的组成**
+* **HashMap的基本存储原理以及存储内容的组成**
 
 ```
 最外层是个数组（transient Node<K,V>[] table）,在new HashMap()只是将initialCapacity初始容量（默认大小16）负载因子loadFactor(默认16)赋值给 (final float loadFactor)计算出阈值
@@ -277,26 +285,26 @@ Hashmap综合应用了这两种数据结构，实现了寻址容易，插入删�
 第三个键值对 C,index也等于0,那么C.next = B,Entry[0] = C；这样我们发现index=0的地方事实上存取了A,B,C三个键值对,它们通过next这个属性链接在一起。我们可以将这个地方称为桶。 对于不同的元素，可能计算出了相同的函数值，这样就产生了“冲突”，这就需要解决冲突，“直接定址”与“解决冲突”是哈希表的两大特点。
 ```
 
-- **HashMap的工作原理以及存取方法过程**
+* **HashMap的工作原理以及存取方法过程**
 
 ```
 HashMap的工作原理 ：HashMap是基于散列法（又称哈希法hashing）的原理，使用put(key, value)存储对象到HashMap中，使用get(key)从HashMap中获取对象。当我们给put()方法传递键和值时，我们先对键调用hashCode()方法，返回的hashCode用于找到bucket（桶）位置来储存Entry对象。”HashMap是在bucket中储存键对象和值对象，作为Map.Entry。并不是仅仅只在bucket中存储值。
 ```
 
-- **HashMap中的碰撞探测(collision detection)以及碰撞的解决方法**
+* **HashMap中的碰撞探测\(collision detection\)以及碰撞的解决方法**
 
 ```
 当两个对象的hashcode相同时，它们的bucket位置相同，‘碰撞’会发生。因为HashMap使用LinkedList存储对象，这个Entry(包含有键值对的Map.Entry对象)会存储在LinkedList中。这两个对象就算hashcode相同，但是它们可能并不相等。 那如何获取这两个对象的值呢？当我们调用get()方法，HashMap会使用键对象的hashcode找到bucket位置，遍历LinkedList直到找到值对象。找到bucket位置之后，会调用keys.equals()方法去找到LinkedList中正确的节点，最终找到要找的值对象使用不可变的、声明作final的对象，并且采用合适的equals()和hashCode()方法的话，将会减少碰撞的发生，提高效率。不可变性使得能够缓存不同键的hashcode，这将提高整个获取对象的速度，使用String，Interger这样的wrapper类作为键是非常好的选择。
 ```
 
-- **如何重新调整HashMap的大小**
+* **如何重新调整HashMap的大小**
 
 ```
 “如果HashMap的大小超过了负载因子(load factor)定义的容量，怎么办？”
 HashMap的扩容阈值（threshold = capacity* loadFactor 容量值范16~2的30次方），就是通过它和size进行比较来判断是否需要扩容。默认的负载因子大小为0.75，也就是说，当一个map填满了75%的bucket时候，和其它集合类(如ArrayList等)一样，将会创建原来HashMap大小的两倍的bucket数组（jdk1.6，但不超过最大容量），来重新调整map的大小，并将原来的对象放入新的bucket数组中。这个过程叫作rehashing，因为它调用hash方法找到新的bucket位置。
 ```
 
-- **解决 hash 冲突的常见方法**
+* **解决 hash 冲突的常见方法**
 
 ```
 a. 链地址法：将哈希表的每个单元作为链表的头结点，所有哈希地址为 i 的元素构成一个同义词链表。即发生冲突时就把该关键字链在以该单元为头结点的链表的尾部。
@@ -310,7 +318,7 @@ d. 建立公共溢出区：将哈希表分为基本表和溢出表，发生冲�
 HashMap 就是使用链地址法来解决冲突的（jdk8中采用平衡树来替代链表存储冲突的元素，但hash() 方法原理相同）。数组中的每一个单元都会指向一个链表，如果发生冲突，就将 put 进来的 K- V 插入到链表的尾部。
 ```
 
-- **HashMap并发环境下是线程不安全的,可能会出现下面的并发问题.**
+* **HashMap并发环境下是线程不安全的,可能会出现下面的并发问题.**
 
 **多线程put后可能导致get死循环**
 
@@ -319,8 +327,6 @@ HashMap 就是使用链地址法来解决冲突的（jdk8中采用平衡树来�
 **put非null元素后get出来的却是null**
 
 **resize扩容造成链表死循环**
-
-
 
 ### HashTable
 
@@ -360,8 +366,6 @@ ConcurrentHashMap使用分段锁技术，将数据分成一段一段的存储，
 从上面的结构我们可以了解到，ConcurrentHashMap定位一个元素的过程需要进行两次Hash操作。
 
 第一次Hash定位到Segment，第二次Hash定位到元素所在的链表的头部
-
-
 
 **坏处**
 
