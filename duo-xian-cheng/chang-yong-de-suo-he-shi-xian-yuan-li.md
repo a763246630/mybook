@@ -708,8 +708,6 @@ Syncronized锁的膨胀 无锁-&gt;偏向锁-&gt;轻量级锁-&gt;重量级锁
 
 如果替换失败，说明有其他线程尝试获取该锁\(此时锁已膨胀\)，那就要在释放锁的同时，唤醒被挂起的线程。
 
-
-
 ##### Lock与synchronized有以下区别：
 
 Lock是一个接口，而synchronized是关键字。
@@ -718,11 +716,9 @@ synchronized会自动释放锁，而Lock必须手动释放锁。
 
 Lock可以让等待锁的线程响应中断，而synchronized不会，线程会一直等待下去。
 
-通过Lock可以知道线程有没有拿到锁，而synchronized不能。
+通过Lock可以知道线程有没有拿到锁\(判断锁的状态\)，而synchronized不能。
 
 Lock能提高多个线程读操作的效率。
 
 synchronized能锁住类、方法和代码块，而Lock是块范围内的
-
-
 
