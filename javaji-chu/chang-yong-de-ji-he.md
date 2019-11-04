@@ -247,6 +247,12 @@ ArrayList和LinkedList的区别（也是顺序表和链表的区别）：
 
 我们知道HashMap是线程不安全的，在多线程环境下，使用Hashmap进行put操作会引起死循环，导致CPU利用率接近100%，所以在并发情况下不能使用HashMap。
 
+为什么HashMap长度是2的幂次方
+
+因为计算hashmap元素的index时hashcode&length-1
+
+偶数不容易发生hash碰撞，数据存储均匀。
+
 * HashMap概念和底层结构
 
 ```
