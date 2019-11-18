@@ -68,7 +68,9 @@ Rabbitmq**高性能是如何做到的**
 
   * fanout：不需要RouteKey性能最高，需要提前将Exchange与Queue进行绑定，一个Exchange可以绑定多个Queue，一个Queue可以同多个Exchange进行绑定。如果接受到消息的Exchange没有与任何Queue绑定，则消息会被抛弃。
 
-  * direct：**消息发送时需要RoutingKey，Exchange收到消息后会转发RoutingKey对应的BindingKey的Queue中**
+  * direct：
+
+    **消息发送时需要RoutingKey，Exchange收到消息后会转发RoutingKey对应的BindingKey的Queue中**
 
     ,如果vhost中不存在RouteKey中指定的队列名，则该消息会被抛弃。
 
