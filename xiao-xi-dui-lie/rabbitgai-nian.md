@@ -2,21 +2,21 @@ RabbitMQ是流行的开源消息队列系统，是**AMQP（Advanced Message Queu
 
 为什么选择rabbitmq？
 
-1)**开源，性能好，稳定性保证**, 
+1\)**开源，性能好，稳定性保证**,
 
-2)**提供了消息的可靠性投递（**confirm**），返回模式** 
+2\)**提供了消息的可靠性投递（**confirm**），返回模式**
 
-3)**与**sping amqp **整合和完美，提供丰富的**api 
+3\)**与**sping amqp **整合和完美，提供丰富的**api
 
-4)**集群模式十分丰富**(HA**模式 镜像队列模型**) 
+4\)**集群模式十分丰富**\(HA**模式 镜像队列模型**\)
 
-5)保证数据不丢失的情况下，保证很好的性能 
+5\)保证数据不丢失的情况下，保证很好的性能
 
-Rabbitmq**高性能是如何做到的** 
+Rabbitmq**高性能是如何做到的**
 
-1**）使用的语言是**elang**语言**(**通常使用到交互机上**)**，**elang**的语言的性能能与原生**socket**的延迟效果**. 
+1**）使用的语言是**elang**语言**\(**通常使用到交互机上**\)**，**elang**的语言的性能能与原生**socket**的延迟效果**.
 
-2)消息入队的延时已经消息的消费的响应很快 
+2\)消息入队的延时已经消息的消费的响应很快
 
 #### 概念
 
@@ -66,9 +66,11 @@ Rabbitmq**高性能是如何做到的**
 
 * Exchange通常分为四种：
 
-  * fanout：不需要RouteKey性能最高，需要提前将Exchange与Queue进行绑定，一个Exchange可以绑定多个Queue，一个Queue可以同多个Exchange进行绑定。如果接受到消息的Exchange没有与任何Queue绑定，则消息会被抛弃。 
+  * fanout：不需要RouteKey性能最高，需要提前将Exchange与Queue进行绑定，一个Exchange可以绑定多个Queue，一个Queue可以同多个Exchange进行绑定。如果接受到消息的Exchange没有与任何Queue绑定，则消息会被抛弃。
 
-  * direct： **消息发送时需要RoutingKey，Exchange收到消息后会转发RouteKey对应的Queue中**,如果vhost中不存在RouteKey中指定的队列名，则该消息会被抛弃。
+  * direct：**消息发送时需要RoutingKey，Exchange收到消息后会转发RoutingKey对应的BindingKey的Queue中**
+
+    ,如果vhost中不存在RouteKey中指定的队列名，则该消息会被抛弃。
 
     适用场景：
 
