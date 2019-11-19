@@ -81,4 +81,5 @@
 * [消息队列](xiao-xi-dui-lie.md)
   * [rabbitmq](xiao-xi-dui-lie/rabbitmq.md)
   * [rabbit概念](xiao-xi-dui-lie/rabbitgai-nian.md)
+* 分布式
 
