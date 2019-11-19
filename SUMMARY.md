@@ -82,4 +82,5 @@
   * [rabbitmq](xiao-xi-dui-lie/rabbitmq.md)
   * [rabbit概念](xiao-xi-dui-lie/rabbitgai-nian.md)
 * 分布式
+  * 分布式常见问题
 
