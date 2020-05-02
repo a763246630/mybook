@@ -124,7 +124,7 @@ cglib静态代理：代码编译期，利用ASM修改类字节码生产代理类
 
 jdk动态代理：运行时,通过反射获取到类信息，进行包装后加装载到jvm,要求类必须要实现接口。
 
-Aspect（切面）： Aspect 声明类似于 Java 中的类声明，在 Aspect 中会包含着一些 Pointcut 以及相应的 Advice。
+Aspect（切面）： Aspect 声明类似于 Java 中的切面类声明，在 Aspect 中会包含着一些 Pointcut 以及相应的 Advice。
 
 Pointcut（切点）：表示一组 joint point，这些 joint point 或是通过逻辑关系组合起来，或是通过通配、正则表达式等方式集中起来，它定义了相应的 Advice 将要发生的地方。
 
